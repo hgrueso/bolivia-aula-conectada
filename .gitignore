@@ -1,0 +1,46 @@
+# macOS / system
+.DS_Store
+.Rhistory
+.RData
+.Rapp.history
+.Ruserdata
+
+# Quarto / R build artefacts
+*.html
+*.knit.md
+*_files/
+*_cache/
+.quarto/
+*.tex
+*.log
+*.aux
+
+# Raw EH 2024 microdata (large, redistribution-restricted by INE)
+data/BD_EH2024/
+data/BD_EH2024.zip
+data/*.sav
+data/*.csv.gz
+
+# Generated outputs (re-creatable by running the pipeline)
+output/
+!output/.gitkeep
+
+# Renv / virtual environments
+renv/library/
+renv/local/
+renv/cellar/
+renv/python/
+.venv/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Optional: do NOT commit rendered PDFs (large, re-creatable)
+*.pdf
+
+# But DO commit the curated lit-review CSVs
+!data/lit_review_papers.csv
+!data/lit_review_effect_modifiers.csv

@@ -1,0 +1,251 @@
+paper_id,paper_name,first_author_year,country,region,implementing_entity,study_design,sample_size_treatment,sample_size_control,fieldwork_year,age_range_min,age_range_max,age_mean,female_share,rural_share,indigenous_share,poverty_share,secondary_enrollment_baseline,urban_density,language_of_instruction,one_sentence_description,delivery_mode,duration_months,cost_per_beneficiary_USD,intensity,outcome_name,outcome_unit,effect_size,standard_error,sample_size_for_this_outcome,control_group_mean_at_baseline,control_group_mean_at_endline,confidence_interval_95,explicitly_discusses_external_validity,generalizable_populations,mechanisms_identified,adapted_from_programme_run_elsewhere,compared_to_other_RCTs,quote
+P001,A Vaccination for Education,Jain_2017,IND,South Asia,government,observational,not_reported,not_reported,2005,6,14,not_reported,0.54,1,not_reported,not_reported,not_reported,rural,not_reported,"Evaluates the impact of the Integrated Child
+Development Services (ICDS) program on the schooling of older girls who
+have a younger sibling under five in rural India.",in-person,not_reported,,not_reported,School attendance,percentage points,0.07,0.02,7167,not_reported,0.66,,no,not_reported,"positive health externalities of the ICDS
+programme",not_reported,,not_reported
+P002,Negotiating a Better Future,Ashraf_2025,ZMB,Sub-Saharan Africa,mixed,RCT,1586,780,2013,not_reported,not_reported,14,1,0,not_reported,not_reported,not_reported,urban,not_reported,"A 10-year follow-up of an RCT evaluating
+negotiation skills and safe space interventions for adolescent girls.",in-person,not_reported,,not_reported,Years of education,years,0.264,0.114,1287,not_reported,not_reported,,no,not_reported,"negotiation skills themselves matter as opposed
+to other, generalized empowerment benefits",not_reported,,"This is substantially larger than the effect estimated by
+ABLM\... compared well with other successful educational interventions,
+such as conditional cash transfer programs"
+P003,Nudges to Improve Learning and Gender Parity,Aurino_2022,GHA,Sub-Saharan Africa,mixed,RCT,1067,not_reported,2021,5,17,not_reported,not_reported,1,not_reported,not_reported,not_reported,rural,English,"Provides timely, actionable SMS nudges to
+caregivers to attenuate behavioral barriers to learning and promote
+gender parity in education.",digital,6,,2 messages per week,School enrollment,not_reported,-0.118,0.105,4671,not_reported,3.037,,no,not_reported,"caregiver behavioural and informational
+barriers",yes,,"The SMS programme was based on Movva's EDUQ+ programme, which
+has been implemented and evaluated in Brazil and Cote d'Ivoire."
+P004,Beyond Attendance Gendered Impacts of a Cash Transfer,Pesando_2026,MAR,Middle East and North Africa,government,RCT,not_reported,not_reported,2008,6,15,not_reported,0.466,1,not_reported,1,not_reported,rural,not_reported,"Evaluates the Tayssir pilot, a cash-transfer
+program to encourage parents to keep children in primary school in rural
+Morocco.",in-person,24,,not_reported,Dropout by the end of year 2,percentage points,-0.077,0.017,3432,not_reported,not_reported,,no,not_reported,"interplay between household inequality, as
+driven by gender and unpaid care work dynamics, and children\'s
+schooling",not_reported,,"In contrast, the range for traditional CCTs is between 6% and
+27% of mean monthly household consumption -- with PROGRESA being around
+20%"
+P005,Gram Varta Participatory Learning and Action,Bogler_2025,IND,South Asia,government,RCT,not_reported,not_reported,2015,13,19,16,1,1,not_reported,not_reported,not_reported,rural,not_reported,"A participatory learning and action (PLA)
+program targeting women\'s self-help groups and adolescent girls to
+improve health knowledge and practices.",in-person,12,,20 structured meetings,Expects to work as housewife,percentage points,-0.44,not_reported,336,not_reported,23.75,,yes,rural population in Bihar,not_reported,not_reported,,not_reported
+P006,Coding Bootcamps for Female Digital Employment,Alzua_2020,"ARG, COL",Latin America,NGO,RCT,402,401,2020,18,50,29.46,1,0,not_reported,not_reported,not_reported,urban,not_reported,"A ready-to-work computer coding bootcamp
+targeting women, providing a spot in the course and a scholarship
+covering 65-80% of costs.",digital,not_reported,,not_reported,Score in coding test,score points 0-10,1.080,0.184,700,not_reported,3.334,,no,not_reported,"quality and careful design of the
+intervention",not_reported,,"This graduation rate compares very favorably relative to
+previous pilots and similar bootcamps"
+P007,Impact of OLPC on Learning Uruguay,de_Melo_2014,URY,Latin America,government,quasi-experiment,not_reported,not_reported,2006,not_reported,not_reported,not_reported,0.48,not_reported,not_reported,not_reported,not_reported,mixed,not_reported,"Plan Ceibal, a One Laptop per Child (OLPC)
+program distributing laptops and internet access to public primary
+school students and teachers.",digital,not_reported,,every-day use,Standardized reading score,SD,-0.0544,0.413,4114,0.00,not_reported,,yes,"all schools in Uruguay, both rural and
+urban","technology must no longer be conceived as a
+tool to gather information, but rather as a tool that radically changes
+the teaching and learning process",not_reported,,"Unlike the study by Cristia et al. (2012), our study is not
+particularly targeted to evaluate the impact of the OLPC program in the
+context of rural schools in poor communities."
+P008,Participatory Intervention Primary Schools Afghanistan,Trani_2025,AFG,South Asia,NGO,RCT,1209,1310,not_reported,6,15,10.7,0.52,1,not_reported,not_reported,not_reported,rural,not_reported,"A participatory intervention promoting child
+engagement in learning through Project-Based Learning (PBL) trainings
+and community-based participatory action research.",in-person,not_reported,,not_reported,Reading literacy and general knowledge score,score points,0.20,not_reported,2519,2.90,not_reported,,yes,primary rural schools of Afghanistan,"empowerment of local stakeholders, supported by
+local authorities",not_reported,,"This study highlights that a sustainable and effective
+education system depends on the empowerment of local stakeholders,
+supported by local authorities."
+P009,Samata Intervention India,Prakash_2019,IND,South Asia,mixed,RCT,1164,1111,2014,13,16,not_reported,1,1,1,0.85,not_reported,rural,not_reported,"The Samata intervention delivered to support
+adolescent girls to stay in school, reduce child marriage and entry into
+sex work.",in-person,36,,not_reported,Proportion of girls who complete secondary school,percentage points,0.8,not_reported,not_reported,not_reported,74.1,,yes,"rural SC/ST households living below the
+poverty line",norm change happens in stages,not_reported,,"A cluster-RCT may not be the most appropriate evaluation design
+to measure the impact of programmes which take a normative approach, as
+control arms may not remain \'pure\' and norm change happens in
+stages."
+P010,Optimizing Engagement ParentApp,Janowski_2025,TZA,Sub-Saharan Africa,mixed,RCT,284,330,2022,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"ParentApp, a digital parenting intervention
+to prevent violence against adolescents, tested with different app
+designs, guidance, and digital support.",digital,3,,weekly modules,Modules completed,Mean Ratio,1.29,not_reported,614,not_reported,3.09,,yes,Tanzanian context,"human guidance yield higher engagement rates
+compared to self-guided interventions",yes,,"These findings align with meta-analytic research on mental
+health apps and the broader digital health literature, which
+consistently shows that interventions incorporating some form of human
+guidance yield higher engagement rates compared to self-guided
+interventions"
+P011,Educate Experience Uganda,not_reported,UGA,Sub-Saharan Africa,NGO,RCT,not_reported,not_reported,2017,not_reported,not_reported,not_reported,0.41,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"The Educate! Experience program delivers
+social entrepreneurship training and mentorship to Ugandan secondary
+school students.",in-person,not_reported,,not_reported,Positive self-perception index,SD,0.102,not_reported,1261,not_reported,0.00,,no,not_reported,not_reported,not_reported,,not_reported
+P012,Parenting for Lifelong Health South Africa,Cluver_2017,ZAF,Sub-Saharan Africa,NGO,RCT,not_reported,not_reported,2015,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A non-commercialised parenting programme,
+Sinovuyo Caring Families Programme for Parents and Teens, designed to
+reduce the risk of child abuse and improve parenting in South Africa.",in-person,not_reported,,14 sessions,"Physical and emotional abuse (Adolescent report at
+follow-up)",Incidence Rate Ratio,0.55,not_reported,not_reported,7.83,4.69,,no,not_reported,not_reported,not_reported,,"This is the first known randomised controlled trial of a
+parenting programme for adolescents in Africa."
+P013,Irumi Program Paraguay,Näslund-Hadley_2025,PRY,Latin America,mixed,RCT,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"The Irûmi program uses an educational
+robot-based curriculum to develop computational thinking skills among
+second-grade students.",in-person,not_reported,,18 topics,Computational Thinking (CT) score,SD,0.089,0.052,1871,0.00,not_reported,,yes,Latin America,not_reported,not_reported,,"Our findings are also relevant to the discussion on how to
+incorporate CT into school curricula in Latin America."
+P014,ELA Sierra Leone Ebola Context,Bandiera_2018,SLE,Sub-Saharan Africa,NGO,RCT,not_reported,not_reported,2014,12,25,not_reported,1,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"The Empowerment and Livelihood for
+Adolescents (ELA) program provides safe spaces, life skills, and
+vocational training to young women, evaluated during the Ebola-related
+disruptions.",in-person,not_reported,,not_reported,School enrollment (High disruption areas),percentage points,0.085,0.049,2382,24.6,not_reported,,no,not_reported,not_reported,yes,,"Our disruption index is largely uncorrelated to contemporaneous
+village characteristics, and uncorrelated to past measures of health
+related behaviors."
+P015,Magic Bus India,Tagat_2025,IND,South Asia,NGO,observational,1898,not_reported,2020,11,15,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A life-skills intervention evaluating the
+short-term and long-term effects of a sports-based socio-emotional
+learning program on adolescents.",in-person,18,,not_reported,Perceived self-efficacy score,score points,3.928,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"This allows us to overcome some of the limitations of the
+pre-post approach in the short-term studies by comparing the impacts of
+the program on the treated children with a control group of children
+that did not receive the program."
+P016,ICT Competences Plan Ceibal Uruguay,Bouvier_2015,URY,Latin America,government,observational,not_reported,not_reported,2012,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"An evaluation of students\' digital skills
+in internet searching and laptop applications provided under the Plan
+Ceibal one-laptop-per-child program.",digital,not_reported,,not_reported,ICT skills score,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"Probablemente la brecha en el uso de internet disminuye más
+rápidamente, puesto que es una actividad a la que los estudiantes se
+enfrentan y desafían constantemente."
+P017,UNESCO MGIEP Digital Teacher Training Nigeria,Olugbade_2025,NGA,Sub-Saharan Africa,mixed,quasi-experiment,229,not_reported,not_reported,not_reported,not_reported,not_reported,0.412,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A 5-week UNESCO MGIEP digital teacher
+training course based on the DigCompEdu framework to improve digital
+pedagogical skills.",digital,1.25,,synchronous and asynchronous weekly virtual interactions,Added Value (Digital pedagogy domain score),Cohen\'s d,2.28,not_reported,229,2.89,4.14,,yes,"Nigerian educators who work in
+government-funded institutions","gender-responsive digital trainings increase
+educator digital competence",not_reported,,"The results strongly support the argument that structured,
+gender-responsive digital training interventions can play a catalytic
+role in promoting inclusive and equitable quality education."
+P018,Girls First Resilience Curriculum India,Leventhal_2015,IND,South Asia,NGO,quasi-experiment,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,1,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"The Girls First resilience curriculum aims
+to improve emotional resilience, self-efficacy, and wellbeing among
+adolescent girls.",in-person,not_reported,,not_reported,Emotional resilience (CD-RISC 10),score points,2.14,not_reported,not_reported,24.32,23.61,,no,not_reported,not_reported,yes,,"DiD is a widely-used approach in impact evaluation, allowing
+comparison of the difference in change of outcome measures between
+control and intervention sites"
+P019,Room to Read Girls Education Program India,Edmonds_2021,IND,South Asia,NGO,RCT,1214,1245,2016,not_reported,not_reported,11,1,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"Room to Read\'s Girls Education Program
+providing life skills training and mentoring to improve secondary school
+progression and agency.",in-person,24,,16 life skills classes per year,Dropout By Endline,percentage points,-0.035,0.018,2387,not_reported,0.132,,yes,not_reported,"peer effects and socio-emotional
+interventions",not_reported,,"While varying assumptions about selection into the endline
+survey do generate some variation in our estimates of treatment effects,
+selection-adjusted estimates are generally not statistically
+distinguishable from the original estimates"
+P020,Computational Thinking Vocational Schools Chile,Simonds_2023,CHL,Latin America,NGO,quasi-experiment,not_reported,not_reported,2020,13,18,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,Spanish,"The Technovation Girls program, adapted to a
+virtual format, teaches computational thinking and mobile application
+prototyping.",digital,not_reported,,not_reported,Computational Thinking Test Score,score points,not_reported,not_reported,not_reported,not_reported,not_reported,,yes,Chilean context,"creating an application is much more than just
+programming",yes,,"We found that overall there is a slight positive improvement in
+scores after finishing the TG program, but with different tendencies by
+school, and participant gender and age."
+P021,Impact of Coding Girls Italy,Basiglio_2024,ITA,Europe,mixed,RCT,not_reported,not_reported,2020,16,18,16.7,0.63,0,not_reported,not_reported,1,urban,Italian,"An educational enrichment program designed
+to familiarize young high school students with programming and inspire
+females to pursue STEM fields.",hybrid,not_reported,,"8 hours of computer lab sessions, 1.5 hours role modeling,
+1 hour STEM topics",Do you know how to program?,Odds Ratio,7.45,not_reported,289,not_reported,not_reported,,yes,Italian high school students,"female role models, awareness of gender
+disparities",not_reported,,"These findings align with Di Tommaso et al. (2024), who
+assessed a program in Italy focusing on a teaching methodology designed
+to enhance girls' mathematical skills."
+P022,Akanksha Digital Literacy India,Gogoi_2025,IND,South Asia,NGO,quasi-experiment,314,272,2017,14,19,not_reported,1,1,predominantly tribal and marginalized caste,not_reported,not_reported,rural,not_reported,"The Akanksha project promotes digital
+literacy among school dropout girls in rural Jharkhand to empower them
+and connect them with government schemes.",in-person,36,,not_reported,Access to digital devices / digital literacy,not_reported,not_reported,not_reported,604,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"It was difficult for us to assign the intervention randomly in
+the chosen area of District Gumla in Jharkhand- most of the population
+is tribal and represent marginalized caste groups."
+P023,COMPASS Caregiver Attitudes DRC,Self_2021,COD,Sub-Saharan Africa,mixed,RCT,not_reported,not_reported,not_reported,10,14,12,1,not_reported,not_reported,not_reported,0.683,not_reported,not_reported,"A secondary analysis of the COMPASS program
+assessing whether changes in caregivers\' gender-equitable attitudes
+improve adolescent girls\' schooling and reduce violence.",in-person,not_reported,,not_reported,Improvement in schooling participation,Odds Ratio,1.13,not_reported,732,not_reported,not_reported,,no,not_reported,"supporting caregivers to increase
+gender-equitable attitudes",not_reported,,"Based on their findings, the authors suggest that supporting
+caregivers to increase gender-equitable attitudes may improve the safety
+and schooling of adolescent girls in humanitarian settings."
+P024,Girls Health Champions India,Shankar_2020,IND,South Asia,NGO,quasi-experiment,738,0,2016,13,16,not_reported,1,0,not_reported,1,1,urban,not_reported,"A school-based peer health education
+intervention called Girls Health Champions targeting 8th-10th standard
+girls in Mumbai slums.",in-person,5,,not_reported,Knowledge Assessment Score (Mid-Year),percentage points,16.2,not_reported,590,56.7,not_reported,,no,not_reported,peer health education,not_reported,,"At mid-year, after five months had elapsed since the initial
+intervention, average scores generally decreased when compared to scores
+immediately post-intervention (p \< 0.001)."
+P025,Robotics and Coding Turkey,Gülen_2025,TUR,Middle East and North Africa,mixed,RCT,34,42,not_reported,14,16,not_reported,1,not_reported,not_reported,not_reported,1,mixed,Turkish,"A 12-week robotics and coding training
+program in an all-girls high school with a humanities-focused curriculum
+aimed at improving STEM motivation and career aspirations.",in-person,3,,12 weeks,STEM Career Scale (SCS),score points,not_reported,not_reported,76,not_reported,not_reported,,no,not_reported,"direct participation in STEM activities changes
+occupational expectations through observation and social feedback",not_reported,,"The current study supports the claim that exposure to
+technological tools such as robotics and coding can enhance career
+perceptions related to STEM, especially for female students who are
+underrepresented in these fields."
+P026,PROGRESA Child Care Mexico,Dubois_2012,MEX,Latin America,government,RCT,2571,1465,1999,12,17,not_reported,1,1,0.41,1,not_reported,rural,not_reported,"Evaluates the impact of the PROGRESA
+conditional cash transfer program on child care provision and time
+allocation among mothers and older daughters.",in-person,not_reported,,not_reported,Daily hours of child care (Daughters 12 to 17),hours,0.148,0.062,3710,2.16,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P027,GEMS Intervention India,not_reported,IND,South Asia,mixed,RCT,2000,2000,2014,not_reported,not_reported,not_reported,0.55,not_reported,not_reported,not_reported,1,not_reported,Hindi,"A school-based intervention targeting
+classes 6 and 7 to promote gender equity and reduce violence among
+adolescents in Jharkhand.",in-person,24,,not_reported,Perpetration of physical violence in school,percentage points,-3.5,not_reported,3069,35.3,31.7,,no,not_reported,not_reported,not_reported,,not_reported
+P028,Time Allocation Sukuma Tanzania,Hedges_2018,TZA,Sub-Saharan Africa,researcher,observational,not_reported,not_reported,not_reported,7,19,not_reported,not_reported,1,not_reported,not_reported,not_reported,rural,not_reported,"An observational study examining the effect
+of birth order, gender, and substitute laborers on children\'s time
+allocation and school enrollment in rural Tanzania.",in-person,not_reported,,not_reported,School enrolment (Boys),Odds Ratio,1.04,not_reported,590,not_reported,not_reported,,no,not_reported,labor substitution effects,not_reported,,not_reported
+P029,Eminyeeto SEL Uganda,Malhotra_2021,UGA,Sub-Saharan Africa,NGO,RCT,not_reported,not_reported,not_reported,12,17,not_reported,1,1,not_reported,not_reported,1,rural,not_reported,"The Eminyeeto program delivered an
+after-school social-emotional learning (SEL) curriculum to adolescent
+girls in Uganda.",in-person,not_reported,,weekly 60-min sessions,PHQ-9 mental health scale score,score points,-1.139,not_reported,494,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P030,Growth Mindset South Africa,Porter_2020,ZAF,Sub-Saharan Africa,mixed,RCT,188,166,2017,13,16,not_reported,0.62,not_reported,not_reported,1,1,urban,not_reported,"A computer-based growth mindset intervention
+delivered to eighth to tenth-grade students in South African
+townships.",digital,not_reported,,three 30-min sessions,Math grades 2017,SD,0.27,not_reported,354,not_reported,not_reported,,yes,contexts where resources are limited,"a willing and capable local partner is required
+to champion the buy-in, and roll-out of the program",yes,,"Overall, this research suggests students in low-income contexts
+can benefit from growth mindset interventions"
+P031,Gender Bias Teaching Practices Chile,Bassi_2016,CHL,Latin America,not_reported,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"An observational study analyzing gender bias
+in teaching practices and learning outcomes in low-performing schools in
+Chile using video recordings of classes.",in-person,not_reported,,not_reported,Praise (Math classes),not_reported,-0.013,not_reported,139,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P032,Empowerment Employability India,not_reported_2021,IND,South Asia,NGO,quasi-experiment,1223,1201,not_reported,not_reported,not_reported,not_reported,1,not_reported,not_reported,not_reported,not_reported,mixed,not_reported,"An empowerment and employability program
+targeted at adolescent girls in Delhi and Jharkhand.",in-person,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P033,ProJoven Occupational Training Peru,Ñopo_2008,PER,Latin America,government,quasi-experiment,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"The ProJoven occupational training program
+designed to reduce gender segregation in the labor market.",in-person,not_reported,,not_reported,Duncan Index,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P034,Samata Family Norms India,Prakash_2020,IND,South Asia,mixed,RCT,937,903,2014,12,15,13,0.676,1,1,0.20,not_reported,rural,Kannada,"The Samata intervention assessing
+family-level social norms regarding adolescent girls\' education and
+marriage in marginalized communities.",in-person,36,,not_reported,It is best if girls get married before age 18,Odds Ratio,0.49,not_reported,not_reported,78.4,64.9,,no,not_reported,not_reported,not_reported,,"Programmes that seek to affect norms should conduct formative
+research to clarify the specific norms affecting the outcome(s) of
+interest."
+P035,Digital Divide Tamil Nadu India,Balasundaram_2026,IND,South Asia,researcher,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,0.478,1,0.352,0.413,not_reported,rural,not_reported,"An observational study on the digital divide
+and gender disparities in educational technology access among rural
+households in Tamil Nadu.",digital,not_reported,,not_reported,Educational technology access in the past 30 days,percentage,not_reported,not_reported,443,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"Each year of mother's education increases the odds more for
+daughters than sons."
+P036,Systematic Review Plan Ceibal Uruguay,Caballero_2017,URY,Latin America,not_applicable,systematic_review,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A systematic review of academic research
+published between 2007 and 2017 on the impact of the One Laptop per
+Child (OLPC) Plan Ceibal in Uruguay.",digital,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,yes,Uruguayan educational system,"the need to implement an information literacy
+program to teach students to discern information",yes,,"la mayoría de los escolares y liceales no usan las laptops
+dentro del aula y que los maestros y profesores no han modificado sus
+prácticas de enseñanza."
+P037,EdTech Girls Education Meta Analysis,Jordan_2022,multiple,Global,mixed,systematic_review,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,1,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A meta-analysis of EdTech interventions in
+low- and middle-income countries assessing which intervention types have
+the greatest impact on learning outcomes for girls.",digital,not_reported,,not_reported,Learning outcomes,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,yes,low- and middle-income countries,not_reported,not_reported,,"Which Intervention Types Have the Greatest Impact on Learning
+Outcomes for Girls?"
+P038,Digital Literacy Girls Empowerment Review,Meherali_2021,multiple,Global,not_applicable,systematic_review,not_reported,not_reported,not_reported,11,19,not_reported,1,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A systematic review of 35 papers examining
+whether digital literacy empowers adolescent girls in low- and
+middle-income countries.",digital,not_reported,,not_reported,Digital literacy and empowerment,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,yes,adolescent girls in LMICs,"digital means for reducing digital inequality
+and improving reproductive health knowledge",not_reported,,"Given the sparse and heterogeneous data such as age group,
+study setting, intervention, mode of delivery, and outcomes, the
+findings of this study cannot be meta-analyzed."
+P039,Machine Learning STEM Peru,not_reported,PER,Latin America,not_reported,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,1,not_reported,not_reported,"A platform utilizing supervised machine
+learning techniques and vocational testing to identify and promote STEM
+careers among secondary education students in Peru.",digital,not_reported,,not_reported,Motivation toward STEM,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,"personalized content related to area of
+interest",not_reported,,"Students accessed the platform, completed a vocational test to
+identify their STEM area of interest, and then proceeded to a pretest
+assessing their current level of motivation toward STEM."
+P040,Plan Ceibal COVID Response Uruguay,not_reported,URY,Latin America,government,observational,700000,not_reported,2020,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,Spanish,"An institutional review of Plan Ceibal\'s
+\'Ceibal en Casa\' initiative, detailing its rapid adaptation to remote
+learning during the COVID-19 pandemic.",digital,not_reported,,not_reported,Learning losses / continuity of learning,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,yes,national scale,"robust foundation in digital education allowed
+quick response",no,,"Aunque las pérdidas de aprendizaje fueron inevitables, las
+simulaciones sugieren que los impactos en Uruguay fueron moderados en
+comparación con otros países latinoamericanos, gracias en parte a la
+infraestructura y la ágil respuesta de Ceibal."
+P041,Elas na Robotica Brazil,not_reported,BRA,Latin America,mixed,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,1,not_reported,not_reported,not_reported,not_reported,not_reported,Portuguese,"An educational project called \'Elas na
+Robótica\' aiming to teach robotics and programming to elementary and
+high school girls to encourage them in exact sciences.",in-person,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P042,PATHS Curriculum USA,Doren_2013,USA,North America,researcher,RCT,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,1,not_reported,not_reported,not_reported,not_reported,not_reported,English,"The PATHS curriculum intervention designed
+to address career barriers for high-risk adolescent girls with
+disabilities.",in-person,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P043,Gender Inequity Secondary Education India,not_reported,IND,South Asia,not_applicable,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"An observational longitudinal study
+assessing gender inequity in secondary education and the burden of
+household chores among adolescents in India.",in-person,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P044,Yi et al 2012,Yi_2012,not_reported,not_reported,not_reported,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,0.489,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A study presenting gender-stratified summary
+statistics for various unlabelled outcomes.",not_reported,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P045,WE Care Impact Evaluation Ethiopia,not_reported,ETH,Sub-Saharan Africa,not_reported,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"An impact evaluation of the WE-Care
+initiative in Ethiopia, focusing on advocacy and policy-influence.",not_reported,not_reported,,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,not_reported
+P046,Advancing Agency Room to Read India,Edmonds_2021,IND,South Asia,NGO,RCT,2459,not_reported,2016,not_reported,not_reported,11,1,not_reported,not_reported,not_reported,1,not_reported,not_reported,"The Girls\' Education Program (GEP)
+delivered by Room to Read providing life skills training and mentoring
+to encourage secondary school completion.",in-person,24,,not_reported,Dropout by grade 7,percentage points,-0.041,0.018,2387,not_reported,0.132,,no,not_reported,not_reported,not_reported,,"Our empirical analysis demonstrates that random assignment to
+GEP generates a significant decline in dropout."
+P047,Caregiver Attitudes COMPASS DRC,Self_2021,COD,Sub-Saharan Africa,NGO,RCT,not_reported,not_reported,2015,not_reported,not_reported,12,1,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"Secondary analysis of the COMPASS program
+examining how changes in caregiver attitudes impact adolescent girls\'
+schooling and safety in conflict-affected communities.",in-person,12,,not_reported,School participation,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,caregiver attitudes toward gender equity,not_reported,,"Based on their findings, the authors suggest that supporting
+caregivers to increase gender-equitable attitudes may improve the safety
+and schooling of adolescent girls in humanitarian settings."
+P048,School Based Intervention Afghanistan,Trani_2025,AFG,South Asia,mixed,RCT,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A school-based intervention in Afghanistan
+testing effects on nonacademic outcomes and academic performance in
+basic mathematical literacy and problem-solving.",in-person,42,,not_reported,Academic outcomes,not_reported,not_reported,not_reported,2251,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"This study used a cluster randomized controlled trial design to
+test the effectiveness of a school-based intervention in three provinces
+of Afghanistan."
+P049,Magic Bus Longitudinal India,Tagat_2025,IND,South Asia,NGO,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A longitudinal panel evaluation of the Magic
+Bus program examining school-related outcomes, perceived self-efficacy,
+resilience, and gender attitudes.",in-person,36,,not_reported,Perceived self-efficacy,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"Equation (2) estimates the impact of the treatment on outcomes
+operating over and above the impact changes in socioemotional scores
+rather than the total effect of the treatment."
+P050,Digital Literacy Training Rural India,Gogoi_2025,IND,South Asia,mixed,quasi-experiment,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,rural,not_reported,"A quasi-experimental study from rural India
+evaluating the design and implementation of a digital literacy training
+programme.",digital,not_reported,,not_reported,Digital literacy,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"The data collection tools were administered only after
+obtaining the participant's written consent after explaining the purpose
+of the project."
+P051,Gender Inequity Secondary Education India,not_reported,IND,South Asia,not_reported,observational,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,"A longitudinal study in India assessing
+gender inequity in secondary education and attitudes towards household
+chores.",not_reported,not_reported,,not_reported,Early reading skills,predicted probabilities,0.56,0.042,not_reported,not_reported,not_reported,,no,not_reported,not_reported,not_reported,,"Whatever she may study, she can't escape from washing dishes:
+gender inequity in secondary education -- evidence from a longitudinal
+study in India"
+P052,Power of Believing Peru,Outes-León_2020,PER,Latin America,mixed,RCT,400,400,2015,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,not_reported,1,mixed,Spanish,"A highly scalable growth-mindset
+intervention (\'¡Expande tu Mente!\') delivered via reading materials
+and posters to 7th and 8th graders.",in-person,not_reported,,not_reported,Mathematics test score,SD,0.054,0.030,54510,not_reported,not_reported,,yes,not_reported,not_reported,not_reported,,"We aim to avoid the pitfalls of small-scale evaluations that do
+not replicate well when scaled up"

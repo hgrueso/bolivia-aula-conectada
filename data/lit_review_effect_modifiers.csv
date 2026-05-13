@@ -1,0 +1,20 @@
+paper_id,paper_name,modifier_variable,modifier_value,effect_size,standard_error,sample_size
+P001,A Vaccination for Education,gender,boys,0.04,0.02,5875
+P004,Beyond Attendance Gendered Impacts of a Cash Transfer,gender,boys,-0.047,0.016,4256
+P007,Impact of OLPC on Learning Uruguay,mother\'s education,primary school,-0.0985,0.083,not_reported
+P009,Samata Intervention India,district,Bagalkote,0.73,not_reported,1035
+P010,Optimizing Engagement ParentApp,app design,unstructured,0.77,not_reported,614
+P011,Educate Experience Uganda,gender,female,0.158,not_reported,565
+P014,ELA Sierra Leone Ebola Context,Ebola-related disruption,Low disruption,-3.03,1.30,not_reported
+P017,UNESCO MGIEP Digital Teacher Training Nigeria,gender,Male,2.41,not_reported,not_reported
+P019,Room to Read Girls Education Program India,dropout propensity,Above Median,-0.086,0.028,not_reported
+P021,Impact of Coding Girls Italy,gender,boys,4.60,not_reported,166
+P024,Girls Health Champions India,school grade,8th Standard,17.3,not_reported,171
+P025,Robotics and Coding Turkey,intended profession,teaching,not_reported,not_reported,not_reported
+P028,Time Allocation Sukuma Tanzania,gender,girls,0.97,not_reported,not_reported
+P035,Digital Divide Tamil Nadu India,gender,female,not_reported,not_reported,212
+P040,Plan Ceibal COVID Response Uruguay,income quintile,poorest quintile,not_reported,not_reported,not_reported
+P046,Advancing Agency Room to Read India,dropout propensity,Above Median,-0.086,0.028,not_reported
+P049,Magic Bus Longitudinal India,gender,female,not_reported,not_reported,not_reported
+P052,Power of Believing Peru,region,regional sample,0.135,0.051,21700
+P052,Power of Believing Peru,gender,Male,0.067,0.030,not_reported

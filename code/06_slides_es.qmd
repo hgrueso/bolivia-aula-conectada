@@ -1,0 +1,785 @@
+---
+title: "Aula Conectada"
+subtitle: "Caso de inversión · Bolivia"
+author: "Hernando Grueso, PhD <br> UNICEF"
+date: "Mayo 2026"
+lang: es
+format:
+  revealjs:
+    theme: [default, slides_theme.scss]
+    logo: ""
+    footer: "Aula Conectada · Caso de Inversión"
+    slide-number: c/t
+    transition: fade
+    incremental: false
+    smaller: false
+    embed-resources: true
+    fig-align: center
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+suppressPackageStartupMessages({
+  library(dplyr); library(tidyr); library(readr); library(here)
+  library(glue); library(knitr); library(stringr); library(purrr); library(tibble)
+})
+
+# Cargar resultados guardados
+funnel  <- read_csv(here("output", "tables", "t8_target_funnel.csv"),
+                    show_col_types = FALSE)
+coefs   <- read_csv(here("output", "models", "main_lpm_coefs.csv"),
+                    show_col_types = FALSE)
+inter   <- read_csv(here("output", "models", "intersectional_coefs.csv"),
+                    show_col_types = FALSE)
+
+fmt_n   <- function(x) format(round(x), big.mark = ",", scientific = FALSE)
+fmt_pct <- function(x, d = 1) sprintf(paste0("%.", d, "f%%"), 100 * x)
+fmt_pp  <- function(x) ifelse(is.na(x), "", sprintf("%+.1f", x))
+
+# Helper para estrellas de significancia
+stars <- function(p) ifelse(is.na(p), "",
+                     ifelse(p < 0.01, "***",
+                     ifelse(p < 0.05, "**",
+                     ifelse(p < 0.10, "*", ""))))
+
+# Mapeos de etiquetas
+term_es <- c(
+  female      = "Niña (1=sí)",
+  rural       = "Rural",
+  poor_d      = "Pobre (INE)",
+  indigenous  = "Indígena",
+  disab_any   = "Discapacidad (WG3+)"
+)
+outcome_es <- c(
+  attending      = "Asiste a la escuela",
+  enrolled       = "Matriculada",
+  grade_delay    = "Rezago escolar",
+  hh_internet    = "Internet en hogar",
+  hh_computer    = "Computadora",
+  hh_any_device  = "Cualquier dispositivo"
+)
+
+# Tablas pre-construidas para reutilizar -------------------------------------
+# 1. Coeficientes principales por outcome (pp con estrellas)
+main_pp <- coefs |>
+  filter(term %in% names(term_es)) |>
+  mutate(
+    pred = factor(term_es[term], levels = unname(term_es)),
+    cell = paste0(fmt_pp(estimate_pp), " pp", stars(p.value))
+  ) |>
+  select(outcome, pred, cell) |>
+  pivot_wider(names_from = outcome, values_from = cell)
+
+# Versión journal-style: dos filas por predictor (coef, luego SE en paréntesis).
+# Construimos la tabla wide manualmente para evitar interacciones extrañas con
+# columnas tipo factor y la inferencia de tipos de pivot_wider.
+build_journal_table <- function(outcome_vars, outcome_labels) {
+  long <- coefs |>
+    filter(outcome %in% outcome_vars, term %in% names(term_es)) |>
+    mutate(
+      predictor = as.character(term_es[term]),
+      outcome   = as.character(outcome_labels[outcome]),
+      coef_cell = sprintf("%.3f%s", estimate, stars(p.value)),
+      se_cell   = sprintf("(%.3f)", std.error)
+    ) |>
+    select(predictor, outcome, coef_cell, se_cell)
+
+  pred_order <- unname(term_es)        # orden deseado de predictores
+  out_order  <- unname(outcome_labels) # orden deseado de columnas de outcome
+
+  # Construir cada par de filas manualmente
+  rows <- purrr::map_dfr(pred_order, function(p) {
+    sub <- long |> filter(predictor == p)
+    coef_vec <- setNames(sub$coef_cell, sub$outcome)[out_order]
+    se_vec   <- setNames(sub$se_cell,   sub$outcome)[out_order]
+    coef_row <- as.list(c(Variable = p,  coef_vec))
+    se_row   <- as.list(c(Variable = "", se_vec))
+    bind_rows(tibble::as_tibble(coef_row), tibble::as_tibble(se_row))
+  })
+  rows
+}
+
+# Coeficientes interseccionales (interacción × Niña)
+inter_pp <- inter |>
+  mutate(
+    estimate_pp = estimate * 100,
+    conf.low_pp  = conf.low * 100,
+    conf.high_pp = conf.high * 100,
+    interaction_label = case_when(
+      interaction == "female_rural" ~ "Niña × Rural",
+      interaction == "female_indig" ~ "Niña × Indígena",
+      interaction == "female_disab" ~ "Niña × Discapacidad",
+      interaction == "female_poor"  ~ "Niña × Pobre",
+      TRUE ~ interaction
+    ),
+    cell = paste0(fmt_pp(estimate_pp), " pp", stars(p.value))
+  ) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  select(outcome, interaction_label, cell) |>
+  pivot_wider(names_from = outcome, values_from = cell)
+```
+
+# 1 · Diagnóstico — brechas en educación {.section-divider background-color="#00377C"}
+
+## Población objetivo — niñas adolescentes 10–17 en Bolivia {.smaller}
+
+```{r funnel-table}
+segment_es <- c(
+  "All girls 10–17 (weighted)"                                              = "Todas las niñas 10–17",
+  "Girls 10–17 — rural"                                                     = "Niñas rurales 10–17",
+  "Girls 10–17 — Indigenous"                                                = "Niñas indígenas 10–17",
+  "Girls 10–17 — poor (INE)"                                                = "Niñas en pobreza (INE) 10–17",
+  "Girls 10–17 — disability (WG 3+)"                                        = "Niñas con discapacidad (WG 3+) 10–17",
+  "Girls 10–17 — no HH internet"                                            = "Niñas sin internet en hogar 10–17",
+  "Girls 10–17 — priority (rural OR Indigenous OR poor OR disability)"      = "Niñas prioritarias (rural ∨ indígena ∨ pobre ∨ discapacidad)"
+)
+funnel |>
+  filter(segment != "All adolescents 10–17 (weighted)") |>
+  mutate(
+    Segmento = recode(segment, !!!segment_es),
+    `N ponderado`      = fmt_n(n_pop),
+    `% de niñas 10–17` = fmt_pct(share_of_all_girls)
+  ) |>
+  select(Segmento, `N ponderado`, `% de niñas 10–17`) |>
+  kable(align = "lrr")
+```
+
+::: footer
+Fuente: INE Bolivia, EH 2024 · estimaciones ponderadas
+:::
+
+## Brechas de género en educación
+
+![](../output/figures/f1a_edu_overall_by_sex.png){fig-align="center" width="85%"}
+
+## La ruralidad amplifica las brechas educativas
+
+![](../output/figures/f1b_edu_by_sex_rural.png){fig-align="center" width="90%"}
+
+## Las niñas indígenas enfrentan rezago escolar diferenciado
+
+![](../output/figures/f1c_edu_by_sex_indig.png){fig-align="center" width="90%"}
+
+## La pobreza compone las brechas educativas
+
+![](../output/figures/f1d_edu_by_sex_poverty.png){fig-align="center" width="90%"}
+
+## Niñas con discapacidad — exclusión compuesta
+
+![](../output/figures/f5_disability_gap.png){fig-align="center" width="90%"}
+
+# 2 · Por qué el digital — los mecanismos {.section-divider background-color="#00377C"}
+
+## La Brecha Digital
+
+![](../output/figures/f6_internet_by_department.png){fig-align="center" width="80%"}
+
+## Acceso digital del hogar — el habilitante material
+
+![](../output/figures/f1_digital_access_sex_age.png){fig-align="center" width="90%"}
+
+## La mayor brecha digital es **territorial**, no solo de género
+
+![](../output/figures/f2_digital_access_area_sex.png){fig-align="center" width="90%"}
+
+## Hogares conectados muestran mayor asistencia escolar para las niñas
+
+![](../output/figures/f4_attendance_by_internet.png){fig-align="center" width="85%"}
+
+# 3 · Análisis multivariado {.section-divider background-color="#00377C"}
+
+## Brechas de género controladas — coeficientes principales {.smaller}
+
+```{r main-coef-pp}
+main_pp |>
+  select(Predictor = pred,
+         `Matriculada`      = enrolled,
+         `Asiste escuela`   = attending,
+         `Rezago escolar`   = grade_delay,
+         `Internet hogar`   = hh_internet,
+         `Cualquier dispositivo` = hh_any_device) |>
+  kable(align = "lrrrrr")
+```
+
+<small>**Lectura clave:** ser niña no se asocia con una brecha promedio significativa en matrícula o asistencia, pero **sí con menor rezago escolar (−6 pp\*\*\*)** — las niñas que están en la escuela progresan mejor. Las brechas fuertes son **rural, pobreza e indígena**. MCO ponderado con efectos fijos de departamento; errores agrupados al nivel UPM. Detalles e intersecciones en el anexo (A3–A4).</small>
+
+# 4 · Teoría del Cambio {.section-divider background-color="#00377C"}
+
+## De insumos a impacto — Teoría del Cambio propuesta
+
+![](../output/figures/f0_theory_of_change.png){fig-align="center" width="100%"}
+
+## Componentes del programa y resultados esperados
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Componentes centrales**
+
+- Formación docente en pedagogía digital y enfoque de género
+- Contenido digital estructurado integrado al currículo
+- Aprendizaje colaborativo
+- Adaptaciones de inclusión (discapacidad, lengua, ruralidad)
+- Participación activa de niñas en STEM
+- **Engagement familiar** — capa de parenting que reduce normas de género restrictivas y violencia intrahogar
+
+:::
+::: {.column width="50%"}
+
+**Resultados esperados**
+
+- Mejor práctica docente
+- Mayor participación de niñas en el aula
+- Mayor confianza digital
+- Mejores habilidades digitales
+- Mejor asistencia y progresión
+- Mayor interés en STEM
+- **Menor violencia intrahogar contra niñas** (vía capa de parenting)
+
+:::
+:::
+
+## Qué nos dice la evidencia internacional {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Hallazgos consistentes**
+
+- Hardware aislado rara vez mejora aprendizaje <br><small>(De Melo et al., 2014; Cristia et al., 2017)</small>
+- Herramientas digitales funcionan con pedagogía estructurada <br><small>(Gómez-Ruiz & Franco, 2023)</small>
+- Formación docente es el mecanismo central <br><small>(Olugbade et al., 2025; Bassi et al., 2016)</small>
+- Contenido con enfoque de género mejora aspiraciones STEM <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+
+:::
+::: {.column width="50%"}
+
+**Capa de parenting (nueva)**
+
+- Intervenciones para padres reducen violencia contra niñas <br><small>(Cluver et al., 2017 — South Africa)</small>
+- Aplicaciones de parenting digital mejoran prácticas <br><small>(Janowski et al., 2025 — Tanzania)</small>
+- Normas de género restrictivas en el hogar son barrera estructural a aprendizaje
+
+:::
+:::
+
+# 5 · Metodología — adaptar evidencia al contexto boliviano {.section-divider background-color="#00377C"}
+
+## Cómo ajustamos cada ancla externa {.smaller}
+
+Cada ancla externa se ajusta usando **cinco factores** derivados únicamente de variables observables.
+
+::: {.callout-note appearance="minimal"}
+**Efecto ajustado = efecto externo × φ_pop × φ_baseline × φ_geo × φ_econ × φ_delivery**
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+
+- **φ_pop** — similitud poblacional (edad, % rural)
+- **φ_baseline** — espacio para mejorar dado el nivel de Bolivia
+- **φ_geo** — distancia geográfica desde La Paz
+
+:::
+::: {.column width="50%"}
+
+- **φ_econ** — razón PIB per cápita Bolivia/país del ancla
+- **φ_delivery** — implementación gubernamental (1.0) vs ONG (0.7)
+- **IC 95%** — propagado del error estándar reportado
+
+:::
+:::
+
+**Anclas no proyectadas:** rango etario fuera de 10–17 (ProJoven, Irûmi) o sin datos demográficos suficientes. Detalle metodológico completo en A6.
+
+## Modelo de Ecuaciones Estructurales — síntesis de la ToC {.smaller}
+
+El SEM integra las anclas en un solo modelo de la Teoría de Cambio, calibrado con parámetros φ-ajustados como priors informativos.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Flechas estructurales clave**
+
+- Formación docente → Práctica docente
+- Práctica docente → Habilidades digitales de la niña
+- **Parenting → Entorno hogar (normas, violencia) → Asistencia**
+- Asistencia → Progresión → Aprendizaje
+- Aprendizaje → Trayectorias laborales (largo plazo)
+
+:::
+::: {.column width="50%"}
+
+**Calibración**
+
+- Parámetros de aprendizaje: anclas digital-education
+- Parámetros de parenting: Cluver + Janowski
+- Outcomes de entorno hogar: **MICS Bolivia 2019** (próxima fase)
+- Estimación bayesiana con `blavaan` para propagar IC
+
+:::
+:::
+
+Pre-registro de ecuaciones en A9. Estimación pendiente — requiere MICS + costing.
+
+# 6 · Anclas y proyecciones {.section-divider background-color="#00377C"}
+
+## Anclas directas — digital education y normas de género {.smaller}
+
+Programas con efecto medido **sobre los resultados educativos** que Aula Conectada busca mejorar:
+
+```{r proj-table-direct}
+proj_v2 <- read_csv(here("output", "projections", "anchor_projections_long.csv"),
+                    show_col_types = FALSE)
+
+proj_v2 |>
+  filter(subgroup_id == "priority", usable_for_projection,
+         programme_type %in% c("digital_education", "gender_norms")) |>
+  transmute(
+    Programa   = programme,
+    País       = country,
+    `Efecto externo (95% CI)` = ext_str,
+    `φ_pop`    = sprintf("%.2f", phi_pop),
+    `φ_geo`    = sprintf("%.2f", phi_geo),
+    `φ_econ`   = sprintf("%.2f", phi_econ),
+    `φ_deliv.` = sprintf("%.2f", phi_delivery),
+    `n par.`   = n_params_used,
+    `Efecto ajustado (95% CI)` = adj_str,
+    Sig.       = ifelse(sign(lower_95) == sign(upper_95), "✓", "—")
+  ) |>
+  kable(align = "lllrrrrrrl")
+```
+
+<small>**Lectura del IC:** si cero está dentro del intervalo, el efecto del ancla original no es estadísticamente distinguible de cero — esto refleja la incertidumbre del estudio, no un error del ajuste. La columna **Sig.** marca con ✓ las anclas que sí lo son. **Caveat ELA:** la alta similitud poblacional refleja coincidencia en variables observables (rural, edad), pero el contexto post-Ébola de Sierra Leona difiere sustancialmente.</small>
+
+## Anclas indirectas — capa de parenting (vía SEM) {.smaller}
+
+Programas de parenting que **no actúan directamente** sobre matrícula/asistencia, sino sobre el entorno del hogar (normas, violencia). Entran al SEM como parámetros del componente parenting → entorno hogar → resultados educativos.
+
+```{r proj-table-indirect}
+proj_v2 |>
+  filter(subgroup_id == "priority",
+         programme_type == "parenting") |>
+  transmute(
+    Programa   = programme,
+    País       = country,
+    `Outcome original`   = "ver A9 (SEM)",
+    `φ_pop`    = sprintf("%.2f", phi_pop),
+    `φ_geo`    = sprintf("%.2f", phi_geo),
+    `φ_econ`   = sprintf("%.2f", phi_econ),
+    `φ_deliv.` = sprintf("%.2f", phi_delivery),
+    `Uso en el modelo` = "parámetro entrada parenting → entorno hogar"
+  ) |>
+  kable(align = "lllrrrrl")
+```
+
+<small>Cluver et al. (2017) reporta efectos sobre violencia física y emocional (IRR 0.55, no traducible directamente a matrícula). Janowski et al. (2025) reporta engagement con la app (módulos completados). Los efectos se propagan al outcome educativo vía el SEM, no directamente.</small>
+
+## Supuestos clave del enfoque {.smaller}
+
+Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al Ministerio evaluar la credibilidad de cada estimación.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Sobre las anclas externas**
+
+- Estudios con identificación creíble en su contexto original (RCT o cuasi-experimental)
+- **Mecanismos causales** parcialmente trasladables (formación docente, pedagogía, contenido con enfoque de género operan de forma comparable entre países)
+- Las variables observables que usamos capturan la heterogeneidad relevante
+
+:::
+::: {.column width="50%"}
+
+**Sobre Bolivia y la implementación**
+
+- Aula Conectada se implementará con **fidelidad pedagógica** comparable a las anclas
+- Las brechas observadas en EH 2024 son representativas del contexto de escalamiento
+- Los subgrupos prioritarios se mantendrán como población objetivo
+
+:::
+:::
+
+**Cómo se manejan los supuestos:** cada factor φ se calcula sobre datos observables. Cuando no hay datos suficientes (p. ej. φ_baseline sin nivel basal reportado), se asigna 1.0 explícitamente. La columna **n par.** indica cuántos factores se calibraron con datos reales.
+
+## Síntesis — qué retorno esperar de Aula Conectada {.smaller}
+
+**Lección clave de Plan Ceibal (De Melo et al., 2014):** la versión solo hardware tuvo efecto cero en aprendizaje. **Aula Conectada captura retorno solo si financia el paquete pedagógico completo**, no únicamente los equipos.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Resultados de corto–mediano plazo** <br>(grupo prioritario, ≈ 568 mil niñas)
+
+- **Aprendizaje** (matemática): +0.09 SD ↔ +0.18 SD <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+- **Pensamiento computacional y STEM:** +0.06 SD a +0.08 SD <br><small>(Näslund-Hadley et al., 2025)</small>
+- **Deserción evitada** en zonas de mayor exclusión: 7–14 ppts <br><small>(Bandiera et al., 2018)</small>
+
+:::
+::: {.column width="50%"}
+
+**Retornos de largo plazo** <br>(evidencia regional comparable)
+
+- **+15.2 ppts** en tasa de empleo femenino <br><small>(Ñopo et al., 2008 — ProJoven Perú)</small>
+- **+93%** en ingresos laborales femeninos
+- **Mecanismo:** habilidades digitales tempranas → progresión escolar → empleabilidad
+
+:::
+:::
+
+# 7 · Costing data {.section-divider background-color="#00377C"}
+
+## Costo por niña — pendiente
+
+# 8 · Análisis de costo-efectividad {.section-divider background-color="#00377C"}
+
+## Costo-efectividad de Aula Conectada — pendiente
+
+# 9 · Anexo Metodológico {.section-divider background-color="#00377C"}
+
+## A1 · Datos y muestra {.smaller}
+
+**Fuente:** Encuesta de Hogares 2024 (EH 2024) — INE Bolivia · Recolección noviembre–diciembre 2024 · Cobertura nacional, urbano y rural · Unidad de análisis: miembros del hogar en viviendas particulares.
+
+**Tamaño:** 12,718 hogares · 39,497 personas · Submuestra analítica: **6,254 adolescentes 10–17** (≈ 977 mil niñas y 1.05 M niños expandidos) · Archivos: Persona, Vivienda, Equipamiento.
+
+**Variables clave**
+
+- **Niña** = `s01a_02 == 2` · **Ruralidad** = `area == 2` · **Pobreza** = `p0` (INE)
+- **Pertenencia indígena** = lengua materna o lengua hablada en códigos bolivianos (1–37, 70, 71)
+- **Discapacidad** = Washington Group, severidad ≥ 3 en cualquier dominio (ver, oír, caminar, recordar)
+- **Internet en hogar** = `s06a_19` (módulo Vivienda) · **Equipamiento digital** (computadora, smartphone, tablet) del módulo Equipamiento
+
+**Estimación:** MCO ponderado por factor de expansión `factor`; errores estándar agrupados al nivel UPM (`fixest::feols`).
+
+::: footer
+Microdatos: anda.ine.gob.bo/index.php/catalog/163
+:::
+
+## A2 · Estrategia empírica {.smaller}
+
+**Modelo base (LPM con efectos fijos de departamento):**
+
+$$Y_{ihd} = \alpha + \beta_F F_i + \beta_R R_i + \beta_I I_i + \beta_D D_i + \beta_P P_i + \gamma X_{ihd} + \delta_d + \varepsilon_{ihd}$$
+
+donde $F$ = Niña, $R$ = Rural, $I$ = Indígena, $D$ = Discapacidad, $P$ = Pobre, $X$ = controles (edad).
+
+**Modelo interseccional con interacciones de dos vías (× Niña):**
+
+$$Y_{ihd} = \alpha + \beta_F F_i + \gamma X_{ihd} + \sum_{k \in \{R,I,D,P\}} \theta_k \, (F_i \times k_i) + \delta_d + \varepsilon_{ihd}$$
+
+**Modelo interseccional con interacciones de tres vías (robustez):**
+
+$$Y_{ihd} = \alpha + \text{efectos principales} + \text{2-vías} + \theta_{F\cdot R \cdot I} \, (F_i \times R_i \times I_i) + \delta_d + \varepsilon_{ihd}$$
+
+y análogos para $F \times R \times P$ y $F \times I \times P$.
+
+Estimación por MCO ponderado por `factor` (factor de expansión); errores estándar agrupados al nivel UPM (`fixest::feols`).
+
+## A3 · Tabla completa — coeficientes principales {.smaller}
+
+```{r reg-table-all}
+out_vars <- c("hh_internet", "enrolled", "attending", "hh_any_device", "grade_delay")
+out_lbls <- c(hh_internet   = "Internet hogar",
+              enrolled      = "Matriculada",
+              attending     = "Asiste escuela",
+              hh_any_device = "Cualquier dispositivo",
+              grade_delay   = "Rezago escolar")
+
+tab <- build_journal_table(out_vars, out_lbls)
+
+# Pull N and R² per outcome from the coefficients CSV
+diag_per_outcome <- coefs |>
+  filter(outcome %in% out_vars) |>
+  group_by(outcome) |>
+  summarise(N  = max(nobs, na.rm = TRUE),
+            r2 = max(r2,   na.rm = TRUE),
+            .groups = "drop") |>
+  mutate(out_label = unname(out_lbls[outcome]),
+         N_chr  = format(N, big.mark = ","),
+         r2_chr = ifelse(is.finite(r2), sprintf("%.3f", r2), "—"))
+n_vec  <- setNames(diag_per_outcome$N_chr,  diag_per_outcome$out_label)
+r2_vec <- setNames(diag_per_outcome$r2_chr, diag_per_outcome$out_label)
+
+foot <- tibble(
+  Variable                  = c("N (observaciones)",
+                                "R²",
+                                "Efectos fijos depto.",
+                                "Pesos muestrales",
+                                "Errores agrupados UPM"),
+  `Internet hogar`          = c(n_vec["Internet hogar"],     r2_vec["Internet hogar"],     "Sí","Sí","Sí"),
+  `Matriculada`             = c(n_vec["Matriculada"],        r2_vec["Matriculada"],        "Sí","Sí","Sí"),
+  `Asiste escuela`          = c(n_vec["Asiste escuela"],     r2_vec["Asiste escuela"],     "Sí","Sí","Sí"),
+  `Cualquier dispositivo`   = c(n_vec["Cualquier dispositivo"],r2_vec["Cualquier dispositivo"],"Sí","Sí","Sí"),
+  `Rezago escolar`          = c(n_vec["Rezago escolar"],     r2_vec["Rezago escolar"],     "Sí","Sí","Sí")
+)
+bind_rows(tab, foot) |>
+  kable(align = "lccccc")
+```
+
+<small>`*` p<0.10, `**` p<0.05, `***` p<0.01. Errores estándar entre paréntesis bajo cada coeficiente. MCO ponderado por factor de expansión EH 2024; efectos fijos de departamento; errores agrupados al nivel UPM (`fixest::feols`).</small>
+
+## A4 · Tabla interseccional completa {.smaller}
+
+```{r inter-table-full}
+inter_long <- inter |>
+  mutate(
+    predictor = case_when(
+      interaction == "female_rural" ~ "Niña × Rural",
+      interaction == "female_indig" ~ "Niña × Indígena",
+      interaction == "female_disab" ~ "Niña × Discapacidad",
+      interaction == "female_poor"  ~ "Niña × Pobre",
+      TRUE ~ interaction
+    ),
+    out_label = unname(outcome_es[outcome]),
+    coef_cell = sprintf("%.3f%s", estimate, stars(p.value)),
+    se_cell   = sprintf("(%.3f)", std.error)
+  ) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  select(predictor, out_label, coef_cell, se_cell)
+
+inter_order <- c("Niña × Rural", "Niña × Indígena",
+                 "Niña × Discapacidad", "Niña × Pobre")
+out_order_i <- c("Matriculada", "Asiste a la escuela",
+                 "Internet en hogar", "Cualquier dispositivo")
+
+rows <- purrr::map_dfr(inter_order, function(p) {
+  sub <- inter_long |> filter(predictor == p)
+  coef_vec <- setNames(sub$coef_cell, sub$out_label)[out_order_i]
+  se_vec   <- setNames(sub$se_cell,   sub$out_label)[out_order_i]
+  coef_row <- as.list(c(Interacción = p,  coef_vec))
+  se_row   <- as.list(c(Interacción = "", se_vec))
+  bind_rows(tibble::as_tibble(coef_row), tibble::as_tibble(se_row))
+})
+
+# Pull N and R² from intersectional CSV
+inter_diag <- inter |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  group_by(outcome) |>
+  summarise(N  = max(nobs, na.rm = TRUE),
+            r2 = max(r2,   na.rm = TRUE),
+            .groups = "drop") |>
+  mutate(out_label = unname(outcome_es[outcome]),
+         N_chr  = format(N, big.mark = ","),
+         r2_chr = ifelse(is.finite(r2), sprintf("%.3f", r2), "—"))
+n_vec_i  <- setNames(inter_diag$N_chr,  inter_diag$out_label)
+r2_vec_i <- setNames(inter_diag$r2_chr, inter_diag$out_label)
+
+footer_rows <- tibble(
+  Interacción            = c("N (observaciones)",
+                             "R²",
+                             "Efectos fijos depto.",
+                             "Pesos muestrales",
+                             "Errores agrupados UPM"),
+  `Matriculada`          = c(n_vec_i["Matriculada"],          r2_vec_i["Matriculada"],          "Sí","Sí","Sí"),
+  `Asiste a la escuela`  = c(n_vec_i["Asiste a la escuela"],  r2_vec_i["Asiste a la escuela"],  "Sí","Sí","Sí"),
+  `Internet en hogar`    = c(n_vec_i["Internet en hogar"],    r2_vec_i["Internet en hogar"],    "Sí","Sí","Sí"),
+  `Cualquier dispositivo`= c(n_vec_i["Cualquier dispositivo"],r2_vec_i["Cualquier dispositivo"],"Sí","Sí","Sí")
+)
+
+bind_rows(rows, footer_rows) |> kable(align = "lcccc")
+```
+
+<small>Coeficientes de interacción (efecto adicional para niñas en cada grupo). Errores estándar entre paréntesis. `*` p<0.10, `**` p<0.05, `***` p<0.01. MCO ponderado, efectos fijos de departamento, errores agrupados al nivel UPM.</small>
+
+## A5 · Análisis de heterogeneidad — bosque de regresión {.smaller}
+
+**Método:** `grf::regression_forest` (Athey & Wager, 2019) — un ensamble de árboles de regresión con submuestreo honesto.
+
+::: {.columns}
+::: {.column width="55%"}
+
+**Especificación**
+
+- **Muestra de entrenamiento:** todos los adolescentes 10–17 (no solo niñas) — permite que el bosque aprenda el efecto del género de forma endógena
+- **Covariables (7):** sexo, edad, ruralidad, indígena, discapacidad, pobreza, departamento
+- **Outcomes (4 bosques separados):** asistencia escolar, internet en hogar, cualquier dispositivo, computadora
+- **Hiperparámetros:** 2,000 árboles · honestidad activada · fracción 0.5 · pesos muestrales = factor de expansión EH 2024
+
+:::
+::: {.column width="45%"}
+
+**Qué reportamos**
+
+- **Importancia de variables** normalizada por outcome
+- **Predicciones por subgrupo** evaluadas sobre una grilla de 16 perfiles (sexo × rural × indígena × pobreza), fijando edad = 13 y departamento = La Paz
+
+**Qué NO es esto**
+
+- No es bosque causal (no hay tratamiento)
+- No estima el efecto de Aula Conectada
+- Estima la heterogeneidad de gaps de **línea base** — útil para focalizar
+
+:::
+:::
+
+## A6 · Metodología de proyección ajustada a Bolivia {.smaller}
+
+**Fórmula completa:** Efecto = $\beta_{\text{externo}} \times \phi_{\text{pop}} \times \phi_{\text{baseline}} \times \phi_{\text{geo}} \times \phi_{\text{econ}} \times \phi_{\text{delivery}}$
+
+::: {.columns}
+::: {.column width="50%"}
+
+**φ_pop** — $\exp(-\bar d^2)$ sobre edad y % rural, estandarizados. Indig_share **deliberadamente excluido** (no apples-to-apples entre contextos). Acotado [0,1].
+
+**φ_baseline** — $(Y_{\max} - Y_{\text{Bol}}) / (Y_{\max} - Y_{\text{ancla}})$. NA si el ancla no reporta nivel basal. Acotado [0,1].
+
+**φ_geo** — distancia Haversine desde La Paz. Mismo país = 1.00; <3000 km = 0.85; <6000 km = 0.65; ≥6000 km = 0.50.
+
+:::
+::: {.column width="50%"}
+
+**φ_econ** — razón PIB/cápita Bolivia/ancla. Si el ancla es de un país más pobre → 1.0 (no se descuenta). Acotado [0.3, 1].
+
+**φ_delivery** — 1.00 si el ancla es implementación gubernamental, 0.70 si es investigación/ONG (Vivalt 2020).
+
+**Reglas de exclusión** — solapamiento etario <25% con 10–17, o <2 variables demográficas comparables → ancla no proyectada.
+
+**Incertidumbre** — IC 95% propagado del SE del ancla. Sin ruido sintético en los factores φ.
+
+:::
+:::
+
+## A7 · Fundamento formal del enfoque de transportabilidad {.smaller}
+
+Asumimos que el desajuste entre la población fuente $S$ (el ancla) y la población objetivo $T$ (Bolivia) se descompone en $K$ dimensiones observables y que la atenuación es **multiplicativa**:
+
+$$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T), \qquad \phi_k \in [0, 1] $$
+
+donde $\hat\beta_S$ es el efecto reportado en el estudio ancla, $\hat\beta_T$ el efecto proyectado para Bolivia, $\phi_k$ el factor de ajuste para la dimensión $k$, y $K=5$ las dimensiones de desajuste (población, baseline, geografía, economía, modalidad de entrega).
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Cada factor está acotado en [0, 1]:**
+
+- $\phi_\text{pop}$ — edad y % rural estandarizados
+- $\phi_\text{baseline}$ — nivel inicial del outcome
+- $\phi_\text{geo}$ — distancia Haversine desde La Paz
+- $\phi_\text{econ}$ — razón PIB per cápita
+- $\phi_\text{delivery}$ = 1.0 (gobierno) o 0.7 (ONG/investigación)
+
+**Propagación de incertidumbre.** El IC 95% se propaga del SE del ancla:
+
+$$ \text{SE}(\hat\beta_T) = \text{SE}(\hat\beta_S) \cdot \prod_{k=1}^{K} \phi_k $$
+
+:::
+::: {.column width="50%"}
+
+**Supuestos clave (claims, no estimaciones):**
+
+- (A1) **Suficiencia de observables**: las 5 dimensiones capturan los modificadores de efecto relevantes entre $S$ y $T$
+- (A2) **Separabilidad**: los efectos de los $\phi_k$ son aproximadamente multiplicativos
+- (A3) **Monotonía**: el desajuste sólo atenúa, nunca amplifica
+- (A4) **Independencia del SE**: la varianza del ancla se propaga sin perturbar los $\phi_k$
+
+:::
+:::
+
+## A8 · Evidencia consolidada — anclas en uso {.smaller}
+
+```{r evidence-table}
+source(here::here("R", "lit_review_data.R"))
+
+# Filter to papers actually used as anchors in 05_projections.R.
+# Anchor keywords matched against first_author_year (case-insensitive).
+ANCHOR_PAPERS <- c("Outes", "Porter", "Bandiera", "Näslund", "Naslund",
+                   "Gómez", "Gomez", "De Melo", "Ñopo", "Nopo",
+                   "Janowski", "Cluver")
+anchor_pattern <- paste(ANCHOR_PAPERS, collapse = "|")
+
+lit_papers |>
+  filter(stringr::str_detect(first_author_year, anchor_pattern),
+         !is.na(effect_size), !is.na(standard_error)) |>
+  mutate(
+    arrow_es = case_when(
+      digital_education == 1 ~ "Educación digital",
+      parenting == 1         ~ "Parenting",
+      gender_norms == 1      ~ "Normas de género",
+      learning_focus == 1    ~ "Aprendizaje",
+      TRUE                   ~ "Otra"
+    )
+  ) |>
+  transmute(
+    Paper   = paste0(first_author_year, " · ", paper_name) |>
+              stringr::str_trunc(58),
+    País    = country,
+    Diseño  = study_design,
+    Edad    = ifelse(!is.na(age_range_min) & !is.na(age_range_max),
+                     paste0(age_range_min, "–", age_range_max), "n.d."),
+    Efecto  = sprintf("%.3f (%.3f)",
+                      as.numeric(effect_size),
+                      as.numeric(standard_error)),
+    `Flecha ToC` = arrow_es
+  ) |>
+  kable(align = "lllllr")
+```
+
+<small>Sólo se listan los papers usados como anclas en la proyección a Bolivia (ver `05_projections.R` y `R/anchors_demographics.R`). La revisión sistemática completa (52 papers) está en `data/lit_review_papers.csv`. La columna **Flecha ToC** indica qué arco de la Teoría de Cambio alimenta cada ancla.</small>
+
+## A9 · Robustez — interacciones de tres vías (MCO) {.smaller}
+
+Para verificar la heterogeneidad detectada por el bosque de regresión, estimamos interacciones de tres vías con MCO. Si el bosque detecta correctamente subgrupos compuestos, los coeficientes de tres vías deberían ser significativos para los outcomes con mayor heterogeneidad.
+
+```{r threeway-table}
+threeway <- read_csv(here("output", "models", "threeway_coefs.csv"),
+                     show_col_types = FALSE)
+
+threeway |>
+  mutate(
+    term_es = case_when(
+      str_detect(term, "female.*rural.*indigenous") ~ "Niña × Rural × Indígena",
+      str_detect(term, "female.*rural.*poor")       ~ "Niña × Rural × Pobre",
+      str_detect(term, "female.*indigenous.*poor") |
+      str_detect(term, "female.*poor.*indigenous")  ~ "Niña × Indígena × Pobre",
+      TRUE ~ term
+    ),
+    out_label = unname(outcome_es[outcome]),
+    cell = sprintf("%.3f%s (%.3f)", estimate, stars(p.value), std.error)
+  ) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet")) |>
+  select(term_es, out_label, cell) |>
+  pivot_wider(names_from = out_label, values_from = cell) |>
+  rename(`Interacción 3 vías` = term_es) |>
+  kable(align = "lrrr")
+```
+
+<small>Coeficientes de las interacciones triples en puntos decimales (× 100 para pp). Errores estándar entre paréntesis. `*` p<0.10, `**` p<0.05, `***` p<0.01. La mayoría de los coeficientes triples no son significativos — el bosque detecta heterogeneidad principalmente a través de variables individuales (ruralidad, departamento), no de su interacción compuesta. **Interpretación:** la exclusión se acumula aditivamente más que multiplicativamente.</small>
+
+## A10 · Modelo de Ecuaciones Estructurales (SEM) — propuesto {.smaller}
+
+Próximo paso para integrar todas las anclas en un modelo único de la Teoría de Cambio. Pre-registramos la estructura aquí; la estimación se hará con datos del piloto + MICS Bolivia 2019 + costing.
+
+**Modelo de medición** (qué indicadores observables cargan en cada constructo latente):
+
+$$\text{TeacherCap}_s = \lambda_1 \, \text{TrainHours}_s + \lambda_2 \, \text{DigCompEdu}_s + \varepsilon$$
+$$\text{GirlSkills}_i = \lambda_3 \, \text{CompThink}_i + \lambda_4 \, \text{DigConfidence}_i + \varepsilon$$
+$$\text{HomeEnv}_h = \lambda_5 \, \text{ParentEng}_h + \lambda_6 \, \text{GenderNorm}_h + \varepsilon$$
+
+**Modelo estructural** (flechas de la Teoría de Cambio):
+
+$$\text{ClassPractice}_s = \beta_1 \, \text{TeacherCap}_s + u_1$$
+$$\text{GirlSkills}_i = \beta_2 \, \text{ClassPractice}_{s(i)} + \beta_3 \, \text{HomeEnv}_{h(i)} + u_2$$
+$$\text{Attendance}_i = \beta_4 \, \text{GirlSkills}_i + \beta_5 \, \text{HomeEnv}_{h(i)} + u_3$$
+$$\text{Progression}_i = \beta_6 \, \text{Attendance}_i + \beta_7 \, \text{GirlSkills}_i + u_4$$
+
+**Calibración de parámetros** desde las anclas φ-ajustadas: $\beta_2$ de Outes-Sanchez + Gómez-Ruiz · $\beta_3$ de ParentApp (Janowski) + Cluver · $\beta_4$ de ELA (Bandiera) · $\beta_6$ medible con EH 2024 + piloto.
+
+**Supuestos de identificación** explícitos: (1) errores latentes independientes; (2) escalas latentes fijadas vía $\lambda_1 = 1$ por constructo; (3) parámetros estructurales tomados como informativos (priors bayesianos con `blavaan`) para propagar incertidumbre.
+
+## A11 · Limitaciones
+
+- La EH mide **acceso a dispositivos e internet**, no habilidades digitales reales
+- Acceso del hogar **no equivale a uso significativo** por parte de la adolescente
+- Tamaño muestral de discapacidad es **pequeño** — interpretar con cautela
+- Datos **transversales**: no se puede observar trayectoria temporal
+- Necesidad de **medición directa al nivel del piloto** para validar y refinar las proyecciones
+
+<br><br>
+
+<div style="text-align: center; margin-top: 2em;">
+<a href="mailto:hgrueso@unicef.org" style="color: #1CABE2; font-size: 1.2em; font-weight: 600; text-decoration: none;">hgrueso@unicef.org</a>
+</div>

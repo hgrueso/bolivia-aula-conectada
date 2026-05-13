@@ -1,0 +1,163 @@
+/*-- scss:defaults --*/
+
+// UNICEF palette
+$unicef-blue:  #1CABE2;
+$unicef-dark:  #00377C;
+$accent-girl:  #E2007A;
+$accent-boy:   #374EA2;
+$grey-dark:    #374649;
+$grey-mid:     #7A8487;
+$grey-light:   #F2F2F2;
+
+// reveal.js theme variables
+$body-bg:           #FFFFFF;
+$body-color:        $grey-dark;
+$link-color:        $unicef-blue;
+$selection-bg:      lighten($unicef-blue, 25%);
+
+$main-font:         "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+$main-font-size:    32px;
+$main-color:        $grey-dark;
+
+$heading-font:      "Source Sans Pro", "Helvetica Neue", Arial, sans-serif;
+$heading-color:     $unicef-dark;
+$heading-line-height: 1.2;
+$heading-letter-spacing: -0.01em;
+$heading-text-transform: none;
+$heading-font-weight: 700;
+
+$presentation-heading-color: $unicef-dark;
+
+$code-color: $accent-girl;
+
+/*-- scss:rules --*/
+
+.reveal {
+  font-family: $main-font;
+  font-size: $main-font-size;
+  color: $main-color;
+}
+
+.reveal h1, .reveal h2, .reveal h3 {
+  color: $unicef-dark;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-weight: 700;
+}
+
+.reveal h2 {
+  border-bottom: 3px solid $unicef-blue;
+  padding-bottom: 8px;
+  margin-bottom: 24px;
+}
+
+.reveal .slide-number {
+  color: $grey-mid;
+  font-size: 16px;
+}
+
+.reveal table {
+  font-size: 0.7em;
+  margin: 12px auto;
+  border-collapse: collapse;
+}
+
+.reveal table th {
+  background-color: $unicef-dark;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  text-align: left;
+  font-weight: 600;
+}
+
+.reveal table td {
+  padding: 6px 12px;
+  border-bottom: 1px solid $grey-light;
+}
+
+.reveal table tr:nth-child(even) td {
+  background-color: lighten($grey-light, 2%);
+}
+
+.reveal .callout {
+  border-left: 4px solid $unicef-blue;
+  background-color: lighten($unicef-blue, 45%);
+  padding: 12px 18px;
+  margin: 18px 0;
+  font-size: 0.85em;
+}
+
+.reveal .callout-note {
+  border-left-color: $unicef-blue;
+}
+
+.reveal footer {
+  font-size: 14px;
+  color: $grey-mid;
+}
+
+.reveal a {
+  color: $unicef-blue;
+  text-decoration: none;
+}
+.reveal a:hover {
+  text-decoration: underline;
+}
+
+// First slide (title) styling
+.reveal .slide:first-of-type h1 {
+  font-size: 1.6em;
+  color: $unicef-dark;
+  margin-bottom: 0.2em;
+}
+.reveal .slide:first-of-type h2 {
+  font-size: 1em;
+  border: none;
+  color: $unicef-blue;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+// Section divider slides (level-1 headers with background-color)
+.reveal section.section-divider h1 {
+  color: white !important;
+  font-size: 2em;
+  font-weight: 300;
+  border: none;
+  letter-spacing: 0.01em;
+  margin-top: 1em;
+}
+.reveal section.section-divider h2 {
+  color: rgba(255,255,255,0.85);
+  border: none;
+}
+
+// Callout customisation
+.reveal .callout-note {
+  border-left-color: $unicef-blue !important;
+}
+.reveal .callout-warning {
+  border-left: 4px solid $accent-girl !important;
+  background-color: lighten($accent-girl, 47%);
+}
+.reveal .callout-title-container .callout-title {
+  color: $unicef-dark;
+}
+
+// Blockquote styling for pull-quote messages
+.reveal blockquote {
+  border-left: 4px solid $unicef-blue;
+  background: lighten($unicef-blue, 47%);
+  padding: 12px 18px;
+  margin: 14px 0;
+  font-style: normal;
+  color: $unicef-dark;
+  font-weight: 500;
+}
+
+// Code blocks
+.reveal pre code {
+  font-size: 0.7em;
+  border-left: 3px solid $unicef-blue;
+}

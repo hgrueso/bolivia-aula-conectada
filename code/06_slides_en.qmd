@@ -1,0 +1,780 @@
+---
+title: "Aula Conectada"
+subtitle: "Investment case · Bolivia"
+author: "Hernando Grueso, PhD <br> UNICEF"
+date: "May 2026"
+lang: en
+format:
+  revealjs:
+    theme: [default, slides_theme.scss]
+    logo: ""
+    footer: "Aula Conectada · Investment Case"
+    slide-number: c/t
+    transition: fade
+    incremental: false
+    smaller: false
+    embed-resources: true
+    fig-align: center
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r setup}
+suppressPackageStartupMessages({
+  library(dplyr); library(tidyr); library(readr); library(here)
+  library(glue); library(knitr); library(stringr)
+  library(purrr); library(tibble)
+})
+
+funnel  <- read_csv(here("output", "tables", "t8_target_funnel.csv"),
+                    show_col_types = FALSE)
+coefs   <- read_csv(here("output", "models", "main_lpm_coefs.csv"),
+                    show_col_types = FALSE)
+inter   <- read_csv(here("output", "models", "intersectional_coefs.csv"),
+                    show_col_types = FALSE)
+
+fmt_n   <- function(x) format(round(x), big.mark = ",", scientific = FALSE)
+fmt_pct <- function(x, d = 1) sprintf(paste0("%.", d, "f%%"), 100 * x)
+fmt_pp  <- function(x) ifelse(is.na(x), "", sprintf("%+.1f", x))
+
+stars <- function(p) ifelse(is.na(p), "",
+                     ifelse(p < 0.01, "***",
+                     ifelse(p < 0.05, "**",
+                     ifelse(p < 0.10, "*", ""))))
+
+# English labels
+term_en <- c(
+  female      = "Girl (1=yes)",
+  rural       = "Rural",
+  poor_d      = "Poor (INE)",
+  indigenous  = "Indigenous",
+  disab_any   = "Disability (WG3+)"
+)
+outcome_en <- c(
+  attending      = "Attending school",
+  enrolled       = "Enrolled",
+  grade_delay    = "Age-for-grade delay",
+  hh_internet    = "HH internet",
+  hh_computer    = "HH computer",
+  hh_any_device  = "Any HH device"
+)
+
+n_girls_total    <- funnel$n_pop[funnel$segment == "All girls 10–17 (weighted)"]
+n_girls_priority <- funnel$n_pop[grepl("priority", funnel$segment)]
+share_priority   <- n_girls_priority / n_girls_total
+
+# Main coefficient pp table
+main_pp <- coefs |>
+  filter(term %in% names(term_en)) |>
+  mutate(
+    pred = factor(term_en[term], levels = unname(term_en)),
+    cell = paste0(fmt_pp(estimate_pp), " pp", stars(p.value))
+  ) |>
+  select(outcome, pred, cell) |>
+  pivot_wider(names_from = outcome, values_from = cell)
+
+# Journal-style table builder
+build_journal_table <- function(outcome_vars, outcome_labels) {
+  long <- coefs |>
+    filter(outcome %in% outcome_vars, term %in% names(term_en)) |>
+    mutate(
+      predictor = as.character(term_en[term]),
+      outcome   = as.character(outcome_labels[outcome]),
+      coef_cell = sprintf("%.3f%s", estimate, stars(p.value)),
+      se_cell   = sprintf("(%.3f)", std.error)
+    ) |>
+    select(predictor, outcome, coef_cell, se_cell)
+
+  pred_order <- unname(term_en)
+  out_order  <- unname(outcome_labels)
+
+  rows <- purrr::map_dfr(pred_order, function(p) {
+    sub <- long |> filter(predictor == p)
+    coef_vec <- setNames(sub$coef_cell, sub$outcome)[out_order]
+    se_vec   <- setNames(sub$se_cell,   sub$outcome)[out_order]
+    coef_row <- as.list(c(Variable = p,  coef_vec))
+    se_row   <- as.list(c(Variable = "", se_vec))
+    bind_rows(tibble::as_tibble(coef_row), tibble::as_tibble(se_row))
+  })
+  rows
+}
+
+# Intersectional in pp
+inter_pp <- inter |>
+  mutate(
+    estimate_pp = estimate * 100,
+    interaction_label = case_when(
+      interaction == "female_rural" ~ "Girl × Rural",
+      interaction == "female_indig" ~ "Girl × Indigenous",
+      interaction == "female_disab" ~ "Girl × Disability",
+      interaction == "female_poor"  ~ "Girl × Poor",
+      TRUE ~ interaction
+    ),
+    cell = paste0(fmt_pp(estimate_pp), " pp", stars(p.value))
+  ) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  select(outcome, interaction_label, cell) |>
+  pivot_wider(names_from = outcome, values_from = cell)
+```
+
+# 1 · Diagnostic — gaps in education {.section-divider background-color="#00377C"}
+
+## Target population — adolescent girls 10–17 in Bolivia {.smaller}
+
+```{r funnel-table}
+segment_en_map <- c(
+  "All girls 10–17 (weighted)"                                              = "All girls 10–17",
+  "Girls 10–17 — rural"                                                     = "Rural girls 10–17",
+  "Girls 10–17 — Indigenous"                                                = "Indigenous girls 10–17",
+  "Girls 10–17 — poor (INE)"                                                = "Girls in poverty (INE) 10–17",
+  "Girls 10–17 — disability (WG 3+)"                                        = "Girls with disability (WG 3+) 10–17",
+  "Girls 10–17 — no HH internet"                                            = "Girls without HH internet 10–17",
+  "Girls 10–17 — priority (rural OR Indigenous OR poor OR disability)"      = "Priority girls (rural ∨ Indigenous ∨ poor ∨ disability)"
+)
+funnel |>
+  filter(segment != "All adolescents 10–17 (weighted)") |>
+  mutate(
+    Segment           = recode(segment, !!!segment_en_map),
+    `Weighted N`      = fmt_n(n_pop),
+    `% of girls 10–17`= fmt_pct(share_of_all_girls)
+  ) |>
+  select(Segment, `Weighted N`, `% of girls 10–17`) |>
+  kable(align = "lrr")
+```
+
+::: footer
+Source: INE Bolivia, EH 2024 · weighted estimates
+:::
+
+## Gender gaps in education
+
+![](../output/figures/f1a_edu_overall_by_sex_en.png){fig-align="center" width="85%"}
+
+## Rurality amplifies education gaps
+
+![](../output/figures/f1b_edu_by_sex_rural_en.png){fig-align="center" width="90%"}
+
+## Indigenous girls face differential grade delay
+
+![](../output/figures/f1c_edu_by_sex_indig_en.png){fig-align="center" width="90%"}
+
+## Poverty compounds education gaps
+
+![](../output/figures/f1d_edu_by_sex_poverty_en.png){fig-align="center" width="90%"}
+
+## Girls with disabilities — compounded exclusion
+
+![](../output/figures/f5_disability_gap_en.png){fig-align="center" width="90%"}
+
+# 2 · Why digital — the mechanisms {.section-divider background-color="#00377C"}
+
+## The Digital Divide
+
+![](../output/figures/f6_internet_by_department_en.png){fig-align="center" width="80%"}
+
+## Household digital access — the material enabler
+
+![](../output/figures/f1_digital_access_sex_age_en.png){fig-align="center" width="90%"}
+
+## The largest digital divide is **territorial**, not just gender
+
+![](../output/figures/f2_digital_access_area_sex_en.png){fig-align="center" width="90%"}
+
+## Connected households show higher school attendance for girls
+
+![](../output/figures/f4_attendance_by_internet_en.png){fig-align="center" width="85%"}
+
+# 3 · Multivariate analysis {.section-divider background-color="#00377C"}
+
+## Controlled gender gaps — main coefficients {.smaller}
+
+```{r main-coef-pp}
+main_pp |>
+  select(Predictor = pred,
+         `Enrolled`         = enrolled,
+         `Attending`        = attending,
+         `Grade delay`      = grade_delay,
+         `HH internet`      = hh_internet,
+         `Any HH device`    = hh_any_device) |>
+  kable(align = "lrrrrr")
+```
+
+<small>**Key reading:** girl coefficient is not significantly associated with average gaps in enrollment or attendance, but **is associated with lower grade delay (−6 pp\*\*\*)** — girls who are in school progress better. The strong gaps are **rural, poverty, and Indigenous**. Weighted OLS with department fixed effects; PSU-clustered SE. Details and intersections in appendix (A3–A4).</small>
+
+# 4 · Theory of Change {.section-divider background-color="#00377C"}
+
+## From inputs to impact — proposed Theory of Change
+
+![](../output/figures/f0_theory_of_change_en.png){fig-align="center" width="100%"}
+
+## Programme components and expected outcomes
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Core components**
+
+- Teacher training in digital pedagogy and gender-responsive teaching
+- Structured digital content integrated into the curriculum
+- Collaborative learning
+- Inclusion adaptations (disability, language, rurality)
+- Girls' active participation in STEM
+- **Family engagement** — parenting layer that reduces restrictive gender norms and intra-household violence
+
+:::
+::: {.column width="50%"}
+
+**Expected outcomes**
+
+- Improved teacher practice
+- Greater girls' participation in class
+- Higher digital confidence
+- Better digital skills
+- Improved attendance and progression
+- Higher STEM interest
+- **Lower violence against girls in the home** (via parenting layer)
+
+:::
+:::
+
+## What the international evidence tells us {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Consistent findings**
+
+- Hardware alone rarely improves learning <br><small>(De Melo et al., 2014; Cristia et al., 2017)</small>
+- Digital tools work when embedded in structured pedagogy <br><small>(Gómez-Ruiz & Franco, 2023)</small>
+- Teacher training is the central delivery mechanism <br><small>(Olugbade et al., 2025; Bassi et al., 2016)</small>
+- Gender-responsive content improves STEM aspirations <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+
+:::
+::: {.column width="50%"}
+
+**Parenting layer (new)**
+
+- Parenting interventions reduce violence against girls <br><small>(Cluver et al., 2017 — South Africa)</small>
+- Digital parenting apps improve practices <br><small>(Janowski et al., 2025 — Tanzania)</small>
+- Restrictive gender norms at home are a structural barrier to learning
+
+:::
+:::
+
+# 5 · Methodology — adapting evidence to the Bolivian context {.section-divider background-color="#00377C"}
+
+## How we adjust each external anchor {.smaller}
+
+Each external anchor is adjusted using **five factors** derived solely from observable variables.
+
+::: {.callout-note appearance="minimal"}
+**Adjusted effect = external effect × φ_pop × φ_baseline × φ_geo × φ_econ × φ_delivery**
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+
+- **φ_pop** — population similarity (age, % rural)
+- **φ_baseline** — headroom given Bolivia's current level
+- **φ_geo** — geographic distance from La Paz
+
+:::
+::: {.column width="50%"}
+
+- **φ_econ** — GDP per capita ratio Bolivia/anchor
+- **φ_delivery** — government (1.0) vs research/NGO (0.7)
+- **95% CI** — propagated from the anchor's reported SE
+
+:::
+:::
+
+**Anchors not projected:** age range outside 10–17 (ProJoven, Irûmi) or insufficient demographic data. Full methodology in A6.
+
+## Structural Equation Model — synthesising the ToC {.smaller}
+
+The SEM integrates all anchors into a single model of the Theory of Change, calibrated with φ-adjusted parameters as informative priors.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Key structural arrows**
+
+- Teacher training → Teacher practice
+- Teacher practice → Girls' digital skills
+- **Parenting → Home environment (norms, violence) → Attendance**
+- Attendance → Progression → Learning
+- Learning → Long-term labor trajectories
+
+:::
+::: {.column width="50%"}
+
+**Calibration**
+
+- Learning parameters: digital-education anchors
+- Parenting parameters: Cluver + Janowski
+- Home-environment outcomes: **MICS Bolivia 2019** (next phase)
+- Bayesian estimation with `blavaan` to propagate CI
+
+:::
+:::
+
+Pre-registration of equations in A9. Estimation pending — requires MICS + costing.
+
+# 6 · Anchors and projections {.section-divider background-color="#00377C"}
+
+## Direct anchors — digital education and gender norms {.smaller}
+
+Programmes with measured effects **on the educational outcomes** Aula Conectada targets:
+
+```{r proj-table-direct}
+proj_v2 <- read_csv(here("output", "projections", "anchor_projections_long.csv"),
+                    show_col_types = FALSE)
+
+proj_v2 |>
+  filter(subgroup_id == "priority", usable_for_projection,
+         programme_type %in% c("digital_education", "gender_norms")) |>
+  transmute(
+    Programme   = programme,
+    Country     = country,
+    `External effect (95% CI)` = ext_str,
+    `φ_pop`     = sprintf("%.2f", phi_pop),
+    `φ_geo`     = sprintf("%.2f", phi_geo),
+    `φ_econ`    = sprintf("%.2f", phi_econ),
+    `φ_deliv.`  = sprintf("%.2f", phi_delivery),
+    `n par.`    = n_params_used,
+    `Adjusted effect (95% CI)` = adj_str,
+    Sig.        = ifelse(sign(lower_95) == sign(upper_95), "✓", "—")
+  ) |>
+  kable(align = "lllrrrrrrl")
+```
+
+<small>**Reading the CI:** if zero falls inside the interval, the anchor's original effect is not statistically distinguishable from zero — this reflects the study's uncertainty, not an error in the adjustment. The **Sig.** column marks ✓ when the adjusted effect is significant. **ELA caveat:** high population similarity reflects observable overlap (rural, age), but Sierra Leone's post-Ebola context differs substantially.</small>
+
+## Indirect anchors — parenting layer (via SEM) {.smaller}
+
+Parenting programmes that **do not act directly** on enrollment/attendance, but on the home environment (norms, violence). They enter the SEM as parameters for the parenting → home environment → education-outcome arrow.
+
+```{r proj-table-indirect}
+proj_v2 |>
+  filter(subgroup_id == "priority",
+         programme_type == "parenting") |>
+  transmute(
+    Programme   = programme,
+    Country     = country,
+    `Original outcome`   = "see A9 (SEM)",
+    `φ_pop`     = sprintf("%.2f", phi_pop),
+    `φ_geo`     = sprintf("%.2f", phi_geo),
+    `φ_econ`    = sprintf("%.2f", phi_econ),
+    `φ_deliv.`  = sprintf("%.2f", phi_delivery),
+    `Use in model` = "parenting → home environment input parameter"
+  ) |>
+  kable(align = "lllrrrrl")
+```
+
+<small>Cluver et al. (2017) reports effects on physical and emotional abuse (IRR 0.55, not directly translatable to enrollment). Janowski et al. (2025) reports engagement with the app (modules completed). Effects propagate to educational outcomes via the SEM, not directly.</small>
+
+## Key assumptions {.smaller}
+
+Each projection rests on explicit assumptions. Documenting them allows the Ministry to evaluate the credibility of each estimate.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**On the external anchors**
+
+- Studies with credible identification in their original context (RCT or quasi-experimental)
+- **Causal mechanisms** partially transferable (teacher training, structured pedagogy, gender-responsive content operate comparably across countries)
+- The observable variables we use capture the relevant heterogeneity
+
+:::
+::: {.column width="50%"}
+
+**On Bolivia and implementation**
+
+- Aula Conectada will be implemented with **pedagogical fidelity** comparable to the anchors
+- Gaps observed in EH 2024 are representative of the scale-up context
+- Priority subgroups will remain the target population
+
+:::
+:::
+
+**How assumptions are handled:** each φ factor is computed on observable data. When data are insufficient (e.g., φ_baseline without reported baseline), the factor is explicitly set to 1.0. The **n par.** column indicates how many factors were calibrated with real data.
+
+## Synthesis — expected returns from Aula Conectada {.smaller}
+
+**Key lesson from Plan Ceibal (De Melo et al., 2014):** the hardware-only version had zero effect on learning. **Aula Conectada captures returns only if it funds the full pedagogical package**, not just equipment.
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Short-to-medium term** <br>(priority group, ≈ 568K girls)
+
+- **Learning** (math): +0.09 SD ↔ +0.18 SD <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+- **Computational thinking and STEM:** +0.06 SD to +0.08 SD <br><small>(Näslund-Hadley et al., 2025)</small>
+- **Prevented dropout** in higher-exclusion areas: 7–14 pp <br><small>(Bandiera et al., 2018)</small>
+
+:::
+::: {.column width="50%"}
+
+**Long-term returns** <br>(comparable regional evidence)
+
+- **+15.2 pp** in female employment rate <br><small>(Ñopo et al., 2008 — ProJoven Peru)</small>
+- **+93%** in female labor income
+- **Mechanism:** early digital skills → school progression → employability
+
+:::
+:::
+
+# 7 · Costing data {.section-divider background-color="#00377C"}
+
+## Cost per girl — pending
+
+# 8 · Cost-effectiveness analysis {.section-divider background-color="#00377C"}
+
+## Cost-effectiveness of Aula Conectada — pending
+
+# 9 · Methodological Appendix {.section-divider background-color="#00377C"}
+
+## A1 · Data and sample {.smaller}
+
+**Source:** Encuesta de Hogares 2024 (EH 2024) — INE Bolivia · Collection November–December 2024 · National coverage, urban and rural · Unit of analysis: household members in private dwellings.
+
+**Sample:** 12,718 households · 39,497 persons · Analytical subsample: **6,254 adolescents 10–17** (≈ 977K girls and 1.05M boys expanded) · Files: Persona, Vivienda, Equipamiento.
+
+**Key variables**
+
+- **Girl** = `s01a_02 == 2` · **Rurality** = `area == 2` · **Poverty** = `p0` (INE)
+- **Indigenous heritage** = mother tongue or spoken language in Bolivian codes (1–37, 70, 71)
+- **Disability** = Washington Group, severity ≥ 3 on any domain (vision, hearing, mobility, memory)
+- **HH internet** = `s06a_19` · **Digital equipment** (computer, smartphone, tablet) from Equipamiento module
+
+**Estimation:** weighted OLS using `factor` (sampling weight); SE clustered at PSU (`fixest::feols`).
+
+::: footer
+Microdata: anda.ine.gob.bo/index.php/catalog/163
+:::
+
+## A2 · Empirical strategy {.smaller}
+
+**Base model (LPM with department fixed effects):**
+
+$$Y_{ihd} = \alpha + \beta_F F_i + \beta_R R_i + \beta_I I_i + \beta_D D_i + \beta_P P_i + \gamma X_{ihd} + \delta_d + \varepsilon_{ihd}$$
+
+where $F$ = Girl, $R$ = Rural, $I$ = Indigenous, $D$ = Disability, $P$ = Poor, $X$ = controls (age).
+
+**Intersectional model with two-way interactions (× Girl):**
+
+$$Y_{ihd} = \alpha + \beta_F F_i + \gamma X_{ihd} + \sum_{k \in \{R,I,D,P\}} \theta_k \, (F_i \times k_i) + \delta_d + \varepsilon_{ihd}$$
+
+**Intersectional model with three-way interactions (robustness):**
+
+$$Y_{ihd} = \alpha + \text{main effects} + \text{2-way} + \theta_{F\cdot R \cdot I} \, (F_i \times R_i \times I_i) + \delta_d + \varepsilon_{ihd}$$
+
+and analogues for $F \times R \times P$ and $F \times I \times P$.
+
+Weighted OLS using `factor` (sampling weight); standard errors clustered at PSU level (`fixest::feols`).
+
+## A3 · Full table — main coefficients {.smaller}
+
+```{r reg-table-all-en}
+out_vars <- c("hh_internet", "enrolled", "attending", "hh_any_device", "grade_delay")
+out_lbls <- c(hh_internet   = "HH internet",
+              enrolled      = "Enrolled",
+              attending     = "Attending",
+              hh_any_device = "Any HH device",
+              grade_delay   = "Grade delay")
+
+tab <- build_journal_table(out_vars, out_lbls)
+
+# Pull N and R² per outcome from the coefficients CSV
+diag_per_outcome <- coefs |>
+  filter(outcome %in% out_vars) |>
+  group_by(outcome) |>
+  summarise(N  = max(nobs, na.rm = TRUE),
+            r2 = max(r2,   na.rm = TRUE),
+            .groups = "drop") |>
+  mutate(out_label = unname(out_lbls[outcome]),
+         N_chr  = format(N, big.mark = ","),
+         r2_chr = ifelse(is.finite(r2), sprintf("%.3f", r2), "—"))
+n_vec  <- setNames(diag_per_outcome$N_chr,  diag_per_outcome$out_label)
+r2_vec <- setNames(diag_per_outcome$r2_chr, diag_per_outcome$out_label)
+
+foot <- tibble(
+  Variable                  = c("N (observations)",
+                                "R²",
+                                "Department FE",
+                                "Sample weights",
+                                "PSU clustered SE"),
+  `HH internet`             = c(n_vec["HH internet"],   r2_vec["HH internet"],   "Yes","Yes","Yes"),
+  `Enrolled`                = c(n_vec["Enrolled"],      r2_vec["Enrolled"],      "Yes","Yes","Yes"),
+  `Attending`               = c(n_vec["Attending"],     r2_vec["Attending"],     "Yes","Yes","Yes"),
+  `Any HH device`           = c(n_vec["Any HH device"], r2_vec["Any HH device"], "Yes","Yes","Yes"),
+  `Grade delay`             = c(n_vec["Grade delay"],   r2_vec["Grade delay"],   "Yes","Yes","Yes")
+)
+bind_rows(tab, foot) |>
+  kable(align = "lccccc")
+```
+
+<small>`*` p<0.10, `**` p<0.05, `***` p<0.01. SE in parentheses below each coefficient. Weighted OLS using EH 2024 expansion factor; department fixed effects; PSU-clustered errors (`fixest::feols`).</small>
+
+## A4 · Full intersectional table {.smaller}
+
+```{r inter-table-full-en}
+inter_long <- inter |>
+  mutate(
+    predictor = case_when(
+      interaction == "female_rural" ~ "Girl × Rural",
+      interaction == "female_indig" ~ "Girl × Indigenous",
+      interaction == "female_disab" ~ "Girl × Disability",
+      interaction == "female_poor"  ~ "Girl × Poor",
+      TRUE ~ interaction
+    ),
+    out_label = unname(outcome_en[outcome]),
+    coef_cell = sprintf("%.3f%s", estimate, stars(p.value)),
+    se_cell   = sprintf("(%.3f)", std.error)
+  ) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  select(predictor, out_label, coef_cell, se_cell)
+
+inter_order <- c("Girl × Rural", "Girl × Indigenous",
+                 "Girl × Disability", "Girl × Poor")
+out_order_i <- c("Enrolled", "Attending school",
+                 "HH internet", "Any HH device")
+
+rows <- purrr::map_dfr(inter_order, function(p) {
+  sub <- inter_long |> filter(predictor == p)
+  coef_vec <- setNames(sub$coef_cell, sub$out_label)[out_order_i]
+  se_vec   <- setNames(sub$se_cell,   sub$out_label)[out_order_i]
+  coef_row <- as.list(c(Interaction = p,  coef_vec))
+  se_row   <- as.list(c(Interaction = "", se_vec))
+  bind_rows(tibble::as_tibble(coef_row), tibble::as_tibble(se_row))
+})
+
+# Pull N and R² from intersectional CSV
+inter_diag <- inter |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  group_by(outcome) |>
+  summarise(N  = max(nobs, na.rm = TRUE),
+            r2 = max(r2,   na.rm = TRUE),
+            .groups = "drop") |>
+  mutate(out_label = unname(outcome_en[outcome]),
+         N_chr  = format(N, big.mark = ","),
+         r2_chr = ifelse(is.finite(r2), sprintf("%.3f", r2), "—"))
+n_vec_i  <- setNames(inter_diag$N_chr,  inter_diag$out_label)
+r2_vec_i <- setNames(inter_diag$r2_chr, inter_diag$out_label)
+
+footer_rows <- tibble(
+  Interaction       = c("N (observations)",
+                        "R²",
+                        "Department FE",
+                        "Sample weights",
+                        "PSU clustered SE"),
+  `Enrolled`        = c(n_vec_i["Enrolled"],          r2_vec_i["Enrolled"],          "Yes","Yes","Yes"),
+  `Attending school`= c(n_vec_i["Attending school"],  r2_vec_i["Attending school"],  "Yes","Yes","Yes"),
+  `HH internet`     = c(n_vec_i["HH internet"],       r2_vec_i["HH internet"],       "Yes","Yes","Yes"),
+  `Any HH device`   = c(n_vec_i["Any HH device"],     r2_vec_i["Any HH device"],     "Yes","Yes","Yes")
+)
+
+bind_rows(rows, footer_rows) |> kable(align = "lcccc")
+```
+
+<small>Interaction coefficients (additional effect for girls in each group). SE in parentheses. `*` p<0.10, `**` p<0.05, `***` p<0.01. Weighted OLS, department fixed effects, PSU-clustered errors.</small>
+
+## A5 · Heterogeneity analysis — regression forest {.smaller}
+
+**Method:** `grf::regression_forest` (Athey & Wager, 2019) — ensemble of regression trees with honest sub-sampling.
+
+::: {.columns}
+::: {.column width="55%"}
+
+**Specification**
+
+- **Training sample:** all adolescents 10–17 (not only girls) — lets the forest learn the gender effect endogenously
+- **Covariates (7):** sex, age, rurality, Indigenous, disability, poverty, department
+- **Outcomes (4 separate forests):** attendance, HH internet, any device, computer
+- **Hyperparameters:** 2,000 trees · honest fitting · fraction 0.5 · sample weights = EH 2024 expansion factor
+
+:::
+::: {.column width="45%"}
+
+**What we report**
+
+- **Variable importance** normalised per outcome
+- **Subgroup predictions** on a 16-profile grid (sex × rural × Indigenous × poverty), fixing age = 13 and department = La Paz
+
+**What this is NOT**
+
+- Not a causal forest (no treatment)
+- Does not estimate the effect of Aula Conectada
+- Estimates **baseline** gap heterogeneity — useful for targeting
+
+:::
+:::
+
+## A6 · Bolivia-adjusted projection methodology {.smaller}
+
+**Full formula:** Effect = $\beta_{\text{ext}} \times \phi_{\text{pop}} \times \phi_{\text{baseline}} \times \phi_{\text{geo}} \times \phi_{\text{econ}} \times \phi_{\text{delivery}}$
+
+::: {.columns}
+::: {.column width="50%"}
+
+**φ_pop** — $\exp(-\bar d^2)$ over age and % rural, standardised. Indig_share **deliberately excluded** (not apples-to-apples across contexts). Bounded [0,1].
+
+**φ_baseline** — $(Y_{\max} - Y_{\text{Bol}}) / (Y_{\max} - Y_{\text{anchor}})$. NA if anchor reports no baseline. Bounded [0,1].
+
+**φ_geo** — Haversine distance from La Paz. Same country = 1.00; <3000 km = 0.85; <6000 km = 0.65; ≥6000 km = 0.50.
+
+:::
+::: {.column width="50%"}
+
+**φ_econ** — GDP per capita ratio Bolivia/anchor. If anchor is from a poorer country → 1.0 (no haircut). Bounded [0.3, 1].
+
+**φ_delivery** — 1.00 if anchor is government-implemented, 0.70 if research/NGO (Vivalt 2020).
+
+**Exclusion rules** — age overlap <25% with 10–17, or <2 demographic variables comparable → anchor not projected.
+
+**Uncertainty** — 95% CI propagated from the anchor's SE. No synthetic noise on φ factors.
+
+:::
+:::
+
+## A7 · Formal foundation of the transportability approach {.smaller}
+
+We assume the mismatch between the source population $S$ (the anchor study) and the target population $T$ (Bolivia) decomposes into $K$ observable dimensions, with **multiplicative** attenuation:
+
+$$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T), \qquad \phi_k \in [0, 1] $$
+
+where $\hat\beta_S$ is the effect reported in the anchor study, $\hat\beta_T$ the projected effect for Bolivia, $\phi_k$ the adjustment factor for dimension $k$, and $K=5$ the mismatch dimensions (population, baseline, geography, economy, delivery mode).
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Each factor is bounded in [0, 1]:**
+
+- $\phi_\text{pop}$ — standardised age and % rural
+- $\phi_\text{baseline}$ — initial outcome level
+- $\phi_\text{geo}$ — Haversine distance from La Paz
+- $\phi_\text{econ}$ — GDP per capita ratio
+- $\phi_\text{delivery}$ = 1.0 (government) or 0.7 (NGO/research)
+
+**Uncertainty propagation.** The 95% CI is propagated from the anchor's SE:
+
+$$ \text{SE}(\hat\beta_T) = \text{SE}(\hat\beta_S) \cdot \prod_{k=1}^{K} \phi_k $$
+
+:::
+::: {.column width="50%"}
+
+**Key assumptions (claims, not estimates):**
+
+- (A1) **Sufficiency of observables**: the 5 dimensions capture the relevant effect modifiers between $S$ and $T$
+- (A2) **Separability**: each $\phi_k$ effect is approximately multiplicative
+- (A3) **Monotonicity**: mismatch only attenuates, never amplifies
+- (A4) **SE independence**: anchor variance propagates without perturbing the $\phi_k$
+
+:::
+:::
+
+## A8 · Consolidated evidence — anchors in use {.smaller}
+
+```{r evidence-table-en}
+source(here::here("R", "lit_review_data.R"))
+
+ANCHOR_PAPERS <- c("Outes", "Porter", "Bandiera", "Näslund", "Naslund",
+                   "Gómez", "Gomez", "De Melo", "Ñopo", "Nopo",
+                   "Janowski", "Cluver")
+anchor_pattern <- paste(ANCHOR_PAPERS, collapse = "|")
+
+lit_papers |>
+  filter(stringr::str_detect(first_author_year, anchor_pattern),
+         !is.na(effect_size), !is.na(standard_error)) |>
+  mutate(
+    arrow_en = case_when(
+      digital_education == 1 ~ "Digital education",
+      parenting == 1         ~ "Parenting",
+      gender_norms == 1      ~ "Gender norms",
+      learning_focus == 1    ~ "Learning",
+      TRUE                   ~ "Other"
+    )
+  ) |>
+  transmute(
+    Paper   = paste0(first_author_year, " · ", paper_name) |>
+              stringr::str_trunc(58),
+    Country = country,
+    Design  = study_design,
+    Age     = ifelse(!is.na(age_range_min) & !is.na(age_range_max),
+                     paste0(age_range_min, "–", age_range_max), "n.r."),
+    Effect  = sprintf("%.3f (%.3f)",
+                      as.numeric(effect_size),
+                      as.numeric(standard_error)),
+    `ToC arrow` = arrow_en
+  ) |>
+  kable(align = "lllllr")
+```
+
+<small>Only papers used as anchors in the Bolivia projection are shown (see `05_projections.R` and `R/anchors_demographics.R`). The full systematic review (52 papers) is in `data/lit_review_papers.csv`. The **ToC arrow** column shows which Theory of Change arc each anchor feeds.</small>
+
+## A9 · Robustness — three-way OLS interactions {.smaller}
+
+To verify the heterogeneity detected by the regression forest, we estimate three-way interactions with OLS. If the forest correctly identifies compound subgroups, the three-way coefficients should be significant for the outcomes with most heterogeneity.
+
+```{r threeway-table-en}
+threeway <- read_csv(here("output", "models", "threeway_coefs.csv"),
+                     show_col_types = FALSE)
+
+threeway |>
+  mutate(
+    term_en = case_when(
+      str_detect(term, "female.*rural.*indigenous") ~ "Girl × Rural × Indigenous",
+      str_detect(term, "female.*rural.*poor")       ~ "Girl × Rural × Poor",
+      str_detect(term, "female.*indigenous.*poor") |
+      str_detect(term, "female.*poor.*indigenous")  ~ "Girl × Indigenous × Poor",
+      TRUE ~ term
+    ),
+    out_label = unname(outcome_en[outcome]),
+    cell = sprintf("%.3f%s (%.3f)", estimate, stars(p.value), std.error)
+  ) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet")) |>
+  select(term_en, out_label, cell) |>
+  pivot_wider(names_from = out_label, values_from = cell) |>
+  rename(`3-way interaction` = term_en) |>
+  kable(align = "lccc")
+```
+
+<small>Three-way interaction coefficients in decimal points (× 100 for pp). SE in parentheses. `*` p<0.10, `**` p<0.05, `***` p<0.01. Most three-way coefficients are not significant — the forest detects heterogeneity primarily through individual variables (rurality, department), not their compound interaction. **Interpretation:** exclusion accumulates additively more than multiplicatively.</small>
+
+## A10 · Structural Equation Model (SEM) — proposed {.smaller}
+
+Next step to integrate all anchors into a single model of the Theory of Change. We pre-register the structure here; estimation requires pilot + MICS Bolivia 2019 + costing data.
+
+**Measurement model** (which observable indicators load on each latent construct):
+
+$$\text{TeacherCap}_s = \lambda_1 \, \text{TrainHours}_s + \lambda_2 \, \text{DigCompEdu}_s + \varepsilon$$
+$$\text{GirlSkills}_i = \lambda_3 \, \text{CompThink}_i + \lambda_4 \, \text{DigConfidence}_i + \varepsilon$$
+$$\text{HomeEnv}_h = \lambda_5 \, \text{ParentEng}_h + \lambda_6 \, \text{GenderNorm}_h + \varepsilon$$
+
+**Structural model** (Theory of Change arrows):
+
+$$\text{ClassPractice}_s = \beta_1 \, \text{TeacherCap}_s + u_1$$
+$$\text{GirlSkills}_i = \beta_2 \, \text{ClassPractice}_{s(i)} + \beta_3 \, \text{HomeEnv}_{h(i)} + u_2$$
+$$\text{Attendance}_i = \beta_4 \, \text{GirlSkills}_i + \beta_5 \, \text{HomeEnv}_{h(i)} + u_3$$
+$$\text{Progression}_i = \beta_6 \, \text{Attendance}_i + \beta_7 \, \text{GirlSkills}_i + u_4$$
+
+**Calibration of parameters** from φ-adjusted anchors: $\beta_2$ from Outes-Sanchez + Gómez-Ruiz · $\beta_3$ from ParentApp (Janowski) + Cluver · $\beta_4$ from ELA (Bandiera) · $\beta_6$ measurable with EH 2024 + pilot.
+
+**Identifying assumptions** explicit: (1) latent errors independent; (2) latent scales fixed by $\lambda_1 = 1$ per construct; (3) structural parameters taken as informative (Bayesian priors with `blavaan`) to propagate uncertainty.
+
+## A11 · Limitations
+
+- EH measures **access to devices and internet**, not actual digital skills
+- HH access **does not equal meaningful use** by the adolescent
+- Disability sample is **small** — interpret with caution
+- Data are **cross-sectional**: no temporal trajectory observed
+- **Direct measurement at pilot level** is needed to validate and refine the projections
+
+<br><br>
+
+<div style="text-align: center; margin-top: 2em;">
+<a href="mailto:hgrueso@unicef.org" style="color: #1CABE2; font-size: 1.2em; font-weight: 600; text-decoration: none;">hgrueso@unicef.org</a>
+</div>

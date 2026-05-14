@@ -39,6 +39,9 @@ render_one() {
     echo "→ Converting with decktape…"
     decktape reveal --size '1280x720' "$html" "$pdf"
     echo "✓ PDF → $pdf"
+    mkdir -p "$ROOT/slides"
+    cp -f "$pdf" "$ROOT/slides/aulas_conectadas_${lang}.pdf"
+    echo "✓ Copied to slides/aulas_conectadas_${lang}.pdf"
     return 0
   fi
 
@@ -105,6 +108,11 @@ EOF
   fi
 
   echo "✓ PDF → $pdf ($size bytes)"
+
+  # Mirror the deck into slides/ for version-controlled distribution
+  mkdir -p "$ROOT/slides"
+  cp -f "$pdf" "$ROOT/slides/aulas_conectadas_${lang}.pdf"
+  echo "✓ Copied to slides/aulas_conectadas_${lang}.pdf"
 }
 
 case "$LANG_ARG" in

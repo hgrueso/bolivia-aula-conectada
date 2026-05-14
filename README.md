@@ -41,6 +41,10 @@ analysis/
 │   ├── lit_review_papers.csv      # 52-paper literature review
 │   └── lit_review_effect_modifiers.csv
 │
+├── slides/                        # rendered investment-case decks (committed)
+│   ├── aulas_conectadas_es.pdf
+│   └── aulas_conectadas_en.pdf
+│
 └── output/                        # generated artefacts (gitignored)
     ├── figures/                   # PNGs for slides
     ├── models/                    # regression coefficients + diagnostics

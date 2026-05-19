@@ -57,6 +57,8 @@ outcome_es <- c(
   attending      = "Asiste a la escuela",
   enrolled       = "Matriculada",
   grade_delay    = "Rezago escolar",
+  dropout        = "Abandono escolar",
+  neet           = "NEET",
   hh_internet    = "Internet en hogar",
   hh_computer    = "Computadora",
   hh_any_device  = "Cualquier dispositivo"
@@ -117,33 +119,38 @@ inter_pp <- inter |>
     ),
     cell = paste0(fmt_pp(estimate_pp), " pp", stars(p.value))
   ) |>
-  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device")) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet", "hh_any_device",
+                        "dropout", "neet")) |>
   select(outcome, interaction_label, cell) |>
-  pivot_wider(names_from = outcome, values_from = cell)
+  pivot_wider(names_from = outcome, values_from = cell) |>
+  # Replace any NA cells with dashes (occurs when regression couldn't converge
+  # for a given outcome × interaction, e.g. for neet with limited variation
+  # in some interaction cells)
+  mutate(across(-interaction_label, ~ ifelse(is.na(.) | . == "NA", "—", .)))
 ```
 
 # 1 · Diagnóstico — brechas en educación {.section-divider background-color="#00377C"}
 
-## Población objetivo — niñas adolescentes 10–17 en Bolivia {.smaller}
+## Población objetivo — niñas adolescentes 10–19 en Bolivia {.smaller}
 
 ```{r funnel-table}
 segment_es <- c(
-  "All girls 10–17 (weighted)"                                              = "Todas las niñas 10–17",
-  "Girls 10–17 — rural"                                                     = "Niñas rurales 10–17",
-  "Girls 10–17 — Indigenous"                                                = "Niñas indígenas 10–17",
-  "Girls 10–17 — poor (INE)"                                                = "Niñas en pobreza (INE) 10–17",
-  "Girls 10–17 — disability (WG 3+)"                                        = "Niñas con discapacidad (WG 3+) 10–17",
-  "Girls 10–17 — no HH internet"                                            = "Niñas sin internet en hogar 10–17",
-  "Girls 10–17 — priority (rural OR Indigenous OR poor OR disability)"      = "Niñas prioritarias (rural ∨ indígena ∨ pobre ∨ discapacidad)"
+  "All girls 10–19 (weighted)"                                              = "Todas las niñas 10–19",
+  "Girls 10–19 — rural"                                                     = "Niñas rurales 10–19",
+  "Girls 10–19 — Indigenous"                                                = "Niñas indígenas 10–19",
+  "Girls 10–19 — poor (INE)"                                                = "Niñas en pobreza (INE) 10–19",
+  "Girls 10–19 — disability (WG 3+)"                                        = "Niñas con discapacidad (WG 3+) 10–19",
+  "Girls 10–19 — no HH internet"                                            = "Niñas sin internet en hogar 10–19",
+  "Girls 10–19 — priority (rural OR Indigenous OR poor OR disability)"      = "Niñas prioritarias (rural ∨ indígena ∨ pobre ∨ discapacidad)"
 )
 funnel |>
-  filter(segment != "All adolescents 10–17 (weighted)") |>
+  filter(segment != "All adolescents 10–19 (weighted)") |>
   mutate(
     Segmento = recode(segment, !!!segment_es),
     `N ponderado`      = fmt_n(n_pop),
-    `% de niñas 10–17` = fmt_pct(share_of_all_girls)
+    `% de niñas 10–19` = fmt_pct(share_of_all_girls)
   ) |>
-  select(Segmento, `N ponderado`, `% de niñas 10–17`) |>
+  select(Segmento, `N ponderado`, `% de niñas 10–19`) |>
   kable(align = "lrr")
 ```
 
@@ -151,43 +158,110 @@ funnel |>
 Fuente: INE Bolivia, EH 2024 · estimaciones ponderadas
 :::
 
+## Cómo leer los indicadores educativos {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Definiciones (EH 2024)**
+
+La Encuesta de Hogares clasifica a cada adolescente en una de tres categorías según su situación educativa:
+
+- **Matrícula** — registrada en el año escolar, asista o no
+- **Asistencia** — matriculada **y** actualmente asistiendo a clases
+- **Abandono escolar** — matriculada pero ya no asiste → desvinculación durante el año
+- **Rezago escolar** — años de escolaridad menores a los esperados para la edad
+- **NEET** — no estudia ni trabaja (15–19 años)
+
+:::
+::: {.column width="50%"}
+
+**Por qué importa**
+
+En Bolivia la matrícula formal está entre el 95% y el 98% en casi todos los subgrupos. Esto significa que mirar solo matrícula muestra muy poca variación entre niñas/niños, áreas urbanas/rurales o grupos indígenas/no indígenas.
+
+Los datos relevantes para identificar dónde hay exclusión efectiva son los de **asistencia, abandono, rezago y NEET**. Es allí donde aparecen las brechas territoriales, indígenas y socioeconómicas.
+
+:::
+:::
+
+::: footer
+La clasificación proviene de la variable derivada por el INE que combina matrícula y asistencia para cada adolescente.
+:::
+
 ## Brechas de género en educación
 
 ![](../output/figures/f1a_edu_overall_by_sex.png){fig-align="center" width="85%"}
 
-## La ruralidad amplifica las brechas educativas
+## Brechas de género según etapa de la adolescencia
+
+![](../output/figures/f1a_age_edu_by_sex_ageband.png){fig-align="center" width="90%"}
+
+::: footer
+NEET sólo es informativo para 15-19 (en 10-14 la mayoría está en escuela por construcción).
+:::
+
+## Resultados educativos según zona de residencia
 
 ![](../output/figures/f1b_edu_by_sex_rural.png){fig-align="center" width="90%"}
 
-## Las niñas indígenas enfrentan rezago escolar diferenciado
+## Resultados educativos según estatus indígena
 
 ![](../output/figures/f1c_edu_by_sex_indig.png){fig-align="center" width="90%"}
 
-## La pobreza compone las brechas educativas
+## Resultados educativos según situación de pobreza
 
 ![](../output/figures/f1d_edu_by_sex_poverty.png){fig-align="center" width="90%"}
 
-## Niñas con discapacidad — exclusión compuesta
+## Resultados educativos según discapacidad
 
 ![](../output/figures/f5_disability_gap.png){fig-align="center" width="90%"}
 
-# 2 · Por qué el digital — los mecanismos {.section-divider background-color="#00377C"}
+# 2 · Por qué la necesidad de un enfoque digital {.section-divider background-color="#00377C"}
 
-## La Brecha Digital
+## El acceso digital es una brecha territorial y socioeconómica {.smaller}
+
+::: {.callout-tip appearance="simple"}
+Los datos de EH 2024 son a nivel del hogar, por lo que no permiten medir directamente el acceso individual de niñas y niños. A nivel del hogar, las diferencias por sexo del adolescente son mínimas. **Las diferencias relevantes se observan entre hogares rurales y urbanos, indígenas y no indígenas, y según la situación de pobreza.**
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Dimensiones de la brecha digital**
+
+- Conectividad e infraestructura en zonas rurales
+- Acceso a dispositivos en hogares indígenas
+- Asequibilidad económica de internet y dispositivos
+- Habilidades digitales y uso significativo
+
+:::
+::: {.column width="50%"}
+
+**Implicación para el programa**
+
+- Una brecha digital de género a nivel individual requeriría datos que EH 2024 no captura (uso, habilidades, autonomía de uso)
+- A nivel del hogar, las brechas de acceso se concentran en los mismos subgrupos que enfrentan mayores brechas educativas
+- El programa Aula Conectada actúa sobre el acceso institucional y el uso pedagógico, no sobre el acceso del hogar
+
+:::
+:::
+
+## Brecha digital — variación departamental
 
 ![](../output/figures/f6_internet_by_department.png){fig-align="center" width="80%"}
 
-## Acceso digital del hogar — el habilitante material
+## Acceso digital del hogar — sin diferencias por sexo
 
 ![](../output/figures/f1_digital_access_sex_age.png){fig-align="center" width="90%"}
 
-## La mayor brecha digital es **territorial**, no solo de género
-
-![](../output/figures/f2_digital_access_area_sex.png){fig-align="center" width="90%"}
-
-## Hogares conectados muestran mayor asistencia escolar para las niñas
+## Hogares conectados muestran marginalmente una mayor asistencia escolar para las niñas
 
 ![](../output/figures/f4_attendance_by_internet.png){fig-align="center" width="85%"}
+
+::: footer
+**Nota:** esto es correlación, no causalidad. Hogares con internet también tienen mayor ingreso, urbanidad y educación parental.
+:::
 
 # 3 · Análisis multivariado {.section-divider background-color="#00377C"}
 
@@ -199,48 +273,30 @@ main_pp |>
          `Matriculada`      = enrolled,
          `Asiste escuela`   = attending,
          `Rezago escolar`   = grade_delay,
+         `NEET (15-19)`     = neet,
          `Internet hogar`   = hh_internet,
+         `Cualquier dispositivo` = hh_any_device) |>
+  kable(align = "lrrrrrr")
+```
+
+<small>Ser niña no se asocia con una brecha promedio significativa en matrícula o asistencia. Se asocia con menor rezago escolar (−6 pp\*\*\*), patrón documentado en la región y consistente con mayor permanencia femenina a tiempo en la educación primaria y secundaria temprana. Los predictores fuertes en todos los outcomes son **rural, pobreza, indígena y discapacidad**. MCO ponderado con efectos fijos de departamento; errores agrupados al nivel UPM.</small>
+
+## Interacciones de género — dónde se concentran las brechas {.smaller}
+
+```{r inter-main}
+inter_pp |>
+  rename(`Interacción × Niña` = interaction_label,
+         `Matriculada`        = enrolled,
+         `Asiste escuela`     = attending,
+         `NEET (15-19)`       = neet,
+         `Internet hogar`     = hh_internet,
          `Cualquier dispositivo` = hh_any_device) |>
   kable(align = "lrrrrr")
 ```
 
-<small>**Lectura clave:** ser niña no se asocia con una brecha promedio significativa en matrícula o asistencia, pero **sí con menor rezago escolar (−6 pp\*\*\*)** — las niñas que están en la escuela progresan mejor. Las brechas fuertes son **rural, pobreza e indígena**. MCO ponderado con efectos fijos de departamento; errores agrupados al nivel UPM. Detalles e intersecciones en el anexo (A3–A4).</small>
+<small>**Cómo leer:** cada coeficiente muestra cuánto mayor (o menor) es la brecha de género en ese subgrupo, comparado con el promedio. Por ejemplo, una niña rural enfrenta una brecha en asistencia que es X pp mayor que la brecha de una niña urbana. Las interacciones más fuertes aparecen en **niñas rurales** e **indígenas**, lo que sugiere que el programa debe priorizar estos subgrupos para tener el mayor impacto. Significancia: \*p<0.10, \*\*p<0.05, \*\*\*p<0.01.</small>
 
-# 4 · Teoría del Cambio {.section-divider background-color="#00377C"}
-
-## De insumos a impacto — Teoría del Cambio propuesta
-
-![](../output/figures/f0_theory_of_change.png){fig-align="center" width="100%"}
-
-## Componentes del programa y resultados esperados
-
-::: {.columns}
-::: {.column width="50%"}
-
-**Componentes centrales**
-
-- Formación docente en pedagogía digital y enfoque de género
-- Contenido digital estructurado integrado al currículo
-- Aprendizaje colaborativo
-- Adaptaciones de inclusión (discapacidad, lengua, ruralidad)
-- Participación activa de niñas en STEM
-- **Engagement familiar** — capa de parenting que reduce normas de género restrictivas y violencia intrahogar
-
-:::
-::: {.column width="50%"}
-
-**Resultados esperados**
-
-- Mejor práctica docente
-- Mayor participación de niñas en el aula
-- Mayor confianza digital
-- Mejores habilidades digitales
-- Mejor asistencia y progresión
-- Mayor interés en STEM
-- **Menor violencia intrahogar contra niñas** (vía capa de parenting)
-
-:::
-:::
+# 4 · Evidencia → Teoría del Cambio {.section-divider background-color="#00377C"}
 
 ## Qué nos dice la evidencia internacional {.smaller}
 
@@ -250,20 +306,89 @@ main_pp |>
 **Hallazgos consistentes**
 
 - Hardware aislado rara vez mejora aprendizaje <br><small>(De Melo et al., 2014; Cristia et al., 2017)</small>
-- Herramientas digitales funcionan con pedagogía estructurada <br><small>(Gómez-Ruiz & Franco, 2023)</small>
+- Herramientas digitales funcionan **con pedagogía estructurada** <br><small>(Gómez-Ruiz & Franco, 2023)</small>
 - Formación docente es el mecanismo central <br><small>(Olugbade et al., 2025; Bassi et al., 2016)</small>
-- Contenido con enfoque de género mejora aspiraciones STEM <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+- Contenido con enfoque de género mejora **aspiraciones y persistencia STEM** <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
 
 :::
 ::: {.column width="50%"}
 
-**Capa de parenting (nueva)**
+**Capa de parenting**
 
-- Intervenciones para padres reducen violencia contra niñas <br><small>(Cluver et al., 2017 — South Africa)</small>
-- Aplicaciones de parenting digital mejoran prácticas <br><small>(Janowski et al., 2025 — Tanzania)</small>
-- Normas de género restrictivas en el hogar son barrera estructural a aprendizaje
+- Intervenciones de parenting reducen **violencia física y emocional contra niñas** (IRR 0.55) <br><small>(Cluver et al., 2017 — Sudáfrica)</small>
+- Apps de parenting digitales mejoran **prácticas no violentas y comunicación padres-hija** <br><small>(Janowski et al., 2025 — Tanzania)</small>
+- Normas de género restrictivas en el hogar son barrera estructural a aprendizaje, asistencia y transición a STEM
 
 :::
+:::
+
+## Componentes del programa — insumos y actividades {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Insumos**
+
+- Materiales gender-responsive y acceso seguro: contenido digital con representación femenina y sin sesgos de género
+- Módulos STEM diseñados para retener y enganchar niñas — vacío clave en la transición a STEM en Bolivia
+- Conectividad y dispositivos priorizados por necesidad/vulnerabilidad (rural, indígena) en lugar de entrega indiscriminada a escuelas
+
+:::
+::: {.column width="50%"}
+
+**Actividades**
+
+- Pedagogía gender-transformadora y formación docente, con integración curricular de modelos femeninos
+- Engagement parental para cambio de normas y vinculación con STEM
+- Empoderamiento, liderazgo y agencia de niñas, más allá de la participación
+- Habilidades socioemocionales y life skills, basadas en revisión de literatura
+- Mentoría y acompañamiento
+
+:::
+:::
+
+## Componentes del programa — outputs y outcomes {.smaller}
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Outputs**
+
+- Sistemas de datos que rastrean participación sex-disaggregated y outcomes profundos de aprendizaje
+- Docentes formados, aulas equipadas y contenidos en uso
+- Niñas integradas en actividades STEM, con grupos prioritarios identificados explícitamente
+
+**Outcomes de corto plazo**
+
+- Prácticas docentes que promueven la participación activa de niñas
+- Apoyo a vías de transición hacia STEM
+- Confianza y habilidades digitales fortalecidas
+- Entornos de aprendizaje seguros y de apoyo
+
+:::
+::: {.column width="50%"}
+
+**Outcomes de mediano plazo**
+
+- Mejor asistencia, progresión y aprendizaje
+- Mayor interés y persistencia en STEM
+- Reducción de violencia intrahogar contra niñas, mediante la capa de parenting
+- Cambios en normas de género en el hogar y la escuela
+
+**Outcomes de largo plazo**
+
+- Mayor transición a educación superior, particularmente en STEM
+- Mejor empleabilidad y reducción de brechas salariales
+
+:::
+:::
+
+## De insumos a impacto — Teoría del Cambio propuesta
+
+![](../output/figures/f0_theory_of_change.png){fig-align="center" width="100%"}
+
+::: footer
+La ToC sintetiza la evidencia y los componentes en una sola cadena causal pre-registrada para evaluación posterior.
 :::
 
 # 5 · Metodología — adaptar evidencia al contexto boliviano {.section-divider background-color="#00377C"}
@@ -293,7 +418,7 @@ Cada ancla externa se ajusta usando **cinco factores** derivados únicamente de 
 :::
 :::
 
-**Anclas no proyectadas:** rango etario fuera de 10–17 (ProJoven, Irûmi) o sin datos demográficos suficientes. Detalle metodológico completo en A6.
+**Anclas no proyectadas:** rango etario fuera de 10–19 (ProJoven, Irûmi) o sin datos demográficos suficientes. Detalle metodológico completo en A6.
 
 ## Modelo de Ecuaciones Estructurales — síntesis de la ToC {.smaller}
 
@@ -430,21 +555,52 @@ Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al 
 :::
 :::
 
-# 7 · Costing data {.section-divider background-color="#00377C"}
+# 7 · Síntesis {.section-divider background-color="#00377C"}
 
-## Costo por niña — pendiente
+## Hallazgos clave {.smaller}
 
-# 8 · Análisis de costo-efectividad {.section-divider background-color="#00377C"}
+::: {.columns}
+::: {.column width="50%"}
 
-## Costo-efectividad de Aula Conectada — pendiente
+**1. La matrícula formal en Bolivia es muy alta y varía poco entre subgrupos**
 
-# 9 · Anexo Metodológico {.section-divider background-color="#00377C"}
+Para identificar brechas educativas relevantes es necesario mirar asistencia, abandono escolar, rezago y NEET. Es allí donde aparecen diferencias importantes.
+
+**2. La EH 2024 no permite medir directamente una brecha digital de género**
+
+Los datos son a nivel del hogar, no a nivel individual. A nivel del hogar, las diferencias por sexo del adolescente son mínimas. Determinar si existe una brecha de género en el uso, las habilidades y la autonomía digital requeriría datos individuales que esta encuesta no captura.
+
+:::
+::: {.column width="50%"}
+
+**3. Las brechas digitales relevantes son territoriales y entre subgrupos**
+
+A nivel del hogar, las brechas de acceso (internet, dispositivos) se concentran entre hogares rurales y urbanos, hogares indígenas y no indígenas, y hogares con distinta situación socioeconómica.
+
+**4. Las brechas educativas se concentran en los mismos subgrupos**
+
+Niñas y niños rurales, indígenas, en pobreza y con discapacidad enfrentan brechas significativas en asistencia, abandono escolar y NEET. Los análisis multivariados y las interacciones de género confirman que estos subgrupos deben ser la prioridad del programa.
+
+:::
+:::
+
+## Tareas pendientes {.smaller}
+
+- **Incorporar indicadores de violencia desde MICS Bolivia 2019** para complementar la capa de parenting de la Teoría de Cambio y permitir la estimación del SEM
+- **Integrar datos de costos** del programa Aula Conectada cuando estén disponibles, para construir la base del análisis costo-efectividad
+- **Estimar el retorno sobre la inversión** una vez completadas las proyecciones, combinando los efectos ajustados con los costos del programa
+
+# 8 · Costing data {.section-divider background-color="#00377C"}
+
+# 9 · Análisis de costo-efectividad {.section-divider background-color="#00377C"}
+
+# 10 · Anexo Metodológico {.section-divider background-color="#00377C"}
 
 ## A1 · Datos y muestra {.smaller}
 
 **Fuente:** Encuesta de Hogares 2024 (EH 2024) — INE Bolivia · Recolección noviembre–diciembre 2024 · Cobertura nacional, urbano y rural · Unidad de análisis: miembros del hogar en viviendas particulares.
 
-**Tamaño:** 12,718 hogares · 39,497 personas · Submuestra analítica: **6,254 adolescentes 10–17** (≈ 977 mil niñas y 1.05 M niños expandidos) · Archivos: Persona, Vivienda, Equipamiento.
+**Tamaño:** 12,718 hogares · 39,497 personas · Submuestra analítica: **6,254 adolescentes 10–19** (≈ 977 mil niñas y 1.05 M niños expandidos) · Archivos: Persona, Vivienda, Equipamiento.
 
 **Variables clave**
 
@@ -471,11 +627,13 @@ donde $F$ = Niña, $R$ = Rural, $I$ = Indígena, $D$ = Discapacidad, $P$ = Pobre
 
 $$Y_{ihd} = \alpha + \beta_F F_i + \gamma X_{ihd} + \sum_{k \in \{R,I,D,P\}} \theta_k \, (F_i \times k_i) + \delta_d + \varepsilon_{ihd}$$
 
+Cada coeficiente $\theta_k$ mide cuánto mayor o menor es la brecha de género en ese subgrupo. Por ejemplo, $\theta_R$ captura si la brecha de género entre niñas y niños rurales difiere de la brecha entre niñas y niños urbanos.
+
 **Modelo interseccional con interacciones de tres vías (robustez):**
 
 $$Y_{ihd} = \alpha + \text{efectos principales} + \text{2-vías} + \theta_{F\cdot R \cdot I} \, (F_i \times R_i \times I_i) + \delta_d + \varepsilon_{ihd}$$
 
-y análogos para $F \times R \times P$ y $F \times I \times P$.
+y análogos para $F \times R \times P$ y $F \times I \times P$. Las interacciones de tres vías capturan si la brecha de género en una intersección compuesta (por ejemplo, niñas rurales indígenas) difiere de lo que sugieren las dos interacciones de dos vías por separado.
 
 Estimación por MCO ponderado por `factor` (factor de expansión); errores estándar agrupados al nivel UPM (`fixest::feols`).
 
@@ -594,7 +752,7 @@ bind_rows(rows, footer_rows) |> kable(align = "lcccc")
 
 **Especificación**
 
-- **Muestra de entrenamiento:** todos los adolescentes 10–17 (no solo niñas) — permite que el bosque aprenda el efecto del género de forma endógena
+- **Muestra de entrenamiento:** todos los adolescentes 10–19 (no solo niñas) — permite que el bosque aprenda el efecto del género de forma endógena
 - **Covariables (7):** sexo, edad, ruralidad, indígena, discapacidad, pobreza, departamento
 - **Outcomes (4 bosques separados):** asistencia escolar, internet en hogar, cualquier dispositivo, computadora
 - **Hiperparámetros:** 2,000 árboles · honestidad activada · fracción 0.5 · pesos muestrales = factor de expansión EH 2024
@@ -616,7 +774,37 @@ bind_rows(rows, footer_rows) |> kable(align = "lcccc")
 :::
 :::
 
-## A6 · Metodología de proyección ajustada a Bolivia {.smaller}
+## A6 · Fundamento formal del enfoque de transportabilidad {.smaller}
+
+Asumimos que el desajuste entre la población fuente $S$ (el ancla) y la población objetivo $T$ (Bolivia) se descompone en $K$ dimensiones observables y que la atenuación es **multiplicativa**:
+
+$$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T), \qquad \phi_k \in [0, 1] $$
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Glosario de factores $\phi_k$:**
+
+- $\phi_\text{pop}$ — edad y % rural estandarizados
+- $\phi_\text{baseline}$ — nivel inicial del outcome
+- $\phi_\text{geo}$ — distancia Haversine desde La Paz
+- $\phi_\text{econ}$ — razón PIB per cápita
+- $\phi_\text{delivery}$ — 1.0 (gobierno) o 0.7 (ONG/investigación)
+
+:::
+::: {.column width="50%"}
+
+**Supuestos:**
+
+- (A1) **Suficiencia de observables**: las 5 dimensiones capturan los modificadores de efecto relevantes
+- (A2) **Separabilidad**: los efectos son aproximadamente multiplicativos
+- (A3) **Monotonía**: el desajuste sólo atenúa, nunca amplifica
+- (A4) **Independencia del SE**: la varianza del ancla se propaga sin perturbar los $\phi_k$
+
+:::
+:::
+
+## A7 · Metodología de proyección ajustada a Bolivia {.smaller}
 
 **Fórmula completa:** Efecto = $\beta_{\text{externo}} \times \phi_{\text{pop}} \times \phi_{\text{baseline}} \times \phi_{\text{geo}} \times \phi_{\text{econ}} \times \phi_{\text{delivery}}$
 
@@ -636,45 +824,9 @@ bind_rows(rows, footer_rows) |> kable(align = "lcccc")
 
 **φ_delivery** — 1.00 si el ancla es implementación gubernamental, 0.70 si es investigación/ONG (Vivalt 2020).
 
-**Reglas de exclusión** — solapamiento etario <25% con 10–17, o <2 variables demográficas comparables → ancla no proyectada.
+**Reglas de exclusión** — solapamiento etario <25% con 10–19, o <2 variables demográficas comparables → ancla no proyectada.
 
 **Incertidumbre** — IC 95% propagado del SE del ancla. Sin ruido sintético en los factores φ.
-
-:::
-:::
-
-## A7 · Fundamento formal del enfoque de transportabilidad {.smaller}
-
-Asumimos que el desajuste entre la población fuente $S$ (el ancla) y la población objetivo $T$ (Bolivia) se descompone en $K$ dimensiones observables y que la atenuación es **multiplicativa**:
-
-$$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T), \qquad \phi_k \in [0, 1] $$
-
-donde $\hat\beta_S$ es el efecto reportado en el estudio ancla, $\hat\beta_T$ el efecto proyectado para Bolivia, $\phi_k$ el factor de ajuste para la dimensión $k$, y $K=5$ las dimensiones de desajuste (población, baseline, geografía, economía, modalidad de entrega).
-
-::: {.columns}
-::: {.column width="50%"}
-
-**Cada factor está acotado en [0, 1]:**
-
-- $\phi_\text{pop}$ — edad y % rural estandarizados
-- $\phi_\text{baseline}$ — nivel inicial del outcome
-- $\phi_\text{geo}$ — distancia Haversine desde La Paz
-- $\phi_\text{econ}$ — razón PIB per cápita
-- $\phi_\text{delivery}$ = 1.0 (gobierno) o 0.7 (ONG/investigación)
-
-**Propagación de incertidumbre.** El IC 95% se propaga del SE del ancla:
-
-$$ \text{SE}(\hat\beta_T) = \text{SE}(\hat\beta_S) \cdot \prod_{k=1}^{K} \phi_k $$
-
-:::
-::: {.column width="50%"}
-
-**Supuestos clave (claims, no estimaciones):**
-
-- (A1) **Suficiencia de observables**: las 5 dimensiones capturan los modificadores de efecto relevantes entre $S$ y $T$
-- (A2) **Separabilidad**: los efectos de los $\phi_k$ son aproximadamente multiplicativos
-- (A3) **Monotonía**: el desajuste sólo atenúa, nunca amplifica
-- (A4) **Independencia del SE**: la varianza del ancla se propaga sin perturbar los $\phi_k$
 
 :::
 :::
@@ -682,43 +834,35 @@ $$ \text{SE}(\hat\beta_T) = \text{SE}(\hat\beta_S) \cdot \prod_{k=1}^{K} \phi_k 
 ## A8 · Evidencia consolidada — anclas en uso {.smaller}
 
 ```{r evidence-table}
-source(here::here("R", "lit_review_data.R"))
+# Use the anchors_demographics.R as source of truth for the anchors actually
+# used in projections — its effect/SE columns are guaranteed populated.
+source(here::here("R", "anchors_demographics.R"))
 
-# Filter to papers actually used as anchors in 05_projections.R.
-# Anchor keywords matched against first_author_year (case-insensitive).
-ANCHOR_PAPERS <- c("Outes", "Porter", "Bandiera", "Näslund", "Naslund",
-                   "Gómez", "Gomez", "De Melo", "Ñopo", "Nopo",
-                   "Janowski", "Cluver")
-anchor_pattern <- paste(ANCHOR_PAPERS, collapse = "|")
-
-lit_papers |>
-  filter(stringr::str_detect(first_author_year, anchor_pattern),
-         !is.na(effect_size), !is.na(standard_error)) |>
+anchors_demo |>
   mutate(
     arrow_es = case_when(
-      digital_education == 1 ~ "Educación digital",
-      parenting == 1         ~ "Parenting",
-      gender_norms == 1      ~ "Normas de género",
-      learning_focus == 1    ~ "Aprendizaje",
-      TRUE                   ~ "Otra"
-    )
+      programme_type == "digital_education" ~ "Educación digital",
+      programme_type == "parenting"         ~ "Parenting",
+      programme_type == "gender_norms"      ~ "Normas de género",
+      programme_type == "labor_market"      ~ "Mercado laboral",
+      TRUE                                  ~ programme_type
+    ),
+    Edad = paste0(age_lo, "\u2011", age_hi),
+    Efecto = sprintf("%.3f (%.3f) %s", effect, se, unit),
+    Entidad = ifelse(gov_implementer, "Gobierno", "ONG/Investigación")
   ) |>
   transmute(
-    Paper   = paste0(first_author_year, " · ", paper_name) |>
-              stringr::str_trunc(58),
-    País    = country,
-    Diseño  = study_design,
-    Edad    = ifelse(!is.na(age_range_min) & !is.na(age_range_max),
-                     paste0(age_range_min, "–", age_range_max), "n.d."),
-    Efecto  = sprintf("%.3f (%.3f)",
-                      as.numeric(effect_size),
-                      as.numeric(standard_error)),
+    Programa = programme |> stringr::str_trunc(42),
+    País     = country,
+    Edad,
+    Efecto,
+    Entidad,
     `Flecha ToC` = arrow_es
   ) |>
   kable(align = "lllllr")
 ```
 
-<small>Sólo se listan los papers usados como anclas en la proyección a Bolivia (ver `05_projections.R` y `R/anchors_demographics.R`). La revisión sistemática completa (52 papers) está en `data/lit_review_papers.csv`. La columna **Flecha ToC** indica qué arco de la Teoría de Cambio alimenta cada ancla.</small>
+<small>Listado completo de las anclas externas usadas en la proyección a Bolivia (ver `05_projections.R` y `R/anchors_demographics.R`). La revisión sistemática completa de 52 papers está en `data/lit_review_papers.csv`. La columna **Flecha ToC** indica qué arco de la Teoría de Cambio alimenta cada ancla.</small>
 
 ## A9 · Robustez — interacciones de tres vías (MCO) {.smaller}
 
@@ -740,37 +884,89 @@ threeway |>
     out_label = unname(outcome_es[outcome]),
     cell = sprintf("%.3f%s (%.3f)", estimate, stars(p.value), std.error)
   ) |>
-  filter(outcome %in% c("attending", "enrolled", "hh_internet")) |>
+  filter(outcome %in% c("attending", "enrolled", "hh_internet"),
+         !is.na(out_label)) |>
   select(term_es, out_label, cell) |>
   pivot_wider(names_from = out_label, values_from = cell) |>
   rename(`Interacción 3 vías` = term_es) |>
   kable(align = "lrrr")
 ```
 
-<small>Coeficientes de las interacciones triples en puntos decimales (× 100 para pp). Errores estándar entre paréntesis. `*` p<0.10, `**` p<0.05, `***` p<0.01. La mayoría de los coeficientes triples no son significativos — el bosque detecta heterogeneidad principalmente a través de variables individuales (ruralidad, departamento), no de su interacción compuesta. **Interpretación:** la exclusión se acumula aditivamente más que multiplicativamente.</small>
+<small>**Cómo leer:** cada celda muestra el coeficiente de la interacción de tres vías y su error estándar entre paréntesis. Significancia: `*` p<0.10, `**` p<0.05, `***` p<0.01. Si no aparecen asteriscos, el coeficiente no es estadísticamente distinguible de cero a los niveles convencionales. **Interpretación:** en esta muestra, las interacciones triples no son significativas, lo que indica que el efecto compuesto de pertenecer a múltiples grupos vulnerables (por ejemplo, niña rural indígena) no es sustancialmente mayor que la suma de los efectos de cada grupo por separado. Las brechas se acumulan de forma aproximadamente aditiva. Esto sugiere que las intervenciones bien dirigidas a cualquiera de los ejes (rural, indígena, pobreza) tendrán impacto en niñas que cumplen con esas características.</small>
 
 ## A10 · Modelo de Ecuaciones Estructurales (SEM) — propuesto {.smaller}
 
-Próximo paso para integrar todas las anclas en un modelo único de la Teoría de Cambio. Pre-registramos la estructura aquí; la estimación se hará con datos del piloto + MICS Bolivia 2019 + costing.
+Próximo paso para integrar todas las anclas en un modelo único de la Teoría de Cambio. Pre-registramos la estructura aquí; la estimación se hará con datos del piloto, MICS Bolivia 2019 y costing.
 
-**Modelo de medición** (qué indicadores observables cargan en cada constructo latente):
+::: {.columns}
+::: {.column width="50%"}
 
-$$\text{TeacherCap}_s = \lambda_1 \, \text{TrainHours}_s + \lambda_2 \, \text{DigCompEdu}_s + \varepsilon$$
-$$\text{GirlSkills}_i = \lambda_3 \, \text{CompThink}_i + \lambda_4 \, \text{DigConfidence}_i + \varepsilon$$
-$$\text{HomeEnv}_h = \lambda_5 \, \text{ParentEng}_h + \lambda_6 \, \text{GenderNorm}_h + \varepsilon$$
+**Modelo de medición**
 
-**Modelo estructural** (flechas de la Teoría de Cambio):
+$\text{TeacherCap} = \lambda_1\text{TrainHrs} + \lambda_2\text{DigCompEdu}$
 
-$$\text{ClassPractice}_s = \beta_1 \, \text{TeacherCap}_s + u_1$$
-$$\text{GirlSkills}_i = \beta_2 \, \text{ClassPractice}_{s(i)} + \beta_3 \, \text{HomeEnv}_{h(i)} + u_2$$
-$$\text{Attendance}_i = \beta_4 \, \text{GirlSkills}_i + \beta_5 \, \text{HomeEnv}_{h(i)} + u_3$$
-$$\text{Progression}_i = \beta_6 \, \text{Attendance}_i + \beta_7 \, \text{GirlSkills}_i + u_4$$
+$\text{GirlSkills} = \lambda_3\text{CompThink} + \lambda_4\text{DigConfidence}$
 
-**Calibración de parámetros** desde las anclas φ-ajustadas: $\beta_2$ de Outes-Sanchez + Gómez-Ruiz · $\beta_3$ de ParentApp (Janowski) + Cluver · $\beta_4$ de ELA (Bandiera) · $\beta_6$ medible con EH 2024 + piloto.
+$\text{HomeEnv} = \lambda_5\text{ParentEng} + \lambda_6\text{GenderNorm}$
 
-**Supuestos de identificación** explícitos: (1) errores latentes independientes; (2) escalas latentes fijadas vía $\lambda_1 = 1$ por constructo; (3) parámetros estructurales tomados como informativos (priors bayesianos con `blavaan`) para propagar incertidumbre.
+**Modelo estructural**
 
-## A11 · Limitaciones
+$\text{ClassPractice} = \beta_1\text{TeacherCap}$
+
+$\text{GirlSkills} = \beta_2\text{ClassPractice} + \beta_3\text{HomeEnv}$
+
+$\text{Attendance} = \beta_4\text{GirlSkills} + \beta_5\text{HomeEnv}$
+
+$\text{Progression} = \beta_6\text{Attendance} + \beta_7\text{GirlSkills}$
+
+:::
+::: {.column width="50%"}
+
+**Calibración desde anclas $\phi$-ajustadas**
+
+- $\beta_2$ ← Outes-Sanchez + Gómez-Ruiz
+- $\beta_3$ ← ParentApp (Janowski) + Cluver
+- $\beta_4$ ← ELA (Bandiera)
+- $\beta_6$ ← medible con EH 2024 + piloto
+
+**Supuestos de identificación**
+
+1. Errores latentes independientes
+2. Escalas latentes fijadas vía $\lambda_1 = 1$ por constructo
+3. Parámetros estructurales tomados como informativos (priors bayesianos con `blavaan`) para propagar incertidumbre
+
+:::
+:::
+
+## A11 · Resultados educativos por banda etaria — global {.smaller}
+
+![](../output/figures/f1a_age_edu_by_sex_ageband.png){fig-align="center" width="90%"}
+
+::: footer
+NEET sólo es informativo en 15-19 (en 10-14 la mayoría está matriculada por construcción).
+:::
+
+## A12 · Resultados educativos por banda etaria — zona de residencia {.smaller}
+
+![](../output/figures/f1b_age_edu_by_sex_rural_ageband.png){fig-align="center" width="92%"}
+
+## A13 · Resultados educativos por banda etaria — estatus indígena {.smaller}
+
+![](../output/figures/f1c_age_edu_by_sex_indig_ageband.png){fig-align="center" width="92%"}
+
+## A14 · Resultados educativos por banda etaria — situación de pobreza {.smaller}
+
+![](../output/figures/f1d_age_edu_by_sex_poverty_ageband.png){fig-align="center" width="92%"}
+
+## A15 · Resultados educativos por banda etaria — discapacidad {.smaller}
+
+![](../output/figures/f5_age_edu_by_sex_disab_ageband.png){fig-align="center" width="92%"}
+
+::: footer
+Submuestra con discapacidad pequeña (~0.4%) — interpretar con cautela.
+:::
+
+## A16 · Limitaciones
 
 - La EH mide **acceso a dispositivos e internet**, no habilidades digitales reales
 - Acceso del hogar **no equivale a uso significativo** por parte de la adolescente

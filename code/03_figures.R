@@ -34,7 +34,7 @@ wt_pct <- function(design, var, by = NULL) {
   }
 }
 
-cap_src <- "Fuente: INE Bolivia – Encuesta de Hogares 2024. Estimaciones ponderadas, adolescentes 10–17."
+cap_src <- "Fuente: INE Bolivia – Encuesta de Hogares 2024. Estimaciones ponderadas, adolescentes 10–19."
 
 # ========================================================================
 # Figura 0: Teoría de Cambio (diagrama horizontal en 6 columnas)
@@ -65,7 +65,7 @@ f0 <- ggplot(toc_cols, aes(x = x, y = 1)) +
                colour = GREY_DARK, inherit.aes = FALSE) +
   scale_x_continuous(limits = c(0.5, 6.5)) +
   scale_y_continuous(limits = c(0.55, 1.55)) +
-  labs(title    = "Teoría de Cambio — Aula Conectada",
+  labs(title    = NULL,
        subtitle = "De insumos a impacto: la tecnología como medio, la pedagogía como motor",
        x = NULL, y = NULL) +
   theme_void(base_size = 11) +
@@ -84,19 +84,29 @@ save_fig(f0, "f0_theory_of_change", width = 12, height = 5.5)
 # Outcomes: matriculación, asistencia, rezago escolar.
 # ========================================================================
 EDU_LEVELS <- c("Matriculada/o", "Asiste a la Escuela",
-                "Rezago Escolar (Edad/Grado)")
+                "Rezago Escolar (Edad/Grado)",
+                "Abandono Escolar",
+                "NEET (15-19)")
 fill_sx    <- c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)
 
 # Helper para construir el dataset educativo por (sexo × grupo)
+# Cinco indicadores: matrícula, asistencia, rezago, abandono, NEET.
+# NEET se calcula sólo para 15–19 (rango convencional para adolescentes).
 edu_outcomes_by <- function(design, by_var = NULL) {
   fr_filter <- if (!is.null(by_var)) c("female", by_var) else "female"
+  # Sub-design para NEET: sólo 15-19 (adolescentes mayores)
+  design_1519 <- subset(design, age >= 15 & age <= 19)
   bind_rows(
     wt_pct(design, "enrolled",     by = fr_filter) |>
       mutate(indicator = "Matriculada/o"),
     wt_pct(design, "attending",    by = fr_filter) |>
       mutate(indicator = "Asiste a la Escuela"),
     wt_pct(design, "grade_delay",  by = fr_filter) |>
-      mutate(indicator = "Rezago Escolar (Edad/Grado)")
+      mutate(indicator = "Rezago Escolar (Edad/Grado)"),
+    wt_pct(design, "dropout",      by = fr_filter) |>
+      mutate(indicator = "Abandono Escolar"),
+    wt_pct(design_1519, "neet",    by = fr_filter) |>
+      mutate(indicator = "NEET (15-19)")
   ) |>
     mutate(
       sexo      = ifelse(female == 1, "Niñas", "Niños"),
@@ -126,15 +136,15 @@ f1a <- ggplot(f1a_dat, aes(x = sexo, y = estimate, fill = sexo)) +
   geom_col(width = 0.55) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             vjust = -0.4, size = 4.0, colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
   scale_fill_manual(values = fill_sx, name = NULL) +
-  labs(title    = "Brechas de género en resultados educativos",
-       subtitle = "Adolescentes 10–17 en Bolivia",
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19 en Bolivia",
        x = NULL, y = NULL, caption = cap_src) +
   edu_theme()
-save_fig(f1a, "f1a_edu_overall_by_sex")
+save_fig(f1a, "f1a_edu_overall_by_sex", height = 6.5)
 
 # --- f1b: outcomes educativos por sexo × rural --------------------------
 f1b_dat <- edu_outcomes_by(des, "rural") |>
@@ -145,15 +155,15 @@ f1b <- ggplot(f1b_dat, aes(x = zona, y = estimate, fill = sexo)) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             position = position_dodge(0.7), vjust = -0.4, size = 3.2,
             colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
   scale_fill_manual(values = fill_sx) +
-  labs(title    = "Resultados educativos por zona de residencia",
-       subtitle = "Adolescentes 10–17, por sexo y rural/urbano",
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19, por sexo y rural/urbano",
        x = NULL, y = NULL, fill = NULL, caption = cap_src) +
   edu_theme()
-save_fig(f1b, "f1b_edu_by_sex_rural")
+save_fig(f1b, "f1b_edu_by_sex_rural", height = 6.5)
 
 # --- f1c: outcomes educativos por sexo × indígena -----------------------
 f1c_dat <- edu_outcomes_by(des, "indigenous") |>
@@ -164,15 +174,15 @@ f1c <- ggplot(f1c_dat, aes(x = grupo, y = estimate, fill = sexo)) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             position = position_dodge(0.7), vjust = -0.4, size = 3.2,
             colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
   scale_fill_manual(values = fill_sx) +
-  labs(title    = "Resultados educativos por pertenencia indígena",
-       subtitle = "Adolescentes 10–17, por sexo",
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19, por sexo",
        x = NULL, y = NULL, fill = NULL, caption = cap_src) +
   edu_theme()
-save_fig(f1c, "f1c_edu_by_sex_indig")
+save_fig(f1c, "f1c_edu_by_sex_indig", height = 6.5)
 
 # --- f1d: outcomes educativos por sexo × pobreza ------------------------
 f1d_dat <- edu_outcomes_by(des, "poor_d") |>
@@ -184,15 +194,156 @@ f1d <- ggplot(f1d_dat, aes(x = grupo, y = estimate, fill = sexo)) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             position = position_dodge(0.7), vjust = -0.4, size = 3.2,
             colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
   scale_fill_manual(values = fill_sx) +
-  labs(title    = "Resultados educativos por situación de pobreza",
-       subtitle = "Adolescentes 10–17, por sexo (INE)",
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19, por sexo (INE)",
        x = NULL, y = NULL, fill = NULL, caption = cap_src) +
   edu_theme()
-save_fig(f1d, "f1d_edu_by_sex_poverty")
+save_fig(f1d, "f1d_edu_by_sex_poverty", height = 6.5)
+
+# ========================================================================
+# Figuras edad-banda (anexo): mismas particiones que f1a-f1d / f5
+# pero cruzando por adolescencia temprana (10-14) vs tardía (15-19).
+# Para mantener legibilidad usamos un helper que retorna 5 outcomes ×
+# sex × age_group_adol (NEET sólo tiene sentido para 15-19, así que
+# en 10-14 saldrá ≈ 0 — esto se hace explícito en el caption).
+# ========================================================================
+
+edu_outcomes_by_ageband <- function(design, extra_var = NULL) {
+  group_cols <- c("female", "age_group_adol", extra_var)
+  bind_rows(
+    wt_pct(design, "enrolled",     by = group_cols) |>
+      mutate(indicator = "Matriculada/o"),
+    wt_pct(design, "attending",    by = group_cols) |>
+      mutate(indicator = "Asiste a la Escuela"),
+    wt_pct(design, "grade_delay",  by = group_cols) |>
+      mutate(indicator = "Rezago Escolar (Edad/Grado)"),
+    wt_pct(design, "dropout",      by = group_cols) |>
+      mutate(indicator = "Abandono Escolar"),
+    wt_pct(design, "neet",         by = group_cols) |>
+      mutate(indicator = "NEET (15-19)")
+  ) |>
+    filter(!is.na(age_group_adol)) |>
+    mutate(
+      sexo = ifelse(female == 1, "Niñas", "Niños"),
+      indicator = factor(indicator, levels = EDU_LEVELS),
+      # Etiquetas cortas para el eje
+      banda = case_when(
+        stringr::str_detect(age_group_adol, "temprana") ~ "10-14",
+        stringr::str_detect(age_group_adol, "tardía")   ~ "15-19",
+        TRUE                                            ~ NA_character_
+      ),
+      banda = factor(banda, levels = c("10-14", "15-19"))
+    )
+}
+
+cap_age <- "Fuente: INE Bolivia – Encuesta de Hogares 2024. Estimaciones ponderadas."
+
+# --- f1a_age: por sexo × banda etaria ---
+f1a_age_dat <- edu_outcomes_by_ageband(des)
+
+f1a_age <- ggplot(f1a_age_dat, aes(x = banda, y = estimate, fill = sexo)) +
+  geom_col(position = position_dodge(0.7), width = 0.6) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
+            position = position_dodge(0.7), vjust = -0.4, size = 3.0,
+            colour = GREY_DARK) +
+  facet_wrap(~indicator, nrow = 2) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
+  scale_fill_manual(values = fill_sx) +
+  labs(title    = NULL,
+       subtitle = "Adolescencia temprana (10-14) vs tardía (15-19)",
+       x = NULL, y = NULL, fill = NULL, caption = cap_age) +
+  edu_theme()
+save_fig(f1a_age, "f1a_age_edu_by_sex_ageband", height = 6.5)
+
+# --- f1b_age: sexo × banda etaria × rural ---
+f1b_age_dat <- edu_outcomes_by_ageband(des, "rural") |>
+  filter(!is.na(rural)) |>
+  mutate(zona = ifelse(rural == 1, "Rural", "Urbano"))
+
+f1b_age <- ggplot(f1b_age_dat,
+                  aes(x = banda, y = estimate, fill = sexo)) +
+  geom_col(position = position_dodge(0.7), width = 0.6) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
+            position = position_dodge(0.7), vjust = -0.4, size = 2.6,
+            colour = GREY_DARK) +
+  facet_grid(zona ~ indicator) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
+  scale_fill_manual(values = fill_sx) +
+  labs(title    = NULL,
+       subtitle = "Por sexo, edad (10-14 / 15-19) y zona de residencia",
+       x = NULL, y = NULL, fill = NULL, caption = cap_age) +
+  edu_theme()
+save_fig(f1b_age, "f1b_age_edu_by_sex_rural_ageband", width = 12, height = 5.5)
+
+# --- f1c_age: sexo × banda etaria × indígena ---
+f1c_age_dat <- edu_outcomes_by_ageband(des, "indigenous") |>
+  filter(!is.na(indigenous)) |>
+  mutate(grupo = ifelse(indigenous == 1, "Indígena", "No indígena"))
+
+f1c_age <- ggplot(f1c_age_dat,
+                  aes(x = banda, y = estimate, fill = sexo)) +
+  geom_col(position = position_dodge(0.7), width = 0.6) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
+            position = position_dodge(0.7), vjust = -0.4, size = 2.6,
+            colour = GREY_DARK) +
+  facet_grid(grupo ~ indicator) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
+  scale_fill_manual(values = fill_sx) +
+  labs(title    = NULL,
+       subtitle = "Por sexo, edad (10-14 / 15-19) y estatus indígena",
+       x = NULL, y = NULL, fill = NULL, caption = cap_age) +
+  edu_theme()
+save_fig(f1c_age, "f1c_age_edu_by_sex_indig_ageband", width = 12, height = 5.5)
+
+# --- f1d_age: sexo × banda etaria × pobreza ---
+f1d_age_dat <- edu_outcomes_by_ageband(des, "poor_d") |>
+  filter(!is.na(poor_d)) |>
+  mutate(grupo = ifelse(poor_d == 1, "Pobre (INE)", "No pobre"))
+
+f1d_age <- ggplot(f1d_age_dat,
+                  aes(x = banda, y = estimate, fill = sexo)) +
+  geom_col(position = position_dodge(0.7), width = 0.6) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
+            position = position_dodge(0.7), vjust = -0.4, size = 2.6,
+            colour = GREY_DARK) +
+  facet_grid(grupo ~ indicator) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
+  scale_fill_manual(values = fill_sx) +
+  labs(title    = NULL,
+       subtitle = "Por sexo, edad (10-14 / 15-19) y situación de pobreza",
+       x = NULL, y = NULL, fill = NULL, caption = cap_age) +
+  edu_theme()
+save_fig(f1d_age, "f1d_age_edu_by_sex_poverty_ageband", width = 12, height = 5.5)
+
+# --- f5_age: sexo × banda etaria × discapacidad ---
+f5_age_dat <- edu_outcomes_by_ageband(des, "disab_any") |>
+  filter(!is.na(disab_any)) |>
+  mutate(grupo = ifelse(disab_any == 1, "Discapacidad (WG 3+)", "Sin discapacidad"))
+
+f5_age <- ggplot(f5_age_dat,
+                 aes(x = banda, y = estimate, fill = sexo)) +
+  geom_col(position = position_dodge(0.7), width = 0.6) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
+            position = position_dodge(0.7), vjust = -0.4, size = 2.6,
+            colour = GREY_DARK) +
+  facet_grid(grupo ~ indicator) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
+  scale_fill_manual(values = fill_sx) +
+  labs(title    = NULL,
+       subtitle = "Por sexo, edad (10-14 / 15-19) y discapacidad",
+       x = NULL, y = NULL, fill = NULL, caption = cap_age) +
+  edu_theme()
+save_fig(f5_age, "f5_age_edu_by_sex_disab_ageband", width = 12, height = 5.5)
+
 
 # ========================================================================
 # Figura 1: Acceso digital del hogar por sexo y grupo etario
@@ -218,13 +369,14 @@ f1 <- ggplot(f1_dat, aes(x = age_group, y = estimate, fill = sexo)) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             position = position_dodge(0.7), vjust = -0.4, size = 3.2,
             colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
   scale_fill_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
-  labs(title    = "Acceso digital del hogar para adolescentes en Bolivia",
+  labs(title    = NULL,
        subtitle = "Proporción de niñas y niños en hogares con cada activo digital, por grupo etario",
-       x = NULL, y = NULL, fill = NULL, caption = cap_src)
+       x = NULL, y = NULL, fill = NULL, caption = cap_src) +
+  edu_theme()
 save_fig(f1, "f1_digital_access_sex_age")
 
 # ========================================================================
@@ -252,13 +404,14 @@ f2 <- ggplot(f2_dat, aes(x = zona, y = estimate, fill = sexo)) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             position = position_dodge(0.7), vjust = -0.4, size = 3.2,
             colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
   scale_fill_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
-  labs(title    = "La mayor brecha digital es territorial, no solo de género",
-       subtitle = "Adolescentes 10–17, por sexo y zona de residencia",
-       x = NULL, y = NULL, fill = NULL, caption = cap_src)
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19, por sexo y zona de residencia",
+       x = NULL, y = NULL, fill = NULL, caption = cap_src) +
+  edu_theme()
 save_fig(f2, "f2_digital_access_area_sex")
 
 # ========================================================================
@@ -286,8 +439,8 @@ f3 <- ggplot(f3_dat, aes(x = estimate, y = indicator, fill = group)) +
                      expand = expansion(mult = c(0, 0.02))) +
   scale_fill_manual(values = c("Niñas indígenas"     = ACCENT_GIRL,
                                "Niñas no indígenas"  = UNICEF_BLUE)) +
-  labs(title    = "Niñas indígenas enfrentan brechas importantes de acceso digital",
-       subtitle = "Niñas adolescentes 10–17 en Bolivia, por pertenencia indígena",
+  labs(title    = NULL,
+       subtitle = "Niñas adolescentes 10–19 en Bolivia, por pertenencia indígena",
        x = NULL, y = NULL, fill = NULL, caption = cap_src) +
   theme(panel.grid.major.x = element_line(colour = "grey90", linewidth = 0.3),
         panel.grid.major.y = element_blank())
@@ -310,8 +463,8 @@ f4 <- ggplot(f4_dat, aes(x = hogar, y = estimate, fill = sexo)) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
   scale_fill_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
-  labs(title    = "Hogares conectados muestran mayor asistencia escolar",
-       subtitle = "Adolescentes 10–17 que asisten actualmente a la escuela",
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19 que asisten actualmente a la escuela",
        x = NULL, y = NULL, fill = NULL, caption = cap_src)
 save_fig(f4, "f4_attendance_by_internet")
 
@@ -333,17 +486,17 @@ f5 <- ggplot(f5_dat, aes(x = grupo, y = estimate, fill = sexo)) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
             position = position_dodge(0.7), vjust = -0.4, size = 3.2,
             colour = GREY_DARK) +
-  facet_wrap(~indicator) +
+  facet_wrap(~indicator, nrow = 2) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, 1), expand = expansion(mult = c(0, 0.07))) +
   scale_fill_manual(values = fill_sx) +
-  labs(title    = "Resultados educativos por situación de discapacidad",
-       subtitle = "Adolescentes 10–17, por sexo · Washington Group severidad ≥ 3",
+  labs(title    = NULL,
+       subtitle = "Adolescentes 10–19, por sexo · Washington Group severidad ≥ 3",
        x = NULL, y = NULL, fill = NULL,
        caption = paste0(cap_src,
                         " Tamaño muestral pequeño (~0.4%) — interpretar con cautela.")) +
   edu_theme()
-save_fig(f5, "f5_disability_gap")
+save_fig(f5, "f5_disability_gap", height = 6.5)
 
 # ========================================================================
 # Figura 6: Variación departamental — internet en el hogar (niñas)
@@ -360,8 +513,8 @@ f6 <- ggplot(f6_dat,
   scale_x_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0, max(f6_dat$estimate) * 1.18),
                      expand = expansion(mult = c(0, 0.02))) +
-  labs(title    = "Variación territorial para orientar priorización y secuenciación",
-       subtitle = "Internet en el hogar, niñas adolescentes 10–17, por departamento",
+  labs(title    = NULL,
+       subtitle = "Internet en el hogar, niñas adolescentes 10–19, por departamento",
        x = NULL, y = NULL, caption = cap_src) +
   theme(panel.grid.major.x = element_line(colour = "grey90", linewidth = 0.3),
         panel.grid.major.y = element_blank())
@@ -372,17 +525,17 @@ save_fig(f6, "f6_internet_by_department")
 # ========================================================================
 funnel <- read_csv(here::here("output", "tables", "t8_target_funnel.csv"),
                    show_col_types = FALSE) |>
-  filter(segment != "All adolescents 10–17 (weighted)") |>
+  filter(segment != "All adolescents 10–19 (weighted)") |>
   mutate(
     # Traducir etiquetas al español para la figura
     segment_es = recode(segment,
-      "All girls 10–17 (weighted)"                                              = "Todas las niñas 10–17",
-      "Girls 10–17 — rural"                                                     = "Niñas rurales 10–17",
-      "Girls 10–17 — Indigenous"                                                = "Niñas indígenas 10–17",
-      "Girls 10–17 — poor (INE)"                                                = "Niñas en pobreza 10–17",
-      "Girls 10–17 — disability (WG 3+)"                                        = "Niñas con discapacidad 10–17",
-      "Girls 10–17 — no HH internet"                                            = "Niñas sin internet en hogar 10–17",
-      "Girls 10–17 — priority (rural OR Indigenous OR poor OR disability)"      = "Niñas prioritarias (rural ∨ indígena ∨ pobre ∨ discapacidad)"
+      "All girls 10–19 (weighted)"                                              = "Todas las niñas 10–19",
+      "Girls 10–19 — rural"                                                     = "Niñas rurales 10–19",
+      "Girls 10–19 — Indigenous"                                                = "Niñas indígenas 10–19",
+      "Girls 10–19 — poor (INE)"                                                = "Niñas en pobreza 10–19",
+      "Girls 10–19 — disability (WG 3+)"                                        = "Niñas con discapacidad 10–19",
+      "Girls 10–19 — no HH internet"                                            = "Niñas sin internet en hogar 10–19",
+      "Girls 10–19 — priority (rural OR Indigenous OR poor OR disability)"      = "Niñas prioritarias (rural ∨ indígena ∨ pobre ∨ discapacidad)"
     ),
     segment_es = factor(segment_es, levels = rev(segment_es))
   )
@@ -393,8 +546,8 @@ f7 <- ggplot(funnel, aes(x = n_pop, y = segment_es)) +
             hjust = -0.1, size = 3.4, colour = GREY_DARK) +
   scale_x_continuous(labels = scales::comma_format(),
                      expand = expansion(mult = c(0, 0.18))) +
-  labs(title    = "Población objetivo y grupos prioritarios — Aula Conectada",
-       subtitle = "Niñas adolescentes 10–17 ponderadas en Bolivia, por segmento",
+  labs(title    = NULL,
+       subtitle = "Niñas adolescentes 10–19 ponderadas en Bolivia, por segmento",
        x = NULL, y = NULL, caption = cap_src) +
   theme(panel.grid.major.x = element_line(colour = "grey90", linewidth = 0.3),
         panel.grid.major.y = element_blank())

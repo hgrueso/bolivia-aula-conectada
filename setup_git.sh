@@ -5,7 +5,7 @@
 #   bash setup_git.sh GITHUB_USER REPO_NAME
 #
 # Example:
-#   bash setup_git.sh hgrueso bolivia-aulas-conectadas
+#   bash setup_git.sh hgrueso bolivia-aula-conectada
 #
 # Prerequisites:
 #   - You are inside the analysis/ folder (the one with .here and code/)
@@ -30,15 +30,15 @@ if [[ $# -lt 2 ]]; then
 Usage: bash setup_git.sh GITHUB_USER REPO_NAME [COMMIT_MSG]
 
 Examples:
-  bash setup_git.sh hgrueso bolivia-aulas-conectadas
-  bash setup_git.sh hgrueso bolivia-aulas-conectadas "Initial commit message"
+  bash setup_git.sh hgrueso bolivia-aula-conectada
+  bash setup_git.sh hgrueso bolivia-aula-conectada "Initial commit message"
 EOF
   exit 1
 fi
 
 GITHUB_USER="$1"
 REPO_NAME="$2"
-COMMIT_MSG="${3:-Initial commit: Aulas Conectadas investment case pipeline}"
+COMMIT_MSG="${3:-Initial commit: Aula Conectada investment case pipeline}"
 DEFAULT_BRANCH="main"
 
 echo "================================================================"
@@ -188,7 +188,7 @@ if command -v gh >/dev/null 2>&1; then
   else
     echo "  Creating private repo and pushing…"
     gh repo create "${GITHUB_USER}/${REPO_NAME}" --private --source=. \
-        --description "Bolivia Aulas Conectadas — UNICEF investment case analysis" \
+        --description "Bolivia Aula Conectada — UNICEF investment case analysis" \
         --remote=origin --push
   fi
 

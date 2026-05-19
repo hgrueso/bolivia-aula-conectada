@@ -1,6 +1,6 @@
-# Bolivia Investment Case — Aulas Conectadas
+# Bolivia Investment Case — Aula Conectada
 
-This repository contains the R code and methodology to replicate an investment case study projecting the expected effectiveness and return on investment of the **Aulas Conectadas** programme in Bolivia — a school-based digital ecosystem designed to promote gender equality and improve digital skills among adolescent girls 10–17 through teacher training, digital infrastructure, connectivity, and robotics-based learning content.
+This repository contains the R code and methodology to replicate an investment case study projecting the expected effectiveness and return on investment of the **Aula Conectada** programme in Bolivia — a school-based digital ecosystem designed to promote gender equality and improve digital skills among adolescent girls 10–17 through teacher training, digital infrastructure, connectivity, and robotics-based learning content.
 
 The analysis combines descriptive evidence on gender gaps in education from the Bolivian Encuesta de Hogares (EH) 2024, multivariate regression analysis with intersectional cuts, and Bolivia-adjusted projections of effects from comparable international anchor programmes.
 
@@ -42,8 +42,8 @@ analysis/
 │   └── lit_review_effect_modifiers.csv
 │
 ├── slides/                        # rendered investment-case decks (committed)
-│   ├── aulas_conectadas_es.pdf
-│   └── aulas_conectadas_en.pdf
+│   ├── aula_conectada_es.pdf
+│   └── aula_conectada_en.pdf
 │
 └── output/                        # generated artefacts (gitignored)
     ├── figures/                   # PNGs for slides

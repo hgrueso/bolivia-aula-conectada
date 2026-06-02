@@ -2,7 +2,7 @@
 title: "Aula Conectada"
 subtitle: "Caso de inversión · Bolivia"
 author: "Hernando Grueso, PhD <br> UNICEF"
-date: "Mayo 2026"
+date: "Junio 2026"
 lang: es
 format:
   revealjs:
@@ -450,9 +450,9 @@ Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al 
 
 **Traducido a ingresos de vida** <br>(vía datos de Bolivia)
 
-- **+0.06 SD → +0.09 años** de escolaridad (Hanushek-Woessmann, aprox.)
+- **+2.4 pp asistencia → +0.10 años de escolaridad asistida**
 - **× 7.5%** retorno Mincer por año (EH 2024, **mujeres bolivianas**) + ingresos por salida de NEET
-- **→ ~$396** valor presente por niña → **BCR ≈ 2.6** (paquete pedagógico, $152)
+- **→ ~$421** valor presente por niña → **BCR ≈ 2.8** (paquete pedagógico, $152)
 
 :::
 :::
@@ -519,18 +519,18 @@ knitr::kable(scale_tab, align = "lrrl")
 
 ## Retornos monetizados vs. retornos más amplios {.smaller}
 
-El BCR a continuación monetiza **únicamente** el canal de aprendizaje → ingresos. Es deliberadamente conservador y debe leerse como el **piso**, no el techo, de los retornos esperados.
+El BCR a continuación monetiza **únicamente** el canal de asistencia → ingresos. Es deliberadamente conservador y debe leerse como el **piso**, no el techo, de los retornos esperados.
 
 ::: {.columns}
 ::: {.column width="50%"}
 
 **Lo que el BCR sí monetiza**
 
-→ Aprendizaje (Porter, φ-ajustado)
+→ Asistencia / retención (Evans & Yuan, φ-ajustado)
 
 → Retorno Mincer Bolivia (7.5%/año)
 
-→ Ingresos laborales descontados a 35 años
+→ Ingresos por salida de NEET + ingresos laborales descontados a 35 años
 
 :::
 ::: {.column width="50%"}
@@ -594,7 +594,7 @@ Grandes RCTs de programas de sólo hardware (**Cristia et al. 2017; Cueto et al.
 
 ## Cadena de valor del beneficio — niñas 10–19 en Bolivia
 
-Cómo el efecto en acceso se convierte en un beneficio en valor presente por niña (paquete pedagógico, $152/niña):
+Cómo el efecto en asistencia se convierte en un beneficio en valor presente por niña (paquete pedagógico, $152/niña):
 
 ::: {.columns}
 ::: {.column width="6%"}
@@ -603,26 +603,26 @@ Cómo el efecto en acceso se convierte en un beneficio en valor presente por ni�
 
 | Paso | Cálculo | Resultado |
 |---|---|---:|
-| **1 · Efecto en acceso** | Evans & Yuan (2022), φ-ajustado | **+0.06 SD** |
-| **2 · Años de escolaridad** | × 1.5 años/SD (Hanushek-Woessmann, aprox.) | **+0.09 años** |
-| **3 · Ingresos — escolaridad** | +0.09 años × 7.5%/año Mincer (EH 2024 mujeres), VP 35 años | **~$327** |
+| **1 · Efecto en asistencia** | Evans & Yuan (2022), φ-ajustado | **+2.4 pp** |
+| **2 · Años de escolaridad** | +2.4 pp asistidos sobre ~4 años de secundaria | **+0.10 años** |
+| **3 · Ingresos — escolaridad** | +0.10 años × 7.5%/año Mincer (EH 2024 mujeres), VP 35 años | **~$352** |
 | **4 · Ingresos — salida de NEET** | −1.4 pp NEET × inactividad temprana evitada | **~$69** |
-| **= Beneficio vs. costo** | $396 beneficio ÷ $152 costo | **BCR ≈ 2.6** |
+| **= Beneficio vs. costo** | $421 beneficio ÷ $152 costo | **BCR ≈ 2.8** |
 
 :::
 ::: {.column width="6%"}
 :::
 :::
 
-<small>Escenario central [rango BCR 0.8 – 5.3]. En el programa completo con laptops ($465), BCR ≈ 0.85 — menor porque también financia hardware que la evidencia RCT muestra que aporta poco al aprendizaje. Cuenta **sólo ingresos**: agencia, reducción de violencia y efectos intergeneracionales documentados pero **no** sumados — el retorno real es mayor.</small>
+<small>La ganancia en asistencia se convierte directamente en años de escolaridad asistida (sin conversión de puntajes). Escenario central [rango BCR 0.8 – 5.6]. En el programa completo con laptops ($465), BCR ≈ 0.9 — menor porque también financia hardware que la evidencia RCT muestra que aporta poco. Cuenta **sólo ingresos**: agencia, reducción de violencia y efectos intergeneracionales documentados pero no sumados, por lo que el retorno real **se espera que sea mayor**.</small>
 
-## Mensajes clave
+## Mensajes clave {.smaller}
 
 **1 · La brecha es territorial, no de matrícula.** La matrícula es ~95% en todas partes; las brechas reales para las niñas están en **asistencia, abandono y acceso digital** — concentradas en hogares rurales, indígenas y pobres.
 
 **2 · Un diseño anclado en evidencia específica de niñas.** Aula Conectada se ancla en el meta-análisis de Evans & Yuan (2022) de 73 RCTs — que halla que la pedagogía docente y el software (no el hardware solo) son lo que funciona para las niñas — con Technovation Girls (Chile) como plantilla de diseño.
 
-**3 · Costo-efectivo cuando se financia la capa correcta.** El paquete pedagógico ($152/niña) alcanza **~$63 por +1 pp de asistencia** y un **BCR central ≈ 2.6** [0.8–5.3] sólo por ingresos. El paquete completo con laptops cuesta 3× más por el mismo efecto (BCR ≈ 0.85) — la evidencia RCT ubica el retorno en la pedagogía, no en el hardware.
+**3 · Costo-efectivo cuando se financia la capa correcta.** El paquete pedagógico ($152/niña) alcanza **~$63 por +1 pp de asistencia** y un **BCR central ≈ 2.8** [0.8–5.6] sólo por ingresos. El paquete completo con laptops cuesta 3× más por el mismo efecto (BCR ≈ 0.9) — la evidencia RCT ubica el retorno en la pedagogía, no en el hardware.
 
 **4 · El retorno monetizado es un piso.** El BCR cuenta sólo ingresos vía retención. Aprendizaje, agencia, reducción de violencia y efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
 
@@ -639,6 +639,8 @@ Cómo el efecto en acceso se convierte en un beneficio en valor presente por ni�
 
 ## A1 · Datos y muestra {.smaller}
 
+::: {style="font-size:0.80em"}
+
 **Fuente:** Encuesta de Hogares 2024 (EH 2024) — INE Bolivia · Recolección noviembre–diciembre 2024 · Cobertura nacional, urbano y rural · Unidad de análisis: miembros del hogar en viviendas particulares.
 
 **Tamaño:** 12,718 hogares · 39,497 personas · Submuestra analítica: **6,254 adolescentes 10–19** (≈ 977 mil niñas y 1.05 M niños expandidos) · Archivos: Persona, Vivienda, Equipamiento.
@@ -651,6 +653,8 @@ Cómo el efecto en acceso se convierte en un beneficio en valor presente por ni�
 - **Internet en hogar** = `s06a_19` (módulo Vivienda) · **Equipamiento digital** (computadora, smartphone, tablet) del módulo Equipamiento
 
 **Estimación:** MCO ponderado por factor de expansión `factor`; errores estándar agrupados al nivel UPM (`fixest::feols`).
+
+:::
 
 ::: footer
 Microdatos: anda.ine.gob.bo/index.php/catalog/163
@@ -690,6 +694,8 @@ flowchart LR
 
 ## A3 · Estrategia empírica {.smaller}
 
+::: {style="font-size:0.82em"}
+
 **Modelo base (LPM con efectos fijos de departamento):**
 
 $$Y_{ihd} = \alpha + \beta_F F_i + \beta_R R_i + \beta_I I_i + \beta_D D_i + \beta_P P_i + \gamma X_{ihd} + \delta_d + \varepsilon_{ihd}$$
@@ -709,6 +715,8 @@ $$Y_{ihd} = \alpha + \text{efectos principales} + \text{2-vías} + \theta_{F\cdo
 y análogos para $F \times R \times P$ y $F \times I \times P$. Las interacciones de tres vías capturan si la brecha de género en una intersección compuesta (por ejemplo, niñas rurales indígenas) difiere de lo que sugieren las dos interacciones de dos vías por separado.
 
 Estimación por MCO ponderado por `factor` (factor de expansión); errores estándar agrupados al nivel UPM (`fixest::feols`).
+
+:::
 
 ## A4 · Tabla completa — coeficientes principales {.smaller}
 

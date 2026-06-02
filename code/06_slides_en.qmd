@@ -2,7 +2,7 @@
 title: "Aula Conectada"
 subtitle: "Investment case · Bolivia"
 author: "Hernando Grueso, PhD <br> UNICEF"
-date: "May 2026"
+date: "June 2026"
 lang: en
 format:
   revealjs:
@@ -448,9 +448,9 @@ proj_v2 |>
 
 **Translated to lifetime earnings** <br>(via Bolivia data)
 
-- **+0.06 SD → +0.09 years** of schooling (Hanushek-Woessmann, approx.)
+- **+2.4 pp attendance → +0.10 attended school-years**
 - **× 7.5%** Mincer return per year (EH 2024, **Bolivian women**) + NEET-exit earnings
-- **→ ~$396** present value per girl → **BCR ≈ 2.6** (pedagogy bundle, $152)
+- **→ ~$421** present value per girl → **BCR ≈ 2.8** (pedagogy bundle, $152)
 
 :::
 :::
@@ -494,18 +494,18 @@ knitr::kable(scale_tab, align = "lrrl")
 
 ## Monetised vs. broader returns {.smaller}
 
-The BCR below monetises **only** the learning → earnings channel. It is deliberately conservative and should be read as the **floor**, not the ceiling, of expected returns.
+The BCR below monetises **only** the attendance → earnings channel. It is deliberately conservative and should be read as the **floor**, not the ceiling, of expected returns.
 
 ::: {.columns}
 ::: {.column width="50%"}
 
 **What the BCR monetises**
 
-→ Learning gains (Porter, φ-adjusted)
+→ Attendance / retention gains (Evans & Yuan, φ-adjusted)
 
 → Bolivia Mincer return (7.5%/year)
 
-→ Discounted lifetime labour earnings (35 years)
+→ NEET-exit earnings + discounted lifetime labour earnings (35 years)
 
 :::
 ::: {.column width="50%"}
@@ -569,7 +569,7 @@ Large RCTs of hardware-only programmes (**Cristia et al. 2017; Cueto et al. 2024
 
 ## Benefit value chain — girls 10–19 in Bolivia
 
-How the access effect becomes a present-value benefit per girl (pedagogy bundle, $152/girl):
+How the attendance effect becomes a present-value benefit per girl (pedagogy bundle, $152/girl):
 
 ::: {.columns}
 ::: {.column width="6%"}
@@ -578,26 +578,26 @@ How the access effect becomes a present-value benefit per girl (pedagogy bundle,
 
 | Step | Calculation | Result |
 |---|---|---:|
-| **1 · Access effect** | Evans & Yuan (2022), φ-adjusted | **+0.06 SD** |
-| **2 · Years of schooling** | × 1.5 yr/SD (Hanushek-Woessmann, approx.) | **+0.09 yr** |
-| **3 · Earnings — schooling** | +0.09 yr × 7.5%/yr Mincer (EH 2024 women), PV 35 yr | **~$327** |
+| **1 · Attendance effect** | Evans & Yuan (2022), φ-adjusted | **+2.4 pp** |
+| **2 · School-years gained** | +2.4 pp attended over ~4 secondary years | **+0.10 yr** |
+| **3 · Earnings — schooling** | +0.10 yr × 7.5%/yr Mincer (EH 2024 women), PV 35 yr | **~$352** |
 | **4 · Earnings — NEET exit** | −1.4 pp NEET × avoided early-career idleness | **~$69** |
-| **= Benefit vs. cost** | $396 benefit ÷ $152 cost | **BCR ≈ 2.6** |
+| **= Benefit vs. cost** | $421 benefit ÷ $152 cost | **BCR ≈ 2.8** |
 
 :::
 ::: {.column width="6%"}
 :::
 :::
 
-<small>Central scenario [BCR range 0.8 – 5.3]. On the full programme with laptops ($465), BCR ≈ 0.85 — lower because it also funds hardware that the RCT evidence shows adds little to learning. Still counts **only earnings**: agency, violence reduction and intergenerational gains are documented but **not** added — the true return is higher.</small>
+<small>The attendance gain converts directly into attended school-years (no test-score conversion needed). Central scenario [BCR range 0.8 – 5.6]. On the full programme with laptops ($465), BCR ≈ 0.9 — lower because it also funds hardware that the RCT evidence shows adds little. Counts **only earnings**: agency, violence reduction and intergenerational gains are documented but not added, so the true return is **expected to be higher**.</small>
 
-## Key takeaways
+## Key takeaways {.smaller}
 
 **1 · The gap is territorial, not enrolment.** Enrolment is ~95% everywhere; the real gaps for girls are in **attendance, dropout, and digital access** — concentrated in rural, indigenous, and poor households.
 
 **2 · A design anchored in girl-specific evidence.** Aula Conectada is anchored on the Evans & Yuan (2022) meta-analysis of 73 RCTs — which finds teacher-pedagogy and software (not hardware alone) are what work for girls — with Technovation Girls (Chile) as the design template.
 
-**3 · Cost-effective when you fund the right layer.** The pedagogy bundle ($152/girl) reaches **~$63 per +1 pp of attendance** and a central **BCR ≈ 2.6** [0.8–5.3] through earnings alone. The full bundle with laptops costs 3× more for the same effect (BCR ≈ 0.85) — the RCT evidence puts the return in the pedagogy, not the hardware.
+**3 · Cost-effective when you fund the right layer.** The pedagogy bundle ($152/girl) reaches **~$63 per +1 pp of attendance** and a central **BCR ≈ 2.8** [0.8–5.6] through earnings alone. The full bundle with laptops costs 3× more for the same effect (BCR ≈ 0.9) — the RCT evidence puts the return in the pedagogy, not the hardware.
 
 **4 · The monetised return is a floor.** The BCR counts only retention-driven earnings. Learning gains, agency, violence reduction, and intergenerational effects are documented but **not** added — the true return is higher.
 
@@ -613,6 +613,8 @@ How the access effect becomes a present-value benefit per girl (pedagogy bundle,
 - **Analysis excludes positive externalities** on younger sisters, community norms, and intergenerational effects on future daughters — all documented in the literature but outside the scope of this conservative BCR
 
 ## A1 · Data and sample {.smaller}
+
+::: {style="font-size:0.80em"}
 
 **Source:** Household Survey 2024 (EH 2024) — INE Bolivia · Collection November–December 2024 · National coverage, urban and rural · Unit of analysis: members of households in private dwellings.
 
@@ -630,6 +632,8 @@ How the access effect becomes a present-value benefit per girl (pedagogy bundle,
 - **HH internet** = `s06a_19` (Housing module) · **Digital equipment** (computer, smartphone, tablet) from Equipment module
 
 **Estimation:** Weighted OLS using expansion factor `factor`; standard errors clustered at PSU level (`fixest::feols`).
+
+:::
 
 ::: footer
 Microdata: anda.ine.gob.bo/index.php/catalog/163
@@ -669,6 +673,8 @@ flowchart LR
 
 ## A3 · Empirical strategy {.smaller}
 
+::: {style="font-size:0.82em"}
+
 **Base model (LPM with department fixed effects):**
 
 $$Y_{ihd} = \alpha + \beta_F F_i + \beta_R R_i + \beta_I I_i + \beta_D D_i + \beta_P P_i + \gamma X_{ihd} + \delta_d + \varepsilon_{ihd}$$
@@ -688,6 +694,8 @@ $$Y_{ihd} = \alpha + \text{main effects} + \text{2-way} + \theta_{F\cdot R \cdot
 and analogous for $F \times R \times P$ and $F \times I \times P$. Three-way interactions capture whether the gender gap in a compound intersection (e.g. rural indigenous girls) differs from what the two-way interactions would suggest separately.
 
 Estimation by weighted OLS using `factor` (expansion factor); standard errors clustered at PSU level (`fixest::feols`).
+
+:::
 
 ## A4 · Full coefficients table — main model {.smaller}
 

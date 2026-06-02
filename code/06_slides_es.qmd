@@ -551,27 +551,24 @@ Estos canales están **documentados pero deliberadamente excluidos** del BCR —
 
 ## Costo-efectividad — un ancla, un efecto
 
-Anclado en el meta-análisis específico de niñas de **Evans & Yuan (2022)** sobre resultados de acceso (73 RCTs): mediana **+0.07 SD**, φ-ajustado a Bolivia. Sin un único estudio frágil; sin sumar efectos.
+Anclado en el meta-análisis específico de niñas de **Evans & Yuan (2022)** sobre resultados de acceso (73 RCTs): mediana **+0.07 SD**, φ-ajustado a Bolivia.
 
 ::: {.columns}
-::: {.column width="10%"}
+::: {.column width="13%"}
 :::
-::: {.column width="80%"}
+::: {.column width="74%"}
 
-| Efecto en niñas 10–19 | Central | Rango |
-|---|---:|---:|
-| Efecto en acceso (φ-ajustado) | +0.06 SD | 0.02 – 0.12 |
-| **Asistencia** | **+2.4 pp** | 0.7 – 4.8 |
-| **NEET (15–19)** | **−1.4 pp** | −0.4 a −2.9 |
-| Costo por niña (4 años) | $465 | $360 – $850 |
-| **Costo por +1 pp asistencia** | **~$190** | $95 – $660 |
+| Resultado (niñas 10–19) | Efectividad | Costo por niña | Costo por 1 pp |
+|---|---:|---:|---:|
+| **Asistencia** | +2.4 pp [0.7 – 4.8] | $465 | **~$194** |
+| **NEET (15–19)** | −1.4 pp [−0.4 a −2.9] | $465 | **~$332** |
 
 :::
-::: {.column width="10%"}
+::: {.column width="13%"}
 :::
 :::
 
-<small>*La reducción de NEET es un cálculo **de orden de magnitud** (pass-through ~60% de la ganancia en asistencia), no una proyección precisa. "Central" = efecto meta-analítico mediano y costo mediano. Estudios individuales (Porter 0.27, Learning Passport México 0.26) se ubican cerca del rango superior como corroboración.*</small>
+<small>*Efecto subyacente en acceso: **+0.06 SD** φ-ajustado [0.02 – 0.12]. La reducción de NEET es un cálculo **de orden de magnitud** (pass-through ~60% de la ganancia en asistencia), no una proyección precisa. "Efectividad" = efecto meta-analítico mediano; costo = escenario mediano ($465/niña en 4 años). Estudios individuales (Porter 0.27, Learning Passport México 0.26) se ubican cerca del rango superior como corroboración.*</small>
 
 ## Cadena de valor del beneficio — niñas 10–19 en Bolivia
 

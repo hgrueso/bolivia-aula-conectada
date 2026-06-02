@@ -526,27 +526,24 @@ These channels are **documented but deliberately excluded** from the BCR — the
 
 ## Cost-effectiveness — one anchor, one effect
 
-Anchored on the **Evans & Yuan (2022)** girl-specific meta-analysis of access outcomes (73 RCTs): median **+0.07 SD**, φ-adjusted to Bolivia. No single fragile study; no effects summed.
+Anchored on the **Evans & Yuan (2022)** girl-specific meta-analysis of access outcomes (73 RCTs): median **+0.07 SD**, φ-adjusted to Bolivia.
 
 ::: {.columns}
-::: {.column width="10%"}
+::: {.column width="13%"}
 :::
-::: {.column width="80%"}
+::: {.column width="74%"}
 
-| Effect on girls 10–19 | Central | Range |
-|---|---:|---:|
-| Access effect (φ-adjusted) | +0.06 SD | 0.02 – 0.12 |
-| **Attendance** | **+2.4 pp** | 0.7 – 4.8 |
-| **NEET (15–19)** | **−1.4 pp** | −0.4 to −2.9 |
-| Cost per girl (4 years) | $465 | $360 – $850 |
-| **Cost per +1 pp attendance** | **~$190** | $95 – $660 |
+| Outcome (girls 10–19) | Effectiveness | Cost per girl | Cost per 1 pp |
+|---|---:|---:|---:|
+| **Attendance** | +2.4 pp [0.7 – 4.8] | $465 | **~$194** |
+| **NEET (15–19)** | −1.4 pp [−0.4 to −2.9] | $465 | **~$332** |
 
 :::
-::: {.column width="10%"}
+::: {.column width="13%"}
 :::
 :::
 
-<small>*NEET reduction is a **back-of-envelope** pass-through (~60% of the attendance gain), shown as an order of magnitude, not a precise projection. "Central" = median meta-analytic effect and median cost. Individual studies (Porter 0.27, Mexico Learning Passport 0.26) sit near the upper range as corroboration.*</small>
+<small>*Underlying access effect: **+0.06 SD** φ-adjusted [0.02 – 0.12]. NEET reduction is a **back-of-envelope** pass-through (~60% of the attendance gain), an order of magnitude, not a precise projection. "Effectiveness" = median meta-analytic effect; cost = median scenario ($465/girl over 4 years). Individual studies (Porter 0.27, Mexico Learning Passport 0.26) sit near the upper range as corroboration.*</small>
 
 ## Benefit value chain — girls 10–19 in Bolivia
 

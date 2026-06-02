@@ -37,6 +37,8 @@ outcomes <- c(
   attending      = "Currently attending",
   enrolled       = "Currently enrolled",
   grade_delay    = "Age-for-grade delay",
+  dropout        = "Enrolled but not attending",
+  neet           = "NEET (not in education or employment)",
   hh_internet    = "HH has internet",
   hh_computer    = "HH has computer",
   hh_any_device  = "HH any digital device"

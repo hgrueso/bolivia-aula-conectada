@@ -365,6 +365,7 @@ proj_v2 <- read_csv(here("output", "projections", "anchor_projections_long.csv")
 
 proj_v2 |>
   filter(subgroup_id == "priority", usable_for_projection,
+         !grepl("Porter", programme),
          programme_type %in% c("digital_education", "gender_norms")) |>
   transmute(
     Programa   = programme,
@@ -450,8 +451,8 @@ Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al 
 **Traducido a ingresos de vida** <br>(vía datos de Bolivia)
 
 - **+0.06 SD → +0.09 años** de escolaridad (Hanushek-Woessmann, aprox.)
-- **× 7.5%** retorno Mincer por año (EH 2024, **mujeres bolivianas**)
-- **→ ~$330** valor presente por niña (sólo canal de ingresos)
+- **× 7.5%** retorno Mincer por año (EH 2024, **mujeres bolivianas**) + ingresos por salida de NEET
+- **→ ~$396** valor presente por niña → **BCR ≈ 2.6** (paquete pedagógico, $152)
 
 :::
 :::
@@ -549,7 +550,7 @@ El BCR a continuación monetiza **únicamente** el canal de aprendizaje → ingr
 
 Estos canales están **documentados pero deliberadamente excluidos** del BCR — elevarían el retorno, no lo reducen, por lo que la cifra monetizada es un piso.
 
-## Costo-efectividad — un ancla, un efecto
+## Costo-efectividad — programa completo (con laptops)
 
 Anclado en el meta-análisis específico de niñas de **Evans & Yuan (2022)** sobre resultados de acceso (73 RCTs): mediana **+0.07 SD**, φ-ajustado a Bolivia.
 
@@ -568,31 +569,52 @@ Anclado en el meta-análisis específico de niñas de **Evans & Yuan (2022)** so
 :::
 :::
 
-<small>*Efecto subyacente en acceso: **+0.06 SD** φ-ajustado [0.02 – 0.12]. La reducción de NEET es un cálculo **de orden de magnitud** (pass-through ~60% de la ganancia en asistencia), no una proyección precisa. "Efectividad" = efecto meta-analítico mediano; costo = escenario mediano ($465/niña en 4 años). Estudios individuales (Porter 0.27, Learning Passport México 0.26) se ubican cerca del rango superior como corroboración.*</small>
+<small>*Paquete completo: dispositivos + conectividad + contenido + formación docente + pedagogía/M&E ≈ $465/niña en 4 años. Efecto subyacente en acceso **+0.06 SD** φ-ajustado [0.02 – 0.12]. NEET es un cálculo de orden de magnitud (pass-through ~60% de la ganancia en asistencia).*</small>
+
+## Costo-efectividad — sólo pedagogía (sin laptops)
+
+Grandes RCTs de programas de sólo hardware (**Cristia et al. 2017; Cueto et al. 2024**, OLPC Perú; de Melo 2014, Uruguay) hallan **efectos casi nulos en aprendizaje** — las ganancias vienen de la capa de **pedagogía y software**, no de los dispositivos. Quitar el hardware preserva el efecto a un tercio del costo.
+
+::: {.columns}
+::: {.column width="13%"}
+:::
+::: {.column width="74%"}
+
+| Resultado (niñas 10–19) | Efectividad | Costo por niña | Costo por 1 pp |
+|---|---:|---:|---:|
+| **Asistencia** | +2.4 pp [0.7 – 4.8] | $152 | **~$63** |
+| **NEET (15–19)** | −1.4 pp [−0.4 a −2.9] | $152 | **~$109** |
+
+:::
+::: {.column width="13%"}
+:::
+:::
+
+<small>*Paquete pedagógico: contenido/plataforma + formación docente + pedagogía/M&E ≈ $152/niña en 4 años (sin compra de nuevos dispositivos ni conectividad). El efecto se mantiene constante porque la evidencia experimental atribuye la ganancia a la pedagogía y el software, con brazos de sólo hardware cercanos a cero. **La costo-efectividad mejora ~3× por punto porcentual.***</small>
 
 ## Cadena de valor del beneficio — niñas 10–19 en Bolivia
 
-Cómo el efecto en acceso se convierte en un beneficio en valor presente por niña:
+Cómo el efecto en acceso se convierte en un beneficio en valor presente por niña (paquete pedagógico, $152/niña):
 
 ::: {.columns}
-::: {.column width="8%"}
+::: {.column width="6%"}
 :::
-::: {.column width="84%"}
+::: {.column width="88%"}
 
 | Paso | Cálculo | Resultado |
 |---|---|---:|
 | **1 · Efecto en acceso** | Evans & Yuan (2022), φ-ajustado | **+0.06 SD** |
 | **2 · Años de escolaridad** | × 1.5 años/SD (Hanushek-Woessmann, aprox.) | **+0.09 años** |
-| **3 · Retorno Mincer** | × 7.5%/año (EH 2024, mujeres bolivianas) | **+0.7%** ingreso |
-| **4 · Valor de vida** | VP sobre 35 años laborales, desc. 3% | **~$330** |
-| **= Beneficio vs. costo** | $330 beneficio ÷ $465 costo | **BCR ≈ 0.7** |
+| **3 · Ingresos — escolaridad** | +0.09 años × 7.5%/año Mincer (EH 2024 mujeres), VP 35 años | **~$327** |
+| **4 · Ingresos — salida de NEET** | −1.4 pp NEET × inactividad temprana evitada | **~$69** |
+| **= Beneficio vs. costo** | $396 beneficio ÷ $152 costo | **BCR ≈ 2.6** |
 
 :::
-::: {.column width="8%"}
+::: {.column width="6%"}
 :::
 :::
 
-<small>Escenario central [rango BCR 0.2 – 1.4]. Cuenta **sólo ingresos** vía retención; aprendizaje, agencia, reducción de violencia y efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.</small>
+<small>Escenario central [rango BCR 0.8 – 5.3]. En el programa completo con laptops ($465), BCR ≈ 0.85 — menor porque también financia hardware que la evidencia RCT muestra que aporta poco al aprendizaje. Cuenta **sólo ingresos**: agencia, reducción de violencia y efectos intergeneracionales documentados pero **no** sumados — el retorno real es mayor.</small>
 
 ## Mensajes clave
 
@@ -600,7 +622,7 @@ Cómo el efecto en acceso se convierte en un beneficio en valor presente por ni�
 
 **2 · Un diseño anclado en evidencia específica de niñas.** Aula Conectada se ancla en el meta-análisis de Evans & Yuan (2022) de 73 RCTs — que halla que la pedagogía docente y el software (no el hardware solo) son lo que funciona para las niñas — con Technovation Girls (Chile) como plantilla de diseño.
 
-**3 · Costo-efectivo en los resultados que importan.** ~**$190 por niña** por cada +1 pp de asistencia; **BCR central ≈ 0.7** [0.2–1.4] sólo por el canal de ingresos, más una reducción estimada de **−1.4 pp NEET** en niñas 15–19.
+**3 · Costo-efectivo cuando se financia la capa correcta.** El paquete pedagógico ($152/niña) alcanza **~$63 por +1 pp de asistencia** y un **BCR central ≈ 2.6** [0.8–5.3] sólo por ingresos. El paquete completo con laptops cuesta 3× más por el mismo efecto (BCR ≈ 0.85) — la evidencia RCT ubica el retorno en la pedagogía, no en el hardware.
 
 **4 · El retorno monetizado es un piso.** El BCR cuenta sólo ingresos vía retención. Aprendizaje, agencia, reducción de violencia y efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
 

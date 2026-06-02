@@ -21,6 +21,15 @@ PERSONA <- list(
   age          = "s01a_03",   # años cumplidos (0–98)
   rel_head     = "s01a_05",   # parentesco con jefe(a)
 
+  # Household composition: row number of father/mother in the HH roster
+  # 0 = parent NOT in household; >0 = roster ID of the parent
+  father_id    = "s01a_05b",  # padre / padrastro
+  mother_id    = "s01a_05c",  # madre / madrastra
+
+  # Adolescent agency indicators (girls only)
+  ever_preg    = "s02b_06",   # 1=actualmente embarazada, 2=estuvo, 3=no
+  num_births   = "s02b_07",   # número de hijos nacidos vivos
+
   # Language / Indigenous proxy
   lang_first   = "s01a_08",   # idioma de la niñez
   lang_spoken1 = "s01a_07_1", # idioma que habla (1)
@@ -46,7 +55,11 @@ PERSONA <- list(
   yhog          = "yhog",       # ingreso del hogar
   yhogpc        = "yhogpc",     # ingreso per cápita
   pov_line      = "z",          # línea de pobreza
-  pov_line_ext  = "zext"        # línea de pobreza extrema
+  pov_line_ext  = "zext",       # línea de pobreza extrema
+
+  # Labour-status — used to construct NEET (Not in Education, Employment or Training)
+  # condact: 1=ocupado, 2=cesante, 3=aspirante, 4=inactivo (codes per EH 2024)
+  condact       = "condact"     # condición de actividad
 )
 
 # --- Vivienda file (household-level) -------------------------------------

@@ -448,24 +448,32 @@ save_fig(f3, "f3_indigenous_girls_gaps")
 
 # ========================================================================
 # Figura 4: Asistencia escolar × internet en el hogar
+# Lollipop con eje ampliado para hacer visible la brecha (asistencia ~90%+)
 # ========================================================================
 f4_dat <- wt_pct(des, "attending", by = c("female", "hh_internet")) |>
   mutate(
     sexo  = ifelse(female == 1, "Niñas", "Niños"),
-    hogar = ifelse(hh_internet == 1, "Hogar con internet", "Hogar sin internet")
+    hogar = ifelse(hh_internet == 1, "Con internet", "Sin internet"),
+    hogar = factor(hogar, levels = c("Sin internet", "Con internet"))
   )
 
-f4 <- ggplot(f4_dat, aes(x = hogar, y = estimate, fill = sexo)) +
-  geom_col(position = position_dodge(0.7), width = 0.6) +
-  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
-            position = position_dodge(0.7), vjust = -0.4, size = 3.4,
-            colour = GREY_DARK) +
+ymin <- floor((min(f4_dat$estimate) - 0.02) * 20) / 20  # redondeo a 5pp
+
+f4 <- ggplot(f4_dat, aes(x = hogar, y = estimate, colour = sexo, group = sexo)) +
+  geom_line(linewidth = 1.1, alpha = 0.5) +
+  geom_point(size = 6) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 0.1)),
+            vjust = -1.3, size = 4, fontface = "bold", show.legend = FALSE) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
-                     limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
-  scale_fill_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
+                     limits = c(ymin, 1.0),
+                     expand = expansion(mult = c(0.05, 0.10))) +
+  scale_colour_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
   labs(title    = NULL,
-       subtitle = "Adolescentes 10–19 que asisten actualmente a la escuela",
-       x = NULL, y = NULL, fill = NULL, caption = cap_src)
+       subtitle = "Tasa de asistencia escolar de adolescentes 10–19, por conexión del hogar",
+       x = NULL, y = "Asisten actualmente", colour = NULL, caption = cap_src) +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(colour = "grey90", linewidth = 0.3),
+        legend.position = "top")
 save_fig(f4, "f4_attendance_by_internet")
 
 # ========================================================================

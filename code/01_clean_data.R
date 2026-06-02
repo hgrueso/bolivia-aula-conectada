@@ -1,7 +1,7 @@
 # 01_clean_data.R — Stage 1: load, merge, clean adolescent sample
 # ------------------------------------------------------------------------
 # Inputs:  data/BD_EH2024/*.sav   (Persona, Vivienda, Equipamiento)
-# Outputs: output/analysis_ready.rds   (adolescents 10–17)
+# Outputs: output/analysis_ready.rds   (adolescents 10–19)
 #          output/analysis_ready_full.rds  (all persons, for HH-level stats)
 #          output/data_dictionary.csv
 # ------------------------------------------------------------------------
@@ -123,17 +123,41 @@ dat <- p |> left_join(hh, by = "folio", suffix = c("", "_hh"))
 message(glue("Merged: {nrow(dat)} persons in {n_distinct(dat$folio)} households"))
 
 # 5. Construct analysis variables -----------------------------------------
+# Pre-flag whether condact was extracted from this EH wave; NEET requires it
+HAS_CONDACT <- "condact" %in% names(dat)
+if (!HAS_CONDACT) {
+  message("⚠ condact (labour status) not found in persona file — NEET will be NA")
+}
+
 dat <- dat |>
   mutate(
     # --- Identity ---
     female = case_when(sex_raw == 2 ~ 1L, sex_raw == 1 ~ 0L, TRUE ~ NA_integer_),
     age    = as.integer(age),
 
-    # --- Adolescent sample 10–17 ---
-    adolescent = age >= 10 & age <= 17,
+    # --- Adolescent sample 10–19 (extended from 10–19 to capture late
+    #     adolescence, where dropout and NEET cliffs are concentrated) ---
+    adolescent = age >= 10 & age <= 19,
+
+    # Two age-band variables:
+    #  - age_group        : narrower 4-yr bands (used in older figures)
+    #  - age_group_adol   : early (10-14) vs late (15-19) adolescence
     age_group  = case_when(
       age >= 10 & age <= 13 ~ "10-13",
       age >= 14 & age <= 17 ~ "14-17",
+      age >= 18 & age <= 19 ~ "18-19",
+      TRUE                  ~ NA_character_
+    ),
+    age_group_adol = case_when(
+      age >= 10 & age <= 14 ~ "Adolescencia temprana (10-14)",
+      age >= 15 & age <= 19 ~ "Adolescencia tardía (15-19)",
+      TRUE                  ~ NA_character_
+    ),
+    # School-cycle proxy (primary vs secondary by typical Bolivian system age)
+    cycle_proxy = case_when(
+      age >= 10 & age <= 11 ~ "Primaria (10-11)",
+      age >= 12 & age <= 17 ~ "Secundaria (12-17)",
+      age >= 18 & age <= 19 ~ "Post-secundaria/joven (18-19)",
       TRUE                  ~ NA_character_
     ),
 
@@ -167,6 +191,11 @@ dat <- dat |>
     ),
 
     # --- Enrolment (INE-derived cmasi) ---
+    # IMPORTANT: 'enrolled' is FORMAL REGISTRATION for the school year
+    # — it does NOT mean the adolescent is actually attending classes.
+    # In Bolivia formal enrolment is high; the harder tests of inclusion
+    # are 'attending', 'dropout' (matriculated-not-attending) and
+    # 'grade_delay'. Lead with these in the descriptive narrative.
     enrolled = case_when(
       cmasi %in% c(2, 3) ~ 1L,   # matriculado (asiste OR no asiste)
       cmasi == 1         ~ 0L,
@@ -177,12 +206,31 @@ dat <- dat |>
       cmasi %in% c(1, 3) ~ 0L,
       TRUE       ~ NA_integer_
     ),
-    matric_no_asiste = as.integer(cmasi == 3),
+    # De facto dropout signal: matriculated but not attending.
+    # This is the strongest 'left school during the year' indicator
+    # available cross-sectionally in EH 2024.
+    dropout         = as.integer(cmasi == 3),
+    matric_no_asiste = as.integer(cmasi == 3),  # legacy name; same content
 
     # Age-for-grade delay: years of schooling < age - 6  (rough proxy)
     grade_delay = case_when(
       age >= 10 & !is.na(aestudio) ~ as.integer(aestudio < (age - 6)),
       TRUE                          ~ NA_integer_
+    ),
+
+    # --- NEET (Not in Education, Employment, or Training) ---
+    # Built from cmasi (education) and condact (labour status).
+    # condact codes (EH 2024): 1=ocupado, 2=cesante, 3=aspirante, 4=inactivo
+    # NEET = (not attending school) AND (not employed = not ocupado)
+    # 'cesante' (laid off) and 'aspirante' (seeking work) are NOT employed,
+    # so they ARE NEET when out of school.
+    # If condact column is missing from this EH wave, NEET will be NA.
+    in_school  = as.integer(cmasi == 2),     # actively attending
+    employed   = if (HAS_CONDACT) as.integer(condact == 1) else NA_integer_,
+    neet = case_when(
+      is.na(in_school) | is.na(employed) ~ NA_integer_,
+      in_school == 0 & employed == 0     ~ 1L,
+      TRUE                                ~ 0L
     ),
 
     # School type
@@ -250,11 +298,41 @@ dat <- dat |>
     )
   )
 
+# 7b. Parenting / agency indicators ---------------------------------------
+# Household composition: father / mother present in the HH roster.
+# In EH 2024, father_id / mother_id is 0 if parent not in HH, >0 otherwise.
+# Adolescent pregnancy / motherhood: girls only (module is not asked of males).
+dat <- dat |>
+  mutate(
+    has_father_hh   = as.integer(!is.na(father_id) & father_id > 0),
+    has_mother_hh   = as.integer(!is.na(mother_id) & mother_id > 0),
+    parents_in_hh   = case_when(
+      has_father_hh == 1 & has_mother_hh == 1 ~ "Ambos padres",
+      has_father_hh == 1 & has_mother_hh == 0 ~ "Sólo padre",
+      has_father_hh == 0 & has_mother_hh == 1 ~ "Sólo madre",
+      has_father_hh == 0 & has_mother_hh == 0 ~ "Ninguno",
+      TRUE                                     ~ NA_character_
+    ),
+    # Adolescent pregnancy: ever pregnant (currently or in the past).
+    # Defined only for females; NA for males.
+    ever_pregnant   = case_when(
+      female == 1 & ever_preg %in% c(1, 2) ~ 1L,
+      female == 1 & ever_preg == 3         ~ 0L,
+      TRUE                                  ~ NA_integer_
+    ),
+    # Restrict to the analytical 15-19 girl subsample
+    ever_pregnant_1519 = ifelse(female == 1 & age >= 15 & age <= 19,
+                                 ever_pregnant, NA_integer_),
+    is_mother_1519     = ifelse(female == 1 & age >= 15 & age <= 19 &
+                                  !is.na(num_births),
+                                as.integer(num_births >= 1), NA_integer_)
+  )
+
 # 8. Save full + adolescent-only datasets ---------------------------------
 saveRDS(dat, file.path(OUT, "analysis_ready_full.rds"))
 
 ado <- dat |> filter(adolescent)
-message(glue("Adolescents 10–17: {nrow(ado)} ({n_distinct(ado$folio)} HHs)"))
+message(glue("Adolescents 10–19: {nrow(ado)} ({n_distinct(ado$folio)} HHs)"))
 saveRDS(ado, file.path(OUT, "analysis_ready.rds"))
 
 # 9. Quick QA summary -----------------------------------------------------

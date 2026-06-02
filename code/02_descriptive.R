@@ -64,7 +64,7 @@ wt_summary <- function(design, vars, by = NULL) {
   res
 }
 
-# Table 1 — overall (adolescents 10–17) -----------------------------------
+# Table 1 — overall (adolescents 10–19) -----------------------------------
 t1 <- wt_summary(des, KEY_BIN) |>
   mutate(pct = scales::percent(estimate, accuracy = 0.1)) |>
   select(variable, estimate, se, pct, n_pop) |>
@@ -134,14 +134,14 @@ girl_n <- function(design, expr) {
 }
 t8 <- tibble(
   segment = c(
-    "All adolescents 10–17 (weighted)",
-    "All girls 10–17 (weighted)",
-    "Girls 10–17 — rural",
-    "Girls 10–17 — Indigenous",
-    "Girls 10–17 — poor (INE)",
-    "Girls 10–17 — disability (WG 3+)",
-    "Girls 10–17 — no HH internet",
-    "Girls 10–17 — priority (rural OR Indigenous OR poor OR disability)"
+    "All adolescents 10–19 (weighted)",
+    "All girls 10–19 (weighted)",
+    "Girls 10–19 — rural",
+    "Girls 10–19 — Indigenous",
+    "Girls 10–19 — poor (INE)",
+    "Girls 10–19 — disability (WG 3+)",
+    "Girls 10–19 — no HH internet",
+    "Girls 10–19 — priority (rural OR Indigenous OR poor OR disability)"
   ),
   n_pop = c(
     sum(weights(des)),

@@ -365,6 +365,7 @@ proj_v2 <- read_csv(here("output", "projections", "anchor_projections_long.csv")
 
 proj_v2 |>
   filter(subgroup_id == "priority", usable_for_projection,
+         !grepl("Porter", programme),
          programme_type %in% c("digital_education", "gender_norms")) |>
   transmute(
     Programme  = programme,
@@ -448,8 +449,8 @@ proj_v2 |>
 **Translated to lifetime earnings** <br>(via Bolivia data)
 
 - **+0.06 SD → +0.09 years** of schooling (Hanushek-Woessmann, approx.)
-- **× 7.5%** Mincer return per year (EH 2024, **Bolivian women**)
-- **→ ~$330** present value per girl (earnings channel only)
+- **× 7.5%** Mincer return per year (EH 2024, **Bolivian women**) + NEET-exit earnings
+- **→ ~$396** present value per girl → **BCR ≈ 2.6** (pedagogy bundle, $152)
 
 :::
 :::
@@ -524,7 +525,7 @@ The BCR below monetises **only** the learning → earnings channel. It is delibe
 
 These channels are **documented but deliberately excluded** from the BCR — they would raise the return, not lower it, so the monetised figure is a floor.
 
-## Cost-effectiveness — one anchor, one effect
+## Cost-effectiveness — full programme (with laptops)
 
 Anchored on the **Evans & Yuan (2022)** girl-specific meta-analysis of access outcomes (73 RCTs): median **+0.07 SD**, φ-adjusted to Bolivia.
 
@@ -543,31 +544,52 @@ Anchored on the **Evans & Yuan (2022)** girl-specific meta-analysis of access ou
 :::
 :::
 
-<small>*Underlying access effect: **+0.06 SD** φ-adjusted [0.02 – 0.12]. NEET reduction is a **back-of-envelope** pass-through (~60% of the attendance gain), an order of magnitude, not a precise projection. "Effectiveness" = median meta-analytic effect; cost = median scenario ($465/girl over 4 years). Individual studies (Porter 0.27, Mexico Learning Passport 0.26) sit near the upper range as corroboration.*</small>
+<small>*Full bundle: devices + connectivity + content + teacher training + pedagogy/M&E ≈ $465/girl over 4 years. Underlying access effect **+0.06 SD** φ-adjusted [0.02 – 0.12]. NEET is a back-of-envelope pass-through (~60% of the attendance gain).*</small>
+
+## Cost-effectiveness — pedagogy only (without laptops)
+
+Large RCTs of hardware-only programmes (**Cristia et al. 2017; Cueto et al. 2024**, Peru OLPC; de Melo 2014, Uruguay) find **near-zero effects on learning** — the gains come from the **pedagogy and software** layer, not the devices. Dropping hardware preserves the effect at a third of the cost.
+
+::: {.columns}
+::: {.column width="13%"}
+:::
+::: {.column width="74%"}
+
+| Outcome (girls 10–19) | Effectiveness | Cost per girl | Cost per 1 pp |
+|---|---:|---:|---:|
+| **Attendance** | +2.4 pp [0.7 – 4.8] | $152 | **~$63** |
+| **NEET (15–19)** | −1.4 pp [−0.4 to −2.9] | $152 | **~$109** |
+
+:::
+::: {.column width="13%"}
+:::
+:::
+
+<small>*Pedagogy bundle: content/platform + teacher training + pedagogy/M&E ≈ $152/girl over 4 years (no new device or connectivity procurement). The effect is held constant because the experimental evidence attributes the gain to pedagogy and software, with hardware-only arms near zero. **Cost-effectiveness improves ~3× per percentage point.***</small>
 
 ## Benefit value chain — girls 10–19 in Bolivia
 
-How the access effect becomes a present-value benefit per girl:
+How the access effect becomes a present-value benefit per girl (pedagogy bundle, $152/girl):
 
 ::: {.columns}
-::: {.column width="8%"}
+::: {.column width="6%"}
 :::
-::: {.column width="84%"}
+::: {.column width="88%"}
 
 | Step | Calculation | Result |
 |---|---|---:|
 | **1 · Access effect** | Evans & Yuan (2022), φ-adjusted | **+0.06 SD** |
 | **2 · Years of schooling** | × 1.5 yr/SD (Hanushek-Woessmann, approx.) | **+0.09 yr** |
-| **3 · Mincer return** | × 7.5%/yr (EH 2024, Bolivian women) | **+0.7%** income |
-| **4 · Lifetime value** | PV over 35 working years, disc. 3% | **~$330** |
-| **= Benefit vs. cost** | $330 benefit ÷ $465 cost | **BCR ≈ 0.7** |
+| **3 · Earnings — schooling** | +0.09 yr × 7.5%/yr Mincer (EH 2024 women), PV 35 yr | **~$327** |
+| **4 · Earnings — NEET exit** | −1.4 pp NEET × avoided early-career idleness | **~$69** |
+| **= Benefit vs. cost** | $396 benefit ÷ $152 cost | **BCR ≈ 2.6** |
 
 :::
-::: {.column width="8%"}
+::: {.column width="6%"}
 :::
 :::
 
-<small>Central scenario [BCR range 0.2 – 1.4]. Counts **only earnings** via retention; learning gains, agency, violence reduction and intergenerational effects are documented but **not** added — the true return is higher.</small>
+<small>Central scenario [BCR range 0.8 – 5.3]. On the full programme with laptops ($465), BCR ≈ 0.85 — lower because it also funds hardware that the RCT evidence shows adds little to learning. Still counts **only earnings**: agency, violence reduction and intergenerational gains are documented but **not** added — the true return is higher.</small>
 
 ## Key takeaways
 
@@ -575,7 +597,7 @@ How the access effect becomes a present-value benefit per girl:
 
 **2 · A design anchored in girl-specific evidence.** Aula Conectada is anchored on the Evans & Yuan (2022) meta-analysis of 73 RCTs — which finds teacher-pedagogy and software (not hardware alone) are what work for girls — with Technovation Girls (Chile) as the design template.
 
-**3 · Cost-effective on the outcomes that matter.** ~**$190 per girl** for each +1 pp of attendance; central **BCR ≈ 0.7** [0.2–1.4] through the earnings channel alone, plus an estimated **−1.4 pp NEET** for girls 15–19.
+**3 · Cost-effective when you fund the right layer.** The pedagogy bundle ($152/girl) reaches **~$63 per +1 pp of attendance** and a central **BCR ≈ 2.6** [0.8–5.3] through earnings alone. The full bundle with laptops costs 3× more for the same effect (BCR ≈ 0.85) — the RCT evidence puts the return in the pedagogy, not the hardware.
 
 **4 · The monetised return is a floor.** The BCR counts only retention-driven earnings. Learning gains, agency, violence reduction, and intergenerational effects are documented but **not** added — the true return is higher.
 

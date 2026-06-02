@@ -111,7 +111,7 @@ z <- function(x, key) {
 }
 
 TARGET_AGE_LO <- 10
-TARGET_AGE_HI <- 17
+TARGET_AGE_HI <- 19
 
 age_overlap_share <- function(anchor_lo, anchor_hi) {
   ov <- pmax(0, pmin(anchor_hi, TARGET_AGE_HI) - pmax(anchor_lo, TARGET_AGE_LO))

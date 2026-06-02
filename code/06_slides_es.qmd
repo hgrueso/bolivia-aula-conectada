@@ -321,25 +321,25 @@ Para evidencia complementaria sobre habilidades digitales individuales véase AG
 :::
 :::
 
-## Qué estamos construyendo — dos modelos probados, adaptados a Bolivia {.smaller}
+## Qué estamos construyendo — un programa, tres capas {.smaller}
 
 ```{mermaid}
-%%| fig-width: 11
-flowchart TB
-    subgraph A["① Acceso digital — Plan Ceibal"]
-        A1["Dispositivos · conectividad · contenido digital · formación docente"]
+%%| fig-width: 13
+flowchart LR
+    subgraph A["① Acceso digital"]
+        A1["Dispositivos · conectividad<br/>contenido digital<br/><i>ancla: Plan Ceibal</i>"]
     end
-    subgraph B["② Permanencia y agencia — ELA"]
-        B1["Espacios seguros · mentoría · pedagogía con enfoque de género"]
+    subgraph B["② Pedagogía con enfoque de género"]
+        B1["Formación docente · mentoría<br/>pensamiento computacional para niñas<br/><i>ancla: Porter · diseño: Technovation</i>"]
     end
-    subgraph C["③ Crianza — Cluver / ParentApp"]
-        C1["Comunicación madre/padre–hija · reducción de violencia"]
+    subgraph C["③ Crianza"]
+        C1["Comunicación madre/padre–hija<br/>reducción de violencia<br/><i>diseño: Cluver / ParentApp</i>"]
     end
 
-    A1 --> R["Las niñas permanecen en la escuela y ganan agencia"]
+    A1 --> R["Las niñas aprenden más<br/>y permanecen en la escuela"]
     B1 --> R
     C1 -.-> R
-    R --> I["Menores brechas de género en aprendizaje y empleo"]
+    R --> I["Menores brechas de género<br/>en aprendizaje y empleo"]
 
     class A,A1 layerA
     class B,B1 layerB
@@ -351,7 +351,7 @@ flowchart TB
     classDef outcome fill:#fff7e6,stroke:#FFC20E,stroke-width:2px,color:#7a5b00
 ```
 
-<small>**Dos modelos probados por RCT, adaptados a Bolivia vía transportabilidad:** **Plan Ceibal** (Uruguay) ancla el acceso digital; **ELA** (Sierra Leona) ancla la permanencia y agencia de niñas. La capa de crianza (línea punteada) está diseñada pero **se activa sólo cuando exista data boliviana**.</small>
+<small>El ancla cuantitativa es **Porter** (Sudáfrica) — un RCT digital, de secundaria, mayoritariamente niñas — corroborado en la región por el **Learning Passport de México** (d=0.26). **Technovation Girls** (Chile) es la plantilla de diseño. La capa de crianza (punteada) se **activa sólo cuando exista data boliviana**.</small>
 
 # 3 · Proyecciones — Aula Conectada en Bolivia {.section-divider background-color="#00377C"}
 
@@ -381,7 +381,7 @@ proj_v2 |>
   kable(align = "lllrrrrrrl")
 ```
 
-<small>**Lectura del IC:** si cero está dentro del intervalo, el efecto del ancla original no es estadísticamente distinguible de cero — esto refleja la incertidumbre del estudio, no un error del ajuste. La columna **Sig.** marca con ✓ las anclas que sí lo son. **Caveat ELA:** la alta similitud poblacional refleja coincidencia en variables observables (rural, edad), pero el contexto post-Ébola de Sierra Leona difiere sustancialmente.</small>
+<small>**Lectura del IC:** si cero está dentro del intervalo, el efecto del ancla original no es estadísticamente distinguible de cero — esto refleja la incertidumbre del estudio, no un error del ajuste. La columna **Sig.** marca con ✓ las anclas que sí lo son.</small>
 
 ## Anclas indirectas — capa de parenting (vía SEM) {.smaller}
 
@@ -435,28 +435,28 @@ Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al 
 
 ## Síntesis — qué retorno esperar de Aula Conectada {.smaller}
 
-**Lección clave de Plan Ceibal (De Melo et al., 2014):** la versión solo hardware tuvo efecto cero en aprendizaje. **Aula Conectada captura retorno solo si financia el paquete pedagógico completo**, no únicamente los equipos.
-
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Resultados de corto–mediano plazo** <br>(grupo prioritario, ≈ 568 mil niñas)
+**Efecto en aprendizaje** <br>(grupo prioritario, ≈ 568 mil niñas)
 
-- **Aprendizaje** (matemática): +0.09 SD ↔ +0.18 SD <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
-- **Pensamiento computacional y STEM:** +0.06 SD a +0.08 SD <br><small>(Näslund-Hadley et al., 2025)</small>
-- **Deserción evitada** en zonas de mayor exclusión: 7–14 ppts <br><small>(Bandiera et al., 2018)</small>
+- **Ancla:** Porter (Sudáfrica) — digital, secundaria, 62% niñas: **+0.27 SD** en matemática
+- **φ-ajustado a Bolivia:** **+0.16 SD** [0.00 – 0.27]
+- **Corroboración en la región:** RCT Learning Passport México, **d = 0.26** (UNICEF, 2026)
 
 :::
 ::: {.column width="50%"}
 
-**Retornos de largo plazo** <br>(evidencia regional comparable)
+**Traducido a ingresos de vida** <br>(vía datos de Bolivia)
 
-- **+15.2 ppts** en tasa de empleo femenino <br><small>(Ñopo et al., 2008 — ProJoven Perú)</small>
-- **+93%** en ingresos laborales femeninos
-- **Mecanismo:** habilidades digitales tempranas → progresión escolar → empleabilidad
+- **+0.16 SD → +0.24 años** de escolaridad (Hanushek-Woessmann)
+- **× 7.5%** retorno Mincer por año (EH 2024, **mujeres bolivianas**)
+- **→ ~$890** valor presente por niña (sólo canal de ingresos)
 
 :::
 :::
+
+<small>La cifra de ingresos es un **piso**: agencia, reducción de violencia y efectos intergeneracionales están documentados pero no monetizados. Cota inferior honesta: si el efecto en aprendizaje es nulo (literatura controvertida), el retorno se acerca a cero.</small>
 
 # 4 · Costos {.section-divider background-color="#00377C"}
 
@@ -525,7 +525,7 @@ El BCR a continuación monetiza **únicamente** el canal de aprendizaje → ingr
 
 **Lo que el BCR sí monetiza**
 
-→ Aprendizaje (Plan Ceibal, Uruguay)
+→ Aprendizaje (Porter, φ-ajustado)
 
 → Retorno Mincer Bolivia (7.5%/año)
 
@@ -536,7 +536,7 @@ El BCR a continuación monetiza **únicamente** el canal de aprendizaje → ingr
 
 **Lo que el BCR NO monetiza** *(documentado, no sumado)*
 
-→ **Normas de género y agencia** (Bandiera, Porter)
+→ **Normas de género y agencia**
 
 → **Reducción de violencia doméstica** (Cluver PLH: IRR 0.55)
 
@@ -547,40 +547,41 @@ El BCR a continuación monetiza **únicamente** el canal de aprendizaje → ingr
 :::
 :::
 
-**Evidencia reciente (SWEDD, Costa de Marfil, 2026)**: programas para niñas que combinan aprendizaje digital con componentes de normas de género y compromiso comunitario generan efectos sobre empleo **~50% mayores** que los componentes de aprendizaje solos.
+Estos canales están **documentados pero deliberadamente excluidos** del BCR — elevarían el retorno, no lo reducen, por lo que la cifra monetizada es un piso.
 
-::: footer
-SWEDD: Boulhane, Boxho, Koussoubé & Rouanet (2026), World Bank Blogs.
-:::
+## Costo-efectividad — un ancla, un efecto
 
-## Costo-efectividad — un ancla, un efecto {.smaller}
-
-Anclamos la estimación cuantitativa en un **único programa bien emparejado**: una intervención digital, en aula, en una muestra de secundaria mayoritariamente femenina (Porter, Sudáfrica). No se suman efectos entre programas.
+Anclado en un **único programa bien emparejado** (Porter, Sudáfrica): digital, secundaria, 62% niñas. No se suman efectos.
 
 ::: {.columns}
-::: {.column width="12%"}
+::: {.column width="8%"}
 :::
-::: {.column width="76%"}
+::: {.column width="84%"}
 
 | Métrica (niñas 10–19) | Central | Rango |
 |---|---:|---:|
-| Efecto en aprendizaje (φ-ajustado) | +0.16 SD | **0.00 – 0.27** |
+| Efecto en aprendizaje (φ-ajustado) | +0.16 SD | 0.00 – 0.27 |
 | Costo por niña (4 años) | $465 | $360 – $850 |
 | **Costo por +0.01 SD de aprendizaje** | **$29** | $13 – $53 |
 | **Costo por +1 año de escolaridad** | **$1,900** | — |
 
 :::
-::: {.column width="12%"}
+::: {.column width="8%"}
 :::
 :::
 
-El ancla (**Porter, Sudáfrica**) es una intervención por computadora en una muestra de secundaria 62% niñas. **Technovation Girls (Chile)** —niñas, digital, pensamiento computacional— es la plantilla de *diseño* más cercana pero no reporta un tamaño de efecto utilizable, por lo que informa el diseño, no el número.
+Corroboración en la región: el RCT del **Learning Passport de México** halló **d = 0.26** en aprendizaje (UNICEF, 2026) — cercano al 0.27 de Porter. **Technovation Girls (Chile)** es la plantilla de diseño (sin tamaño de efecto utilizable).
 
-<small>*La cota inferior es **0.00 SD**: los estudios más rigurosos de la literatura de growth-mindset hallan efectos casi nulos, por lo que dejamos que el piso llegue a cero en lugar de asumir un efecto positivo. "Central" = supuestos medianos de costo y ajuste φ; ver anexo A0.*</small>
+<small>*Cota inferior = **0.00 SD**: los estudios más rigurosos de growth-mindset hallan efectos casi nulos, por lo que el piso llega a cero. "Central" = supuestos medianos de costo y ajuste φ; ver A0.*</small>
 
-## Cadena de valor del beneficio — niñas 10–19 en Bolivia {.smaller}
+## Cadena de valor del beneficio — niñas 10–19 en Bolivia
 
 Cómo el efecto en aprendizaje se convierte en un beneficio en valor presente por niña:
+
+::: {.columns}
+::: {.column width="8%"}
+:::
+::: {.column width="84%"}
 
 | Paso | Cálculo | Resultado |
 |---|---|---:|
@@ -590,7 +591,12 @@ Cómo el efecto en aprendizaje se convierte en un beneficio en valor presente po
 | **4 · Valor de vida** | VP sobre 35 años laborales, desc. 3% | **~$890** |
 | **= Beneficio vs. costo** | $890 beneficio ÷ $465 costo | **BCR ≈ 1.9** |
 
-<small>Escenario central. Como el piso del efecto es casi nulo (literatura controvertida), el **escenario bajo da BCR ≈ 0** — la cota inferior honesta. El BCR cuenta **sólo ingresos**; agencia, reducción de violencia y efectos intergeneracionales están documentados pero no sumados.</small>
+:::
+::: {.column width="8%"}
+:::
+:::
+
+<small>Escenario central. Si el efecto es nulo (literatura controvertida), **BCR ≈ 0** — la cota inferior honesta. Cuenta **sólo ingresos**; agencia, reducción de violencia y efectos intergeneracionales documentados pero no sumados.</small>
 
 ## Mensajes clave
 

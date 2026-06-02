@@ -321,25 +321,25 @@ For complementary evidence on individual digital skills see AGETIC (National Sur
 :::
 :::
 
-## What we are building — two proven models, adapted to Bolivia {.smaller}
+## What we are building — one programme, three layers {.smaller}
 
 ```{mermaid}
-%%| fig-width: 11
-flowchart TB
-    subgraph A["① Digital access — Plan Ceibal"]
-        A1["Devices · connectivity · digital content · teacher training"]
+%%| fig-width: 13
+flowchart LR
+    subgraph A["① Digital access"]
+        A1["Devices · connectivity<br/>digital content<br/><i>anchor: Plan Ceibal</i>"]
     end
-    subgraph B["② Girls' retention & agency — ELA"]
-        B1["Safe spaces · mentoring · gender-responsive pedagogy"]
+    subgraph B["② Gender-responsive pedagogy"]
+        B1["Teacher training · mentoring<br/>computational thinking for girls<br/><i>anchor: Porter · design: Technovation</i>"]
     end
-    subgraph C["③ Parenting — Cluver / ParentApp"]
-        C1["Parent–daughter communication · violence reduction"]
+    subgraph C["③ Parenting"]
+        C1["Parent–daughter communication<br/>violence reduction<br/><i>design: Cluver / ParentApp</i>"]
     end
 
-    A1 --> R["Girls stay enrolled, build skills & agency"]
+    A1 --> R["Girls learn more &<br/>stay in school"]
     B1 --> R
     C1 -.-> R
-    R --> I["Narrower gender gaps in learning & work"]
+    R --> I["Narrower gender gaps<br/>in learning & work"]
 
     class A,A1 layerA
     class B,B1 layerB
@@ -351,7 +351,7 @@ flowchart TB
     classDef outcome fill:#fff7e6,stroke:#FFC20E,stroke-width:2px,color:#7a5b00
 ```
 
-<small>**Two RCT-proven models, adapted to Bolivia via transportability:** **Plan Ceibal** (Uruguay) anchors digital access; **ELA** (Sierra Leone) anchors girls' retention & agency. The parenting layer (dashed) is designed in but **activated only when Bolivian data exists**.</small>
+<small>The quantitative anchor is **Porter** (South Africa) — a digital, secondary-age, majority-girls RCT — corroborated in-region by the **Mexico Learning Passport** (d=0.26). **Technovation Girls** (Chile) is the design template. The parenting layer (dashed) is **activated only when Bolivian data exists**.</small>
 
 # 3 · Projections — Aula Conectada in Bolivia {.section-divider background-color="#00377C"}
 
@@ -381,7 +381,7 @@ proj_v2 |>
   kable(align = "lllrrrrrrl")
 ```
 
-<small>**Reading the CI:** if zero is inside the interval, the anchor's original effect is not statistically distinguishable from zero — this reflects the source study's uncertainty, not an adjustment error. The **Sig.** column marks with ✓ the anchors that are statistically distinguishable from zero. **ELA caveat:** the high population similarity reflects overlap in observable variables (rural, age), but the post-Ebola context of Sierra Leone differs substantially.</small>
+<small>**Reading the CI:** if zero is inside the interval, the anchor's original effect is not statistically distinguishable from zero — this reflects the source study's uncertainty, not an adjustment error. The **Sig.** column marks with ✓ the anchors that are statistically distinguishable from zero.</small>
 
 ## Indirect anchors — parenting layer (via SEM) {.smaller}
 
@@ -436,23 +436,25 @@ proj_v2 |>
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Short–medium term outcomes** <br>(priority group, ≈ 568K girls)
+**Learning effect** <br>(priority group, ≈ 568K girls)
 
-- **Learning** (mathematics): +0.09 SD ↔ +0.18 SD <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
-- **Computational thinking and STEM:** +0.06 SD to +0.08 SD <br><small>(Näslund-Hadley et al., 2025)</small>
-- **Dropout averted** in higher-exclusion areas: 7–14 pp <br><small>(Bandiera et al., 2018)</small>
+- **Anchor:** Porter (South Africa) — digital, secondary, 62% girls: **+0.27 SD** on mathematics
+- **φ-adjusted to Bolivia:** **+0.16 SD** [0.00 – 0.27]
+- **In-region corroboration:** Mexico Learning Passport RCT, **d = 0.26** (UNICEF, 2026)
 
 :::
 ::: {.column width="50%"}
 
-**Long-term returns** <br>(comparable regional evidence)
+**Translated to lifetime earnings** <br>(via Bolivia data)
 
-- **+15.2 pp** in female employment rate <br><small>(Ñopo et al., 2008 — ProJoven Perú)</small>
-- **+93%** in female labour earnings
-- **Mechanism:** early digital skills → school progression → employability
+- **+0.16 SD → +0.24 years** of schooling (Hanushek-Woessmann)
+- **× 7.5%** Mincer return per year (EH 2024, **Bolivian women**)
+- **→ ~$890** present value per girl (earnings channel only)
 
 :::
 :::
+
+<small>The earnings figure is a **floor**: agency, violence reduction and intergenerational gains are documented but not monetised. Honest downside: if the learning effect is null (contested literature), the return approaches zero.</small>
 
 # 4 · Costing {.section-divider background-color="#00377C"}
 
@@ -498,7 +500,7 @@ The BCR below monetises **only** the learning → earnings channel. It is delibe
 
 **What the BCR monetises**
 
-→ Learning gains (Plan Ceibal, Uruguay)
+→ Learning gains (Porter, φ-adjusted)
 
 → Bolivia Mincer return (7.5%/year)
 
@@ -509,7 +511,7 @@ The BCR below monetises **only** the learning → earnings channel. It is delibe
 
 **What the BCR does NOT monetise** *(documented, not summed)*
 
-→ **Gender norms and agency** (Bandiera, Porter)
+→ **Gender norms and agency**
 
 → **Household violence reduction** (Cluver PLH: IRR 0.55)
 
@@ -520,50 +522,56 @@ The BCR below monetises **only** the learning → earnings channel. It is delibe
 :::
 :::
 
-**Recent evidence (SWEDD, Côte d'Ivoire, 2026)**: girls' programmes that combine digital learning with gender-norms components and community engagement generate employment effects **~50% larger** than learning components alone.
+These channels are **documented but deliberately excluded** from the BCR — they would raise the return, not lower it, so the monetised figure is a floor.
 
-::: footer
-SWEDD: Boulhane, Boxho, Koussoubé & Rouanet (2026), World Bank Blogs.
-:::
+## Cost-effectiveness — one anchor, one effect
 
-## Cost-effectiveness — one anchor, one effect {.smaller}
-
-We anchor the quantitative estimate on a **single, well-matched programme**: a digital, classroom-delivered intervention in a majority-girls secondary sample (Porter, South Africa). No effects are summed across programmes.
+Anchored on a **single, well-matched programme** (Porter, South Africa): digital, secondary, 62% girls. No effects summed.
 
 ::: {.columns}
-::: {.column width="12%"}
+::: {.column width="8%"}
 :::
-::: {.column width="76%"}
+::: {.column width="84%"}
 
 | Metric (girls 10–19) | Central | Range |
 |---|---:|---:|
-| Learning effect (φ-adjusted) | +0.16 SD | **0.00 – 0.27** |
+| Learning effect (φ-adjusted) | +0.16 SD | 0.00 – 0.27 |
 | Cost per girl (4 years) | $465 | $360 – $850 |
 | **Cost per +0.01 SD learning** | **$29** | $13 – $53 |
 | **Cost per +1 year of schooling** | **$1,900** | — |
 
 :::
-::: {.column width="12%"}
+::: {.column width="8%"}
 :::
 :::
 
-The anchor (**Porter, South Africa**) is a computer-delivered intervention in a 62%-girls secondary sample. **Technovation Girls (Chile)** — girls, digital, computational thinking — is the closest *design* template but reports no usable effect size, so it informs the design, not the number.
+In-region corroboration: **Mexico Learning Passport** RCT found **d = 0.26** on learning (UNICEF, 2026) — near Porter's 0.27. **Technovation Girls (Chile)** is the design template (no usable effect size).
 
-<small>*The low bound is **0.00 SD**: the growth-mindset literature's strongest studies find near-null effects, so we let the floor reach zero rather than assume a positive effect. "Central" = median cost and φ-adjustment assumptions; see appendix A0.*</small>
+<small>*Low bound = **0.00 SD**: the strongest growth-mindset studies find near-null effects, so the floor reaches zero. "Central" = median cost and φ-adjustment; see A0.*</small>
 
-## Benefit value chain — girls 10–19 in Bolivia {.smaller}
+## Benefit value chain — girls 10–19 in Bolivia
 
 How the learning effect becomes a present-value benefit per girl:
 
+::: {.columns}
+::: {.column width="8%"}
+:::
+::: {.column width="84%"}
+
 | Step | Calculation | Result |
 |---|---|---:|
-| **1 · Learning effect** | Porter (South Africa), φ-adjusted to Bolivia | **+0.16 SD** |
+| **1 · Learning effect** | Porter (S. Africa), φ-adjusted to Bolivia | **+0.16 SD** |
 | **2 · Years of schooling** | × 1.5 yr/SD (Hanushek-Woessmann) | **+0.24 yr** |
 | **3 · Mincer return** | × 7.5%/yr (EH 2024, Bolivian women) | **+1.8%** income |
-| **4 · Lifetime value** | PV over 35 working years, discounted 3% | **~$890** |
+| **4 · Lifetime value** | PV over 35 working years, disc. 3% | **~$890** |
 | **= Benefit vs. cost** | $890 benefit ÷ $465 cost | **BCR ≈ 1.9** |
 
-<small>Central scenario. Because the effect floor is near-zero (contested literature), the **low scenario gives BCR ≈ 0** — the honest downside. The BCR counts **only earnings**; agency, violence reduction and intergenerational gains are documented but not added.</small>
+:::
+::: {.column width="8%"}
+:::
+:::
+
+<small>Central scenario. If the effect is null (contested literature), **BCR ≈ 0** — the honest downside. Counts **only earnings**; agency, violence reduction and intergenerational gains documented but not added.</small>
 
 ## Key takeaways
 

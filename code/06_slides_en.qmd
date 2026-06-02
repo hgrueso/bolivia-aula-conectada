@@ -324,22 +324,22 @@ For complementary evidence on individual digital skills see AGETIC (National Sur
 ## What we are building — two proven models, adapted to Bolivia {.smaller}
 
 ```{mermaid}
-%%| fig-width: 13
-flowchart LR
-    subgraph A["①&nbsp;&nbsp;Digital access&nbsp;&nbsp;·&nbsp;&nbsp;Plan Ceibal&nbsp;"]
-        A1["Devices · connectivity<br/>digital content · teacher training"]
+%%| fig-width: 11
+flowchart TB
+    subgraph A["① Digital access — Plan Ceibal"]
+        A1["Devices · connectivity · digital content · teacher training"]
     end
-    subgraph B["②&nbsp;&nbsp;Girls' retention &amp; agency&nbsp;&nbsp;·&nbsp;&nbsp;ELA&nbsp;"]
-        B1["Safe spaces · mentoring<br/>gender-responsive pedagogy"]
+    subgraph B["② Girls' retention & agency — ELA"]
+        B1["Safe spaces · mentoring · gender-responsive pedagogy"]
     end
-    subgraph C["③&nbsp;&nbsp;Parenting&nbsp;&nbsp;·&nbsp;&nbsp;Cluver / ParentApp&nbsp;"]
-        C1["Parent–daughter communication<br/>violence reduction"]
+    subgraph C["③ Parenting — Cluver / ParentApp"]
+        C1["Parent–daughter communication · violence reduction"]
     end
 
-    A1 --> R["Girls stay enrolled,<br/>build skills &amp; agency"]
+    A1 --> R["Girls stay enrolled, build skills & agency"]
     B1 --> R
     C1 -.-> R
-    R --> I["Narrower gender gaps<br/>in learning &amp; work"]
+    R --> I["Narrower gender gaps in learning & work"]
 
     class A,A1 layerA
     class B,B1 layerB
@@ -526,76 +526,54 @@ The BCR below monetises **only** the learning → earnings channel. It is delibe
 SWEDD: Boulhane, Boxho, Koussoubé & Rouanet (2026), World Bank Blogs.
 :::
 
-## Cost-effectiveness — which components keep girls in school? {.smaller}
+## Cost-effectiveness — one anchor, one effect {.smaller}
 
-The gender-pedagogy components drive retention; the laptops drive learning at **4× the cost**.
+We anchor the quantitative estimate on a **single, well-matched programme**: a digital, classroom-delivered intervention in a majority-girls secondary sample (Porter, South Africa). No effects are summed across programmes.
 
 ::: {.columns}
-::: {.column width="15%"}
+::: {.column width="12%"}
 :::
-::: {.column width="70%"}
+::: {.column width="76%"}
 
-| Programme version | Cost / girl | Attendance effect | **Cost per +1 pp** |
-|---|---:|---:|---:|
-| **Gender pedagogy only** *(no laptops)* | $106 | +2.6 pp | **$41** |
-| **Full programme** *(+ laptops, Plan Ceibal)* | $465 | +2.6 pp | **$179** |
+| Metric (girls 10–19) | Central | Range |
+|---|---:|---:|
+| Learning effect (φ-adjusted) | +0.16 SD | **0.00 – 0.27** |
+| Cost per girl (4 years) | $465 | $360 – $850 |
+| **Cost per +0.01 SD learning** | **$29** | $13 – $53 |
+| **Cost per +1 year of schooling** | **$1,900** | — |
 
 :::
-::: {.column width="15%"}
+::: {.column width="12%"}
 :::
 :::
 
-The attendance gain (**+2.6 pp**, anchored on **ELA**, Sierra Leone) comes from safe spaces and gender-responsive pedagogy — *not* from devices. Laptops (**Plan Ceibal**) add learning gains through a separate, costlier channel.
+The anchor (**Porter, South Africa**) is a computer-delivered intervention in a 62%-girls secondary sample. **Technovation Girls (Chile)** — girls, digital, computational thinking — is the closest *design* template but reports no usable effect size, so it informs the design, not the number.
 
-<small>*"Central" = the central scenario: median assumptions on cost, effect size, and the φ-adjustment from the source study to Bolivia. Low/high scenarios bound it (see appendix A0). Effect range: +0.7 to +6.4 pp.*</small>
+<small>*The low bound is **0.00 SD**: the growth-mindset literature's strongest studies find near-null effects, so we let the floor reach zero rather than assume a positive effect. "Central" = median cost and φ-adjustment assumptions; see appendix A0.*</small>
 
 ## Benefit value chain — girls 10–19 in Bolivia {.smaller}
 
-How the **+2.6 pp** attendance effect becomes a present-value benefit per girl:
+How the learning effect becomes a present-value benefit per girl:
 
 | Step | Calculation | Result |
 |---|---|---:|
-| **1 · Attendance effect** | ELA (Sierra Leone), φ-adjusted to Bolivia | **+2.6 pp** |
-| **2 · Years of schooling** | +2.6 pp over ~4 remaining secondary years | **+0.10 yr** |
-| **3 · Mincer return** | × 7.5%/yr (EH 2024, Bolivian women) | **+0.78%** income |
-| **4 · Lifetime value** | PV over 35 working years, discounted 3% | **~$385** |
-| **= Benefit vs. cost** | $385 benefit ÷ $465 cost | **BCR ≈ 0.83** |
+| **1 · Learning effect** | Porter (South Africa), φ-adjusted to Bolivia | **+0.16 SD** |
+| **2 · Years of schooling** | × 1.5 yr/SD (Hanushek-Woessmann) | **+0.24 yr** |
+| **3 · Mincer return** | × 7.5%/yr (EH 2024, Bolivian women) | **+1.8%** income |
+| **4 · Lifetime value** | PV over 35 working years, discounted 3% | **~$890** |
+| **= Benefit vs. cost** | $890 benefit ÷ $465 cost | **BCR ≈ 1.9** |
 
-<small>Every step uses Bolivia-specific data (Mincer from EH 2024, women) or the gender-lens anchor ELA. The BCR counts **only earnings** — agency, violence reduction and intergenerational gains are documented but not added.</small>
-
-**Reading.** Each step uses Bolivia-specific data (Mincer EH 2024 women only) or the gender-lens anchor Bandiera ELA, φ-adjusted to the Bolivian context. By using the effect on girls' attendance — rather than Plan Ceibal's learning effect — the BCR approaches 1 and stays anchored in gender-specific evidence.
-
-## Scenarios — learning channel (sensitivity) {.smaller}
-
-As a check, the learning channel (Plan Ceibal, digital infrastructure) gives a more conservative BCR. It is reported as a lower bound.
-
-```{r bcr-scenarios-en}
-bcr_tab <- readr::read_csv(
-  here::here("output", "projections", "bcr_scenarios_table.csv"),
-  show_col_types = FALSE
-)
-knitr::kable(bcr_tab, align = "lrrrr")
-```
-
-```{r bcr-interpret-en}
-.bcr_central   <- bcr_tab$BCR[bcr_tab$Scenario == "Central"]
-.bcr_low       <- bcr_tab$BCR[bcr_tab$Scenario == "Low"]
-.bcr_high      <- bcr_tab$BCR[bcr_tab$Scenario == "High"]
-```
-
-::: {.callout-tip appearance="simple"}
-**Interpretation.** Two complementary channels: (1) the **gender/attendance** channel (Bandiera ELA) gives the central BCR on the previous slide (≈ 0.83); (2) the **learning** channel (Plan Ceibal, digital infrastructure) is more conservative [`r .bcr_low` – `r .bcr_high`], because it comes from a country with 3× Bolivia's GDP per capita. Both are lower bounds: neither adds the broader returns of agency, violence reduction, or intergenerational effects.
-:::
+<small>Central scenario. Because the effect floor is near-zero (contested literature), the **low scenario gives BCR ≈ 0** — the honest downside. The BCR counts **only earnings**; agency, violence reduction and intergenerational gains are documented but not added.</small>
 
 ## Key takeaways
 
 **1 · The gap is territorial, not enrolment.** Enrolment is ~95% everywhere; the real gaps for girls are in **attendance, dropout, and digital access** — concentrated in rural, indigenous, and poor households.
 
-**2 · Two proven models, adapted to Bolivia.** Aula Conectada = **Plan Ceibal** (digital access) + **ELA** (girls' retention & agency), transported with explicit, conservative attenuation.
+**2 · A proven model, adapted to Bolivia.** Aula Conectada follows a digital, classroom-delivered design anchored on a single well-matched study (Porter, South Africa), with Technovation Girls (Chile) as the design template — no effects summed across programmes.
 
-**3 · The cheapest components do the heavy lifting.** Gender pedagogy alone keeps girls in school at **$41 per percentage point**; adding laptops raises this to **$179** for the same retention effect. Laptops add learning, not retention — so the highest-return investment is the gender-pedagogy layer.
+**3 · Cost-effective on learning.** ~**$29 per girl** for each +0.01 SD of learning; central **BCR ≈ 1.9** through the earnings channel alone. The honest downside: if the effect is null (contested literature), the BCR approaches 0.
 
-**4 · The monetised return is a floor.** The BCR (≈ 0.83) counts only earnings. Agency, violence reduction, and intergenerational gains are documented but **not** added — the true return is higher.
+**4 · The monetised return is a floor.** The central BCR (≈ 1.9) counts only earnings. Agency, violence reduction, and intergenerational gains are documented but **not** added — the true return is higher.
 
 # 6 · Methodological Appendix {.section-divider background-color="#00377C"}
 
@@ -631,7 +609,39 @@ knitr::kable(bcr_tab, align = "lrrrr")
 Microdata: anda.ine.gob.bo/index.php/catalog/163
 :::
 
-## A2 · Empirical strategy {.smaller}
+## A2 · Structural synthesis of the ToC — girls 10–19 (SEM) {.smaller}
+
+```{mermaid}
+%%| fig-width: 13
+flowchart LR
+    LWB["Lives with<br/>both parents"]:::obs
+    NP["Non-poor<br/>household"]:::obs
+    ND["No disability<br/>in household"]:::obs
+    ENR["Enrolled"]:::obs
+    ATT["Attending<br/>class"]:::obs
+
+    HE(("Home<br/>environment")):::latent
+    EE(("School<br/>engagement")):::latent
+    PR["Educational<br/>progression"]:::outcome
+
+    LWB -.->|λ₁| HE
+    NP  -.->|λ₂| HE
+    ND  -.->|λ₃| HE
+    ENR -.->|λ₄| EE
+    ATT -.->|λ₅| EE
+
+    HE ==>|β₁| EE
+    EE ==>|β₂| PR
+    HE ==>|β₃| PR
+
+    classDef obs fill:#ffffff,stroke:#7A8487,stroke-width:1px,color:#374649
+    classDef latent fill:#ffffff,stroke:#1CABE2,stroke-width:2px,color:#00377C
+    classDef outcome fill:#ffffff,stroke:#E2007A,stroke-width:2px,color:#a3005a
+```
+
+<small>Latent constructs (blue ovals) are measured by observed EH 2024 indicators (grey boxes); the final outcome is educational progression (pink). The parenting layer is **excluded** — Bolivia lacks contemporary parenting data (last full MICS: 2008) — and will be added when pilot or survey data exist. Equations and estimated coefficients in A11.</small>
+
+## A3 · Empirical strategy {.smaller}
 
 **Base model (LPM with department fixed effects):**
 
@@ -653,7 +663,7 @@ and analogous for $F \times R \times P$ and $F \times I \times P$. Three-way int
 
 Estimation by weighted OLS using `factor` (expansion factor); standard errors clustered at PSU level (`fixest::feols`).
 
-## A3 · Full coefficients table — main model {.smaller}
+## A4 · Full coefficients table — main model {.smaller}
 
 ```{r reg-table-all-en}
 out_vars <- c("hh_internet", "enrolled", "attending", "hh_any_device", "grade_delay")
@@ -692,7 +702,7 @@ bind_rows(tab, footer_rows) |>
 
 <small>Coefficients in decimal points (× 100 for pp). Robust SE in parentheses. `*` p<0.10, `**` p<0.05, `***` p<0.01.</small>
 
-## A4 · Full intersectional table {.smaller}
+## A5 · Full intersectional table {.smaller}
 
 ```{r inter-table-full-en}
 inter_outcomes <- c("attending", "enrolled", "hh_internet", "hh_any_device")
@@ -743,7 +753,7 @@ bind_rows(inter_rows, inter_footer) |>
 
 <small>Each row is the coefficient on the (Girl × subgroup) interaction in a separate regression. Coefficients in decimal points. Standard errors in parentheses. Robust SE clustered at PSU.</small>
 
-## A5 · Heterogeneity analysis — regression forest {.smaller}
+## A6 · Heterogeneity analysis — regression forest {.smaller}
 
 We complement the LPM with a regression forest (`grf::regression_forest`, Athey & Wager 2019) that estimates predicted outcomes conditional on the full set of demographic variables.
 
@@ -757,7 +767,7 @@ The forest is **diagnostic, not causal** — there is no treatment in EH 2024 to
 Code: `code/04b_heterogeneity.R` · output: `output/figures/f_forest_var_importance_en.png`
 :::
 
-## A6 · Formal foundation of the transportability approach {.smaller}
+## A7 · Formal foundation of the transportability approach {.smaller}
 
 We assume that the mismatch between the source population $S$ (the anchor) and the target $T$ (Bolivia) decomposes into $K$ observable dimensions, with multiplicative attenuation:
 
@@ -787,7 +797,7 @@ $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T),
 :::
 :::
 
-## A7 · Bolivia-adjusted projection methodology {.smaller}
+## A8 · Bolivia-adjusted projection methodology {.smaller}
 
 **Algorithm** for each anchor:
 
@@ -804,7 +814,7 @@ $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T),
 
 **Uncertainty** — 95% CI propagated from the anchor SE. No synthetic noise on $\phi$ factors.
 
-## A8 · Consolidated evidence — anchors in use {.smaller}
+## A9 · Consolidated evidence — anchors in use {.smaller}
 
 ```{r evidence-table-en}
 source(here::here("R", "anchors_demographics.R"))
@@ -835,7 +845,7 @@ anchors_demo |>
 
 <small>Complete list of external anchors used in the Bolivia projection (see `05_projections.R` and `R/anchors_demographics.R`). The full systematic review of 52 papers is in `data/lit_review_papers.csv`. The **ToC arrow** column indicates which arc of the Theory of Change each anchor feeds.</small>
 
-## A9 · Robustness — three-way interactions (OLS) {.smaller}
+## A10 · Robustness — three-way interactions (OLS) {.smaller}
 
 To verify the heterogeneity detected by the regression forest, we estimate three-way interactions with OLS. If the forest correctly detects compound subgroups, the three-way coefficients should be significant for the outcomes with greatest heterogeneity.
 
@@ -865,41 +875,9 @@ threeway |>
 
 <small>**How to read:** each cell shows the three-way interaction coefficient and its standard error in parentheses. Significance: `*` p<0.10, `**` p<0.05, `***` p<0.01. Where no asterisks appear, the coefficient is not statistically distinguishable from zero at conventional levels. **Interpretation:** in this sample, the three-way interactions are not significant, indicating that the compound effect of belonging to multiple vulnerable groups (e.g. rural indigenous girl) is not substantially larger than the sum of effects of each group separately. Gaps accumulate roughly additively. This suggests well-targeted interventions on any axis (rural, indigenous, poverty) will reach girls who fit those characteristics.</small>
 
-## A10 · Structural synthesis of the ToC — girls 10–19 (SEM) {.smaller}
-
-```{mermaid}
-%%| fig-width: 13
-flowchart LR
-    LWB["Lives with<br/>both parents"]:::obs
-    NP["Non-poor<br/>household"]:::obs
-    ND["No disability<br/>in household"]:::obs
-    ENR["Enrolled"]:::obs
-    ATT["Attending<br/>class"]:::obs
-
-    HE(("Home<br/>environment")):::latent
-    EE(("School<br/>engagement")):::latent
-    PR["Educational<br/>progression"]:::outcome
-
-    LWB -.->|λ₁| HE
-    NP  -.->|λ₂| HE
-    ND  -.->|λ₃| HE
-    ENR -.->|λ₄| EE
-    ATT -.->|λ₅| EE
-
-    HE ==>|β₁| EE
-    EE ==>|β₂| PR
-    HE ==>|β₃| PR
-
-    classDef obs fill:#ffffff,stroke:#7A8487,stroke-width:1px,color:#374649
-    classDef latent fill:#ffffff,stroke:#1CABE2,stroke-width:2px,color:#00377C
-    classDef outcome fill:#ffffff,stroke:#E2007A,stroke-width:2px,color:#a3005a
-```
-
-<small>Latent constructs (blue ovals) are measured by observed EH 2024 indicators (grey boxes); the final outcome is educational progression (pink). The parenting layer is **excluded** — Bolivia lacks contemporary parenting data (last full MICS: 2008) — and will be added when pilot or survey data exist. Estimated coefficients on the next slide.</small>
-
 ## A11 · SEM — equations and calibration {.smaller}
 
-**Approach**: we estimate the ToC arrows for which EH 2024 has observed indicators (attendance, dropout, age-for-grade delay, household composition as a HomeEnv proxy). The **parenting-layer parameters** ($\beta_3$, $\beta_5$) are calibrated as **informative Bayesian priors** from the $\phi$-adjusted anchors (Cluver, Janowski), not estimated from EH 2024.
+**Approach**: we estimate the ToC arrows for which EH 2024 has observed indicators (attendance, dropout, age-for-grade delay, household composition as a HomeEnv proxy). The **parenting-layer parameters** ($\beta_3$, $\beta_5$) are calibrated as **informative Bayesian priors** from the $\phi$-adjusted anchors (Cluver, Janowski), not estimated from EH 2024. The structural diagram is in **A2**.
 
 ::: {.columns}
 ::: {.column width="50%"}

@@ -324,22 +324,22 @@ Para evidencia complementaria sobre habilidades digitales individuales véase AG
 ## Qué estamos construyendo — dos modelos probados, adaptados a Bolivia {.smaller}
 
 ```{mermaid}
-%%| fig-width: 13
-flowchart LR
-    subgraph A["①&nbsp;&nbsp;Acceso digital&nbsp;&nbsp;·&nbsp;&nbsp;Plan Ceibal&nbsp;"]
-        A1["Dispositivos · conectividad<br/>contenido digital · formación docente"]
+%%| fig-width: 11
+flowchart TB
+    subgraph A["① Acceso digital — Plan Ceibal"]
+        A1["Dispositivos · conectividad · contenido digital · formación docente"]
     end
-    subgraph B["②&nbsp;&nbsp;Permanencia y agencia&nbsp;&nbsp;·&nbsp;&nbsp;ELA&nbsp;"]
-        B1["Espacios seguros · mentoría<br/>pedagogía con enfoque de género"]
+    subgraph B["② Permanencia y agencia — ELA"]
+        B1["Espacios seguros · mentoría · pedagogía con enfoque de género"]
     end
-    subgraph C["③&nbsp;&nbsp;Crianza&nbsp;&nbsp;·&nbsp;&nbsp;Cluver / ParentApp&nbsp;"]
-        C1["Comunicación madre/padre–hija<br/>reducción de violencia"]
+    subgraph C["③ Crianza — Cluver / ParentApp"]
+        C1["Comunicación madre/padre–hija · reducción de violencia"]
     end
 
-    A1 --> R["Las niñas permanecen en<br/>la escuela y ganan agencia"]
+    A1 --> R["Las niñas permanecen en la escuela y ganan agencia"]
     B1 --> R
     C1 -.-> R
-    R --> I["Menores brechas de género<br/>en aprendizaje y empleo"]
+    R --> I["Menores brechas de género en aprendizaje y empleo"]
 
     class A,A1 layerA
     class B,B1 layerB
@@ -553,90 +553,54 @@ El BCR a continuación monetiza **únicamente** el canal de aprendizaje → ingr
 SWEDD: Boulhane, Boxho, Koussoubé & Rouanet (2026), World Bank Blogs.
 :::
 
-## Costo-efectividad — ¿qué componentes retienen a las niñas? {.smaller}
+## Costo-efectividad — un ancla, un efecto {.smaller}
 
-Los componentes de pedagogía con enfoque de género impulsan la permanencia; las laptops impulsan el aprendizaje a **4× el costo**.
+Anclamos la estimación cuantitativa en un **único programa bien emparejado**: una intervención digital, en aula, en una muestra de secundaria mayoritariamente femenina (Porter, Sudáfrica). No se suman efectos entre programas.
 
 ::: {.columns}
 ::: {.column width="12%"}
 :::
 ::: {.column width="76%"}
 
-| Versión del programa | Costo / niña | Efecto asistencia | **Costo por +1 pp** |
-|---|---:|---:|---:|
-| **Sólo pedagogía de género** *(sin laptops)* | $106 | +2.6 pp | **$41** |
-| **Programa completo** *(+ laptops, Plan Ceibal)* | $465 | +2.6 pp | **$179** |
+| Métrica (niñas 10–19) | Central | Rango |
+|---|---:|---:|
+| Efecto en aprendizaje (φ-ajustado) | +0.16 SD | **0.00 – 0.27** |
+| Costo por niña (4 años) | $465 | $360 – $850 |
+| **Costo por +0.01 SD de aprendizaje** | **$29** | $13 – $53 |
+| **Costo por +1 año de escolaridad** | **$1,900** | — |
 
 :::
 ::: {.column width="12%"}
 :::
 :::
 
-El efecto sobre asistencia (**+2.6 pp**, anclado en **ELA**, Sierra Leona) proviene de los espacios seguros y la pedagogía con enfoque de género — *no* de los dispositivos. Las laptops (**Plan Ceibal**) añaden ganancias de aprendizaje por un canal distinto y más costoso.
+El ancla (**Porter, Sudáfrica**) es una intervención por computadora en una muestra de secundaria 62% niñas. **Technovation Girls (Chile)** —niñas, digital, pensamiento computacional— es la plantilla de *diseño* más cercana pero no reporta un tamaño de efecto utilizable, por lo que informa el diseño, no el número.
 
-<small>*"Central" = el escenario central: supuestos medianos sobre costo, tamaño del efecto y el ajuste φ del estudio de origen a Bolivia. Los escenarios bajo/alto lo acotan (ver anexo A0). Rango del efecto: +0.7 a +6.4 pp.*</small>
+<small>*La cota inferior es **0.00 SD**: los estudios más rigurosos de la literatura de growth-mindset hallan efectos casi nulos, por lo que dejamos que el piso llegue a cero en lugar de asumir un efecto positivo. "Central" = supuestos medianos de costo y ajuste φ; ver anexo A0.*</small>
 
 ## Cadena de valor del beneficio — niñas 10–19 en Bolivia {.smaller}
 
-Cómo el efecto de **+2.6 pp** en asistencia se convierte en un beneficio en valor presente por niña:
+Cómo el efecto en aprendizaje se convierte en un beneficio en valor presente por niña:
 
 | Paso | Cálculo | Resultado |
 |---|---|---:|
-| **1 · Efecto en asistencia** | ELA (Sierra Leona), φ-ajustado a Bolivia | **+2.6 pp** |
-| **2 · Años de escolaridad** | +2.6 pp sobre ~4 años de secundaria restantes | **+0.10 años** |
-| **3 · Retorno Mincer** | × 7.5%/año (EH 2024, mujeres bolivianas) | **+0.78%** ingreso |
-| **4 · Valor de vida** | VP sobre 35 años laborales, desc. 3% | **~$385** |
-| **= Beneficio vs. costo** | $385 beneficio ÷ $465 costo | **BCR ≈ 0.83** |
+| **1 · Efecto en aprendizaje** | Porter (Sudáfrica), φ-ajustado a Bolivia | **+0.16 SD** |
+| **2 · Años de escolaridad** | × 1.5 años/SD (Hanushek-Woessmann) | **+0.24 años** |
+| **3 · Retorno Mincer** | × 7.5%/año (EH 2024, mujeres bolivianas) | **+1.8%** ingreso |
+| **4 · Valor de vida** | VP sobre 35 años laborales, desc. 3% | **~$890** |
+| **= Beneficio vs. costo** | $890 beneficio ÷ $465 costo | **BCR ≈ 1.9** |
 
-<small>Cada paso usa datos específicos de Bolivia (Mincer de la EH 2024, mujeres) o el ancla con enfoque de género ELA. El BCR cuenta **sólo ingresos** — agencia, reducción de violencia y efectos intergeneracionales están documentados pero no sumados.</small>
-
-**Lectura.** Cada paso usa datos específicos de Bolivia (Mincer EH 2024 sólo mujeres) o el ancla con enfoque de género Bandiera ELA, φ-ajustada al contexto boliviano. Al usar el efecto sobre asistencia de niñas —en lugar del efecto sobre aprendizaje de Plan Ceibal— el BCR se acerca a 1 y queda anclado en evidencia gender-específica.
-
-## Escenarios — canal de aprendizaje (sensibilidad) {.smaller}
-
-Como verificación, el canal de aprendizaje (Plan Ceibal, infraestructura digital) da un BCR más conservador. Se reporta como cota inferior.
-
-```{r bcr-scenarios}
-bcr_tab <- readr::read_csv(
-  here::here("output", "projections", "bcr_scenarios_table.csv"),
-  show_col_types = FALSE
-)
-# Translate column headers to Spanish
-es_cols <- c(
-  "Scenario"                      = "Escenario",
-  "Years edu gained"              = "Años edu ganados",
-  "Benefit PV (USD/girl)"         = "Beneficio VP (USD/niña)",
-  "Cost (USD/girl over exposure)" = "Costo (USD/niña, exposición total)",
-  "BCR"                           = "BCR"
-)
-es_scen <- c("Low" = "Bajo (costo alto + efecto bajo)",
-             "Central" = "Central",
-             "High" = "Alto (costo bajo + efecto alto)")
-bcr_tab |>
-  dplyr::mutate(Scenario = dplyr::recode(Scenario, !!!es_scen)) |>
-  dplyr::rename_with(~ dplyr::recode(.x, !!!es_cols)) |>
-  knitr::kable(align = "lrrrr")
-```
-
-```{r bcr-interpret}
-.bcr_central <- bcr_tab$BCR[bcr_tab$Scenario == "Central"]
-.bcr_low     <- bcr_tab$BCR[bcr_tab$Scenario == "Low"]
-.bcr_high    <- bcr_tab$BCR[bcr_tab$Scenario == "High"]
-```
-
-::: {.callout-tip appearance="simple"}
-**Interpretación.** Dos canales complementarios: (1) el canal de **género/asistencia** (Bandiera ELA) da el BCR central de la slide anterior (≈ 0.83); (2) el canal de **aprendizaje** (Plan Ceibal, infraestructura digital) es más conservador [`r .bcr_low` – `r .bcr_high`], porque proviene de un país con PIB per cápita 3× el de Bolivia. Ambos son cotas inferiores: ninguno suma los retornos amplios de agencia, reducción de violencia ni efectos intergeneracionales.
-:::
+<small>Escenario central. Como el piso del efecto es casi nulo (literatura controvertida), el **escenario bajo da BCR ≈ 0** — la cota inferior honesta. El BCR cuenta **sólo ingresos**; agencia, reducción de violencia y efectos intergeneracionales están documentados pero no sumados.</small>
 
 ## Mensajes clave
 
 **1 · La brecha es territorial, no de matrícula.** La matrícula es ~95% en todas partes; las brechas reales para las niñas están en **asistencia, abandono y acceso digital** — concentradas en hogares rurales, indígenas y pobres.
 
-**2 · Dos modelos probados, adaptados a Bolivia.** Aula Conectada = **Plan Ceibal** (acceso digital) + **ELA** (permanencia y agencia de niñas), transportados con atenuación explícita y conservadora.
+**2 · Un modelo probado, adaptado a Bolivia.** Aula Conectada sigue un diseño digital en aula, anclado en un único estudio bien emparejado (Porter, Sudáfrica), con Technovation Girls (Chile) como plantilla de diseño — sin sumar efectos entre programas.
 
-**3 · Los componentes más baratos hacen la mayor diferencia.** La pedagogía de género sola retiene a las niñas a **$41 por punto porcentual**; añadir laptops eleva esto a **$179** por el mismo efecto de retención. Las laptops añaden aprendizaje, no retención — la inversión de mayor retorno es la capa de pedagogía con enfoque de género.
+**3 · Costo-efectivo en aprendizaje.** ~**$29 por niña** por cada +0.01 SD de aprendizaje; **BCR central ≈ 1.9** sólo por el canal de ingresos. La cota inferior honesta: si el efecto es nulo (literatura controvertida), el BCR se acerca a 0.
 
-**4 · El retorno monetizado es un piso.** El BCR (≈ 0.83) cuenta sólo ingresos. La agencia, la reducción de violencia y los efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
+**4 · El retorno monetizado es un piso.** El BCR central (≈ 1.9) cuenta sólo ingresos. La agencia, la reducción de violencia y los efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
 
 # 6 · Anexo Metodológico {.section-divider background-color="#00377C"}
 
@@ -668,7 +632,39 @@ bcr_tab |>
 Microdatos: anda.ine.gob.bo/index.php/catalog/163
 :::
 
-## A2 · Estrategia empírica {.smaller}
+## A2 · Síntesis estructural de la ToC — niñas 10–19 (SEM) {.smaller}
+
+```{mermaid}
+%%| fig-width: 13
+flowchart LR
+    LWB["Vive con<br/>ambos padres"]:::obs
+    NP["Hogar<br/>no pobre"]:::obs
+    ND["Hogar sin<br/>discapacidad"]:::obs
+    ENR["Matriculada"]:::obs
+    ATT["Asistiendo<br/>a clase"]:::obs
+
+    HE(("Entorno<br/>del hogar")):::latent
+    EE(("Compromiso<br/>escolar")):::latent
+    PR["Progresión<br/>educativa"]:::outcome
+
+    LWB -.->|λ₁| HE
+    NP  -.->|λ₂| HE
+    ND  -.->|λ₃| HE
+    ENR -.->|λ₄| EE
+    ATT -.->|λ₅| EE
+
+    HE ==>|β₁| EE
+    EE ==>|β₂| PR
+    HE ==>|β₃| PR
+
+    classDef obs fill:#ffffff,stroke:#7A8487,stroke-width:1px,color:#374649
+    classDef latent fill:#ffffff,stroke:#1CABE2,stroke-width:2px,color:#00377C
+    classDef outcome fill:#ffffff,stroke:#E2007A,stroke-width:2px,color:#a3005a
+```
+
+<small>Los constructos latentes (óvalos azules) se miden con indicadores observados de la EH 2024 (cajas grises); el resultado final es la progresión educativa (rosa). La capa de crianza está **excluida** —Bolivia carece de datos contemporáneos (última MICS: 2008)— y se añadirá cuando existan datos del piloto o de una encuesta. Ecuaciones y coeficientes estimados en A11.</small>
+
+## A3 · Estrategia empírica {.smaller}
 
 **Modelo base (LPM con efectos fijos de departamento):**
 
@@ -690,7 +686,7 @@ y análogos para $F \times R \times P$ y $F \times I \times P$. Las interaccione
 
 Estimación por MCO ponderado por `factor` (factor de expansión); errores estándar agrupados al nivel UPM (`fixest::feols`).
 
-## A3 · Tabla completa — coeficientes principales {.smaller}
+## A4 · Tabla completa — coeficientes principales {.smaller}
 
 ```{r reg-table-all}
 out_vars <- c("hh_internet", "enrolled", "attending", "hh_any_device", "grade_delay")
@@ -733,7 +729,7 @@ bind_rows(tab, foot) |>
 
 <small>`*` p<0.10, `**` p<0.05, `***` p<0.01. Errores estándar entre paréntesis bajo cada coeficiente. MCO ponderado por factor de expansión EH 2024; efectos fijos de departamento; errores agrupados al nivel UPM (`fixest::feols`).</small>
 
-## A4 · Tabla interseccional completa {.smaller}
+## A5 · Tabla interseccional completa {.smaller}
 
 ```{r inter-table-full}
 inter_long <- inter |>
@@ -796,7 +792,7 @@ bind_rows(rows, footer_rows) |> kable(align = "lcccc")
 
 <small>Coeficientes de interacción (efecto adicional para niñas en cada grupo). Errores estándar entre paréntesis. `*` p<0.10, `**` p<0.05, `***` p<0.01. MCO ponderado, efectos fijos de departamento, errores agrupados al nivel UPM.</small>
 
-## A5 · Análisis de heterogeneidad — bosque de regresión {.smaller}
+## A6 · Análisis de heterogeneidad — bosque de regresión {.smaller}
 
 **Método:** `grf::regression_forest` (Athey & Wager, 2019) — un ensamble de árboles de regresión con submuestreo honesto.
 
@@ -827,7 +823,7 @@ bind_rows(rows, footer_rows) |> kable(align = "lcccc")
 :::
 :::
 
-## A6 · Fundamento formal del enfoque de transportabilidad {.smaller}
+## A7 · Fundamento formal del enfoque de transportabilidad {.smaller}
 
 Asumimos que el desajuste entre la población fuente $S$ (el ancla) y la población objetivo $T$ (Bolivia) se descompone en $K$ dimensiones observables y que la atenuación es **multiplicativa**:
 
@@ -857,7 +853,7 @@ $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T),
 :::
 :::
 
-## A7 · Metodología de proyección ajustada a Bolivia {.smaller}
+## A8 · Metodología de proyección ajustada a Bolivia {.smaller}
 
 **Fórmula completa:** Efecto = $\beta_{\text{externo}} \times \phi_{\text{pop}} \times \phi_{\text{baseline}} \times \phi_{\text{geo}} \times \phi_{\text{econ}} \times \phi_{\text{delivery}}$
 
@@ -884,7 +880,7 @@ $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T),
 :::
 :::
 
-## A8 · Evidencia consolidada — anclas en uso {.smaller}
+## A9 · Evidencia consolidada — anclas en uso {.smaller}
 
 ```{r evidence-table}
 # Use the anchors_demographics.R as source of truth for the anchors actually
@@ -917,7 +913,7 @@ anchors_demo |>
 
 <small>Listado completo de las anclas externas usadas en la proyección a Bolivia (ver `05_projections.R` y `R/anchors_demographics.R`). La revisión sistemática completa de 52 papers está en `data/lit_review_papers.csv`. La columna **Flecha ToC** indica qué arco de la Teoría de Cambio alimenta cada ancla.</small>
 
-## A9 · Robustez — interacciones de tres vías (MCO) {.smaller}
+## A10 · Robustez — interacciones de tres vías (MCO) {.smaller}
 
 Para verificar la heterogeneidad detectada por el bosque de regresión, estimamos interacciones de tres vías con MCO. Si el bosque detecta correctamente subgrupos compuestos, los coeficientes de tres vías deberían ser significativos para los outcomes con mayor heterogeneidad.
 
@@ -947,41 +943,9 @@ threeway |>
 
 <small>**Cómo leer:** cada celda muestra el coeficiente de la interacción de tres vías y su error estándar entre paréntesis. Significancia: `*` p<0.10, `**` p<0.05, `***` p<0.01. Si no aparecen asteriscos, el coeficiente no es estadísticamente distinguible de cero a los niveles convencionales. **Interpretación:** en esta muestra, las interacciones triples no son significativas, lo que indica que el efecto compuesto de pertenecer a múltiples grupos vulnerables (por ejemplo, niña rural indígena) no es sustancialmente mayor que la suma de los efectos de cada grupo por separado. Las brechas se acumulan de forma aproximadamente aditiva. Esto sugiere que las intervenciones bien dirigidas a cualquiera de los ejes (rural, indígena, pobreza) tendrán impacto en niñas que cumplen con esas características.</small>
 
-## A10 · Síntesis estructural de la ToC — niñas 10–19 (SEM) {.smaller}
-
-```{mermaid}
-%%| fig-width: 13
-flowchart LR
-    LWB["Vive con<br/>ambos padres"]:::obs
-    NP["Hogar<br/>no pobre"]:::obs
-    ND["Hogar sin<br/>discapacidad"]:::obs
-    ENR["Matriculada"]:::obs
-    ATT["Asistiendo<br/>a clase"]:::obs
-
-    HE(("Entorno<br/>del hogar")):::latent
-    EE(("Compromiso<br/>escolar")):::latent
-    PR["Progresión<br/>educativa"]:::outcome
-
-    LWB -.->|λ₁| HE
-    NP  -.->|λ₂| HE
-    ND  -.->|λ₃| HE
-    ENR -.->|λ₄| EE
-    ATT -.->|λ₅| EE
-
-    HE ==>|β₁| EE
-    EE ==>|β₂| PR
-    HE ==>|β₃| PR
-
-    classDef obs fill:#ffffff,stroke:#7A8487,stroke-width:1px,color:#374649
-    classDef latent fill:#ffffff,stroke:#1CABE2,stroke-width:2px,color:#00377C
-    classDef outcome fill:#ffffff,stroke:#E2007A,stroke-width:2px,color:#a3005a
-```
-
-<small>Los constructos latentes (óvalos azules) se miden con indicadores observados de la EH 2024 (cajas grises); el resultado final es la progresión educativa (rosa). La capa de crianza está **excluida** —Bolivia carece de datos contemporáneos (última MICS: 2008)— y se añadirá cuando existan datos del piloto o de una encuesta. Coeficientes estimados en la slide siguiente.</small>
-
 ## A11 · SEM — ecuaciones y calibración {.smaller}
 
-**Enfoque**: estimamos las flechas de la ToC para las que la EH 2024 tiene indicadores observados (asistencia, abandono, rezago, composición del hogar como proxy de HomeEnv). Los parámetros de la **capa de parenting** ($\beta_3$, $\beta_5$) se calibran como **priors informativos bayesianos** desde las anclas $\phi$-ajustadas (Cluver, Janowski), no se estiman con la EH 2024.
+**Enfoque**: estimamos las flechas de la ToC para las que la EH 2024 tiene indicadores observados (asistencia, abandono, rezago, composición del hogar como proxy de HomeEnv). Los parámetros de la **capa de parenting** ($\beta_3$, $\beta_5$) se calibran como **priors informativos bayesianos** desde las anclas $\phi$-ajustadas (Cluver, Janowski), no se estiman con la EH 2024. El diagrama estructural está en **A2**.
 
 ::: {.columns}
 ::: {.column width="50%"}

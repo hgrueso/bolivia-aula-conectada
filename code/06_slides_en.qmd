@@ -567,7 +567,7 @@ Large RCTs of hardware-only programmes (**Cristia et al. 2017; Cueto et al. 2024
 
 <small>*Pedagogy bundle: content/platform + teacher training + pedagogy/M&E ≈ $152/girl over 4 years (no new device or connectivity procurement). The effect is held constant because the experimental evidence attributes the gain to pedagogy and software, with hardware-only arms near zero. **Cost-effectiveness improves ~3× per percentage point.***</small>
 
-## Benefit value chain — girls 10–19 in Bolivia
+## Benefit value chain — girls 10–19 in Bolivia {.smaller}
 
 How the attendance effect becomes a present-value benefit per girl (pedagogy bundle, $152/girl):
 
@@ -589,7 +589,7 @@ How the attendance effect becomes a present-value benefit per girl (pedagogy bun
 :::
 :::
 
-<small>The attendance gain converts directly into attended school-years (no test-score conversion needed). Central scenario [BCR range 0.8 – 5.6]. On the full programme with laptops ($465), BCR ≈ 0.9 — lower because it also funds hardware that the RCT evidence shows adds little. Counts **only earnings**: agency, violence reduction and intergenerational gains are documented but not added, so the true return is **expected to be higher**.</small>
+<small>Attendance converts directly into attended school-years (no test-score conversion). Central [BCR 0.8 – 5.6]. With laptops ($465), BCR ≈ 0.9 — hardware adds little per the RCT evidence. Counts **only earnings**; agency, violence reduction and intergenerational gains are not added, so the true return is **expected to be higher**.</small>
 
 ## Key takeaways {.smaller}
 

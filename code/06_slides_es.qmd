@@ -592,7 +592,7 @@ Grandes RCTs de programas de sólo hardware (**Cristia et al. 2017; Cueto et al.
 
 <small>*Paquete pedagógico: contenido/plataforma + formación docente + pedagogía/M&E ≈ $152/niña en 4 años (sin compra de nuevos dispositivos ni conectividad). El efecto se mantiene constante porque la evidencia experimental atribuye la ganancia a la pedagogía y el software, con brazos de sólo hardware cercanos a cero. **La costo-efectividad mejora ~3× por punto porcentual.***</small>
 
-## Cadena de valor del beneficio — niñas 10–19 en Bolivia
+## Cadena de valor del beneficio — niñas 10–19 en Bolivia {.smaller}
 
 Cómo el efecto en asistencia se convierte en un beneficio en valor presente por niña (paquete pedagógico, $152/niña):
 
@@ -614,7 +614,7 @@ Cómo el efecto en asistencia se convierte en un beneficio en valor presente por
 :::
 :::
 
-<small>La ganancia en asistencia se convierte directamente en años de escolaridad asistida (sin conversión de puntajes). Escenario central [rango BCR 0.8 – 5.6]. En el programa completo con laptops ($465), BCR ≈ 0.9 — menor porque también financia hardware que la evidencia RCT muestra que aporta poco. Cuenta **sólo ingresos**: agencia, reducción de violencia y efectos intergeneracionales documentados pero no sumados, por lo que el retorno real **se espera que sea mayor**.</small>
+<small>La asistencia se convierte directamente en años de escolaridad asistida. Central [BCR 0.8 – 5.6]. Con laptops ($465), BCR ≈ 0.9. Cuenta **sólo ingresos**; agencia, violencia e intergeneracionales no sumados → retorno real **se espera mayor**.</small>
 
 ## Mensajes clave {.smaller}
 

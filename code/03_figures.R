@@ -459,18 +459,18 @@ f4_dat <- wt_pct(des, "attending", by = c("female", "hh_internet")) |>
 
 ymin <- floor((min(f4_dat$estimate) - 0.02) * 20) / 20  # redondeo a 5pp
 
-f4 <- ggplot(f4_dat, aes(x = hogar, y = estimate, colour = sexo, group = sexo)) +
-  geom_line(linewidth = 1.1, alpha = 0.5) +
-  geom_point(size = 6) +
+f4 <- ggplot(f4_dat, aes(x = hogar, y = estimate, fill = sexo)) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.62) +
   geom_text(aes(label = scales::percent(estimate, accuracy = 0.1)),
-            vjust = -1.3, size = 4, fontface = "bold", show.legend = FALSE) +
+            position = position_dodge(width = 0.7),
+            vjust = -0.6, size = 4, fontface = "bold", show.legend = FALSE) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
-                     limits = c(ymin, 1.0),
-                     expand = expansion(mult = c(0.05, 0.10))) +
-  scale_colour_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
+                     limits = c(0, 1.0),
+                     expand = expansion(mult = c(0, 0.08))) +
+  scale_fill_manual(values = c("Niños" = ACCENT_BOY, "Niñas" = ACCENT_GIRL)) +
   labs(title    = NULL,
        subtitle = "Tasa de asistencia escolar de adolescentes 10–19, por conexión del hogar",
-       x = NULL, y = "Asisten actualmente", colour = NULL, caption = cap_src) +
+       x = NULL, y = "Asisten actualmente", fill = NULL, caption = cap_src) +
   theme(panel.grid.major.x = element_blank(),
         panel.grid.major.y = element_line(colour = "grey90", linewidth = 0.3),
         legend.position = "top")

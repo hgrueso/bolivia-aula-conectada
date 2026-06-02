@@ -448,24 +448,32 @@ save_fig(f3, "f3_indigenous_girls_gaps_en")
 
 # ========================================================================
 # Figure 4: School attendance × internet at home
+# Lollipop with zoomed axis to make the gap visible (attendance ~90%+)
 # ========================================================================
 f4_dat <- wt_pct(des, "attending", by = c("female", "hh_internet")) |>
   mutate(
     sexo  = ifelse(female == 1, "Girls", "Boys"),
-    hogar = ifelse(hh_internet == 1, "Hogar con internet", "Hogar sin internet")
+    hogar = ifelse(hh_internet == 1, "With internet", "Without internet"),
+    hogar = factor(hogar, levels = c("Without internet", "With internet"))
   )
 
+ymin <- floor((min(f4_dat$estimate) - 0.02) * 20) / 20
+
 f4 <- ggplot(f4_dat, aes(x = hogar, y = estimate, fill = sexo)) +
-  geom_col(position = position_dodge(0.7), width = 0.6) +
-  geom_text(aes(label = scales::percent(estimate, accuracy = 1)),
-            position = position_dodge(0.7), vjust = -0.4, size = 3.4,
-            colour = GREY_DARK) +
+  geom_col(position = position_dodge(width = 0.7), width = 0.62) +
+  geom_text(aes(label = scales::percent(estimate, accuracy = 0.1)),
+            position = position_dodge(width = 0.7),
+            vjust = -0.6, size = 4, fontface = "bold", show.legend = FALSE) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
-                     limits = c(0, 1), expand = expansion(mult = c(0, 0.05))) +
+                     limits = c(0, 1.0),
+                     expand = expansion(mult = c(0, 0.08))) +
   scale_fill_manual(values = c("Boys" = ACCENT_BOY, "Girls" = ACCENT_GIRL)) +
   labs(title    = NULL,
-       subtitle = "Adolescents 10–19 currently attending school",
-       x = NULL, y = NULL, fill = NULL, caption = cap_src)
+       subtitle = "School attendance rate of adolescents 10–19, by household connectivity",
+       x = NULL, y = "Currently attending", fill = NULL, caption = cap_src) +
+  theme(panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_line(colour = "grey90", linewidth = 0.3),
+        legend.position = "top")
 save_fig(f4, "f4_attendance_by_internet_en")
 
 # ========================================================================

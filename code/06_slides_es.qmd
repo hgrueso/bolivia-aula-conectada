@@ -321,22 +321,22 @@ Para evidencia complementaria sobre habilidades digitales individuales véase AG
 :::
 :::
 
-## Qué estamos construyendo — un programa, tres capas {.smaller}
+## Qué estamos construyendo — un programa, tres capas
 
 ```{mermaid}
-%%| fig-width: 13
+%%| fig-width: 14
 flowchart LR
     subgraph A["① Acceso digital"]
-        A1["Dispositivos · conectividad<br/>contenido digital<br/><i>ancla: Plan Ceibal</i>"]
+        A1["Dispositivos · conectividad<br/>contenido digital"]
     end
-    subgraph B["② Pedagogía con enfoque de género"]
-        B1["Formación docente · mentoría<br/>pensamiento computacional para niñas<br/><i>ancla: Porter · diseño: Technovation</i>"]
+    subgraph B["② Pedagogía de niñas"]
+        B1["Formación docente · mentoría<br/>pensamiento computacional"]
     end
     subgraph C["③ Crianza"]
-        C1["Comunicación madre/padre–hija<br/>reducción de violencia<br/><i>diseño: Cluver / ParentApp</i>"]
+        C1["Comunicación con la hija<br/>reducción de violencia"]
     end
 
-    A1 --> R["Las niñas aprenden más<br/>y permanecen en la escuela"]
+    A1 --> R["Las niñas permanecen<br/>y aprenden"]
     B1 --> R
     C1 -.-> R
     R --> I["Menores brechas de género<br/>en aprendizaje y empleo"]
@@ -351,7 +351,7 @@ flowchart LR
     classDef outcome fill:#fff7e6,stroke:#FFC20E,stroke-width:2px,color:#7a5b00
 ```
 
-<small>El ancla cuantitativa es **Porter** (Sudáfrica) — un RCT digital, de secundaria, mayoritariamente niñas — corroborado en la región por el **Learning Passport de México** (d=0.26). **Technovation Girls** (Chile) es la plantilla de diseño. La capa de crianza (punteada) se **activa sólo cuando exista data boliviana**.</small>
+<small>Ancla cuantitativa: **Evans & Yuan (2022)**, meta-análisis específico de niñas de 73+ RCTs. **Technovation Girls** (Chile) es la plantilla de diseño; la capa de **crianza** (punteada) se activa sólo cuando exista data boliviana.</small>
 
 # 3 · Proyecciones — Aula Conectada en Bolivia {.section-divider background-color="#00377C"}
 
@@ -438,25 +438,25 @@ Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al 
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Efecto en aprendizaje** <br>(grupo prioritario, ≈ 568 mil niñas)
+**Efecto en acceso** <br>(grupo prioritario, ≈ 568 mil niñas)
 
-- **Ancla:** Porter (Sudáfrica) — digital, secundaria, 62% niñas: **+0.27 SD** en matemática
-- **φ-ajustado a Bolivia:** **+0.16 SD** [0.00 – 0.27]
-- **Corroboración en la región:** RCT Learning Passport México, **d = 0.26** (UNICEF, 2026)
+- **Ancla:** Evans & Yuan (2022) — meta-análisis específico de niñas, 73 RCTs: mediana **+0.07 SD** en acceso
+- **φ-ajustado a Bolivia:** **+0.06 SD** [0.02 – 0.12]
+- **→ +2.4 pp asistencia · −1.4 pp NEET** (niñas 15–19)
 
 :::
 ::: {.column width="50%"}
 
 **Traducido a ingresos de vida** <br>(vía datos de Bolivia)
 
-- **+0.16 SD → +0.24 años** de escolaridad (Hanushek-Woessmann)
+- **+0.06 SD → +0.09 años** de escolaridad (Hanushek-Woessmann, aprox.)
 - **× 7.5%** retorno Mincer por año (EH 2024, **mujeres bolivianas**)
-- **→ ~$890** valor presente por niña (sólo canal de ingresos)
+- **→ ~$330** valor presente por niña (sólo canal de ingresos)
 
 :::
 :::
 
-<small>La cifra de ingresos es un **piso**: agencia, reducción de violencia y efectos intergeneracionales están documentados pero no monetizados. Cota inferior honesta: si el efecto en aprendizaje es nulo (literatura controvertida), el retorno se acerca a cero.</small>
+<small>RCTs digitales individuales (Porter 0.27, Learning Passport México 0.26) se ubican cerca del rango superior del meta-análisis — corroboración, no el ancla. Los ingresos son un **piso**: aprendizaje, agencia, reducción de violencia y efectos intergeneracionales documentados pero no monetizados.</small>
 
 # 4 · Costos {.section-divider background-color="#00377C"}
 
@@ -551,32 +551,31 @@ Estos canales están **documentados pero deliberadamente excluidos** del BCR —
 
 ## Costo-efectividad — un ancla, un efecto
 
-Anclado en un **único programa bien emparejado** (Porter, Sudáfrica): digital, secundaria, 62% niñas. No se suman efectos.
+Anclado en el meta-análisis específico de niñas de **Evans & Yuan (2022)** sobre resultados de acceso (73 RCTs): mediana **+0.07 SD**, φ-ajustado a Bolivia. Sin un único estudio frágil; sin sumar efectos.
 
 ::: {.columns}
-::: {.column width="8%"}
+::: {.column width="10%"}
 :::
-::: {.column width="84%"}
+::: {.column width="80%"}
 
-| Métrica (niñas 10–19) | Central | Rango |
+| Efecto en niñas 10–19 | Central | Rango |
 |---|---:|---:|
-| Efecto en aprendizaje (φ-ajustado) | +0.16 SD | 0.00 – 0.27 |
+| Efecto en acceso (φ-ajustado) | +0.06 SD | 0.02 – 0.12 |
+| **Asistencia** | **+2.4 pp** | 0.7 – 4.8 |
+| **NEET (15–19)** | **−1.4 pp** | −0.4 a −2.9 |
 | Costo por niña (4 años) | $465 | $360 – $850 |
-| **Costo por +0.01 SD de aprendizaje** | **$29** | $13 – $53 |
-| **Costo por +1 año de escolaridad** | **$1,900** | — |
+| **Costo por +1 pp asistencia** | **~$190** | $95 – $660 |
 
 :::
-::: {.column width="8%"}
+::: {.column width="10%"}
 :::
 :::
 
-Corroboración en la región: el RCT del **Learning Passport de México** halló **d = 0.26** en aprendizaje (UNICEF, 2026) — cercano al 0.27 de Porter. **Technovation Girls (Chile)** es la plantilla de diseño (sin tamaño de efecto utilizable).
-
-<small>*Cota inferior = **0.00 SD**: los estudios más rigurosos de growth-mindset hallan efectos casi nulos, por lo que el piso llega a cero. "Central" = supuestos medianos de costo y ajuste φ; ver A0.*</small>
+<small>*La reducción de NEET es un cálculo **de orden de magnitud** (pass-through ~60% de la ganancia en asistencia), no una proyección precisa. "Central" = efecto meta-analítico mediano y costo mediano. Estudios individuales (Porter 0.27, Learning Passport México 0.26) se ubican cerca del rango superior como corroboración.*</small>
 
 ## Cadena de valor del beneficio — niñas 10–19 en Bolivia
 
-Cómo el efecto en aprendizaje se convierte en un beneficio en valor presente por niña:
+Cómo el efecto en acceso se convierte en un beneficio en valor presente por niña:
 
 ::: {.columns}
 ::: {.column width="8%"}
@@ -585,28 +584,28 @@ Cómo el efecto en aprendizaje se convierte en un beneficio en valor presente po
 
 | Paso | Cálculo | Resultado |
 |---|---|---:|
-| **1 · Efecto en aprendizaje** | Porter (Sudáfrica), φ-ajustado a Bolivia | **+0.16 SD** |
-| **2 · Años de escolaridad** | × 1.5 años/SD (Hanushek-Woessmann) | **+0.24 años** |
-| **3 · Retorno Mincer** | × 7.5%/año (EH 2024, mujeres bolivianas) | **+1.8%** ingreso |
-| **4 · Valor de vida** | VP sobre 35 años laborales, desc. 3% | **~$890** |
-| **= Beneficio vs. costo** | $890 beneficio ÷ $465 costo | **BCR ≈ 1.9** |
+| **1 · Efecto en acceso** | Evans & Yuan (2022), φ-ajustado | **+0.06 SD** |
+| **2 · Años de escolaridad** | × 1.5 años/SD (Hanushek-Woessmann, aprox.) | **+0.09 años** |
+| **3 · Retorno Mincer** | × 7.5%/año (EH 2024, mujeres bolivianas) | **+0.7%** ingreso |
+| **4 · Valor de vida** | VP sobre 35 años laborales, desc. 3% | **~$330** |
+| **= Beneficio vs. costo** | $330 beneficio ÷ $465 costo | **BCR ≈ 0.7** |
 
 :::
 ::: {.column width="8%"}
 :::
 :::
 
-<small>Escenario central. Si el efecto es nulo (literatura controvertida), **BCR ≈ 0** — la cota inferior honesta. Cuenta **sólo ingresos**; agencia, reducción de violencia y efectos intergeneracionales documentados pero no sumados.</small>
+<small>Escenario central [rango BCR 0.2 – 1.4]. Cuenta **sólo ingresos** vía retención; aprendizaje, agencia, reducción de violencia y efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.</small>
 
 ## Mensajes clave
 
 **1 · La brecha es territorial, no de matrícula.** La matrícula es ~95% en todas partes; las brechas reales para las niñas están en **asistencia, abandono y acceso digital** — concentradas en hogares rurales, indígenas y pobres.
 
-**2 · Un modelo probado, adaptado a Bolivia.** Aula Conectada sigue un diseño digital en aula, anclado en un único estudio bien emparejado (Porter, Sudáfrica), con Technovation Girls (Chile) como plantilla de diseño — sin sumar efectos entre programas.
+**2 · Un diseño anclado en evidencia específica de niñas.** Aula Conectada se ancla en el meta-análisis de Evans & Yuan (2022) de 73 RCTs — que halla que la pedagogía docente y el software (no el hardware solo) son lo que funciona para las niñas — con Technovation Girls (Chile) como plantilla de diseño.
 
-**3 · Costo-efectivo en aprendizaje.** ~**$29 por niña** por cada +0.01 SD de aprendizaje; **BCR central ≈ 1.9** sólo por el canal de ingresos. La cota inferior honesta: si el efecto es nulo (literatura controvertida), el BCR se acerca a 0.
+**3 · Costo-efectivo en los resultados que importan.** ~**$190 por niña** por cada +1 pp de asistencia; **BCR central ≈ 0.7** [0.2–1.4] sólo por el canal de ingresos, más una reducción estimada de **−1.4 pp NEET** en niñas 15–19.
 
-**4 · El retorno monetizado es un piso.** El BCR central (≈ 1.9) cuenta sólo ingresos. La agencia, la reducción de violencia y los efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
+**4 · El retorno monetizado es un piso.** El BCR cuenta sólo ingresos vía retención. Aprendizaje, agencia, reducción de violencia y efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
 
 # 6 · Anexo Metodológico {.section-divider background-color="#00377C"}
 

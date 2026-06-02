@@ -321,22 +321,22 @@ For complementary evidence on individual digital skills see AGETIC (National Sur
 :::
 :::
 
-## What we are building — one programme, three layers {.smaller}
+## What we are building — one programme, three layers
 
 ```{mermaid}
-%%| fig-width: 13
+%%| fig-width: 14
 flowchart LR
     subgraph A["① Digital access"]
-        A1["Devices · connectivity<br/>digital content<br/><i>anchor: Plan Ceibal</i>"]
+        A1["Devices · connectivity<br/>digital content"]
     end
-    subgraph B["② Gender-responsive pedagogy"]
-        B1["Teacher training · mentoring<br/>computational thinking for girls<br/><i>anchor: Porter · design: Technovation</i>"]
+    subgraph B["② Girls' pedagogy"]
+        B1["Teacher training · mentoring<br/>computational thinking"]
     end
     subgraph C["③ Parenting"]
-        C1["Parent–daughter communication<br/>violence reduction<br/><i>design: Cluver / ParentApp</i>"]
+        C1["Parent–daughter comms<br/>violence reduction"]
     end
 
-    A1 --> R["Girls learn more &<br/>stay in school"]
+    A1 --> R["Girls stay in<br/>school & learn"]
     B1 --> R
     C1 -.-> R
     R --> I["Narrower gender gaps<br/>in learning & work"]
@@ -351,7 +351,7 @@ flowchart LR
     classDef outcome fill:#fff7e6,stroke:#FFC20E,stroke-width:2px,color:#7a5b00
 ```
 
-<small>The quantitative anchor is **Porter** (South Africa) — a digital, secondary-age, majority-girls RCT — corroborated in-region by the **Mexico Learning Passport** (d=0.26). **Technovation Girls** (Chile) is the design template. The parenting layer (dashed) is **activated only when Bolivian data exists**.</small>
+<small>Quantitative anchor: **Evans & Yuan (2022)** girl-specific meta-analysis of 73+ RCTs. **Technovation Girls** (Chile) is the design template; the **parenting** layer (dashed) activates only when Bolivian data exists.</small>
 
 # 3 · Projections — Aula Conectada in Bolivia {.section-divider background-color="#00377C"}
 
@@ -436,25 +436,25 @@ proj_v2 |>
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Learning effect** <br>(priority group, ≈ 568K girls)
+**Access effect** <br>(priority group, ≈ 568K girls)
 
-- **Anchor:** Porter (South Africa) — digital, secondary, 62% girls: **+0.27 SD** on mathematics
-- **φ-adjusted to Bolivia:** **+0.16 SD** [0.00 – 0.27]
-- **In-region corroboration:** Mexico Learning Passport RCT, **d = 0.26** (UNICEF, 2026)
+- **Anchor:** Evans & Yuan (2022) — girl-specific meta-analysis, 73 RCTs: median **+0.07 SD** on access
+- **φ-adjusted to Bolivia:** **+0.06 SD** [0.02 – 0.12]
+- **→ +2.4 pp attendance · −1.4 pp NEET** (girls 15–19)
 
 :::
 ::: {.column width="50%"}
 
 **Translated to lifetime earnings** <br>(via Bolivia data)
 
-- **+0.16 SD → +0.24 years** of schooling (Hanushek-Woessmann)
+- **+0.06 SD → +0.09 years** of schooling (Hanushek-Woessmann, approx.)
 - **× 7.5%** Mincer return per year (EH 2024, **Bolivian women**)
-- **→ ~$890** present value per girl (earnings channel only)
+- **→ ~$330** present value per girl (earnings channel only)
 
 :::
 :::
 
-<small>The earnings figure is a **floor**: agency, violence reduction and intergenerational gains are documented but not monetised. Honest downside: if the learning effect is null (contested literature), the return approaches zero.</small>
+<small>Individual digital RCTs (Porter 0.27, Mexico Learning Passport 0.26) sit near the meta-analysis's upper range — corroboration, not the anchor. Earnings are a **floor**: learning, agency, violence-reduction and intergenerational gains documented but not monetised.</small>
 
 # 4 · Costing {.section-divider background-color="#00377C"}
 
@@ -526,32 +526,31 @@ These channels are **documented but deliberately excluded** from the BCR — the
 
 ## Cost-effectiveness — one anchor, one effect
 
-Anchored on a **single, well-matched programme** (Porter, South Africa): digital, secondary, 62% girls. No effects summed.
+Anchored on the **Evans & Yuan (2022)** girl-specific meta-analysis of access outcomes (73 RCTs): median **+0.07 SD**, φ-adjusted to Bolivia. No single fragile study; no effects summed.
 
 ::: {.columns}
-::: {.column width="8%"}
+::: {.column width="10%"}
 :::
-::: {.column width="84%"}
+::: {.column width="80%"}
 
-| Metric (girls 10–19) | Central | Range |
+| Effect on girls 10–19 | Central | Range |
 |---|---:|---:|
-| Learning effect (φ-adjusted) | +0.16 SD | 0.00 – 0.27 |
+| Access effect (φ-adjusted) | +0.06 SD | 0.02 – 0.12 |
+| **Attendance** | **+2.4 pp** | 0.7 – 4.8 |
+| **NEET (15–19)** | **−1.4 pp** | −0.4 to −2.9 |
 | Cost per girl (4 years) | $465 | $360 – $850 |
-| **Cost per +0.01 SD learning** | **$29** | $13 – $53 |
-| **Cost per +1 year of schooling** | **$1,900** | — |
+| **Cost per +1 pp attendance** | **~$190** | $95 – $660 |
 
 :::
-::: {.column width="8%"}
+::: {.column width="10%"}
 :::
 :::
 
-In-region corroboration: **Mexico Learning Passport** RCT found **d = 0.26** on learning (UNICEF, 2026) — near Porter's 0.27. **Technovation Girls (Chile)** is the design template (no usable effect size).
-
-<small>*Low bound = **0.00 SD**: the strongest growth-mindset studies find near-null effects, so the floor reaches zero. "Central" = median cost and φ-adjustment; see A0.*</small>
+<small>*NEET reduction is a **back-of-envelope** pass-through (~60% of the attendance gain), shown as an order of magnitude, not a precise projection. "Central" = median meta-analytic effect and median cost. Individual studies (Porter 0.27, Mexico Learning Passport 0.26) sit near the upper range as corroboration.*</small>
 
 ## Benefit value chain — girls 10–19 in Bolivia
 
-How the learning effect becomes a present-value benefit per girl:
+How the access effect becomes a present-value benefit per girl:
 
 ::: {.columns}
 ::: {.column width="8%"}
@@ -560,28 +559,28 @@ How the learning effect becomes a present-value benefit per girl:
 
 | Step | Calculation | Result |
 |---|---|---:|
-| **1 · Learning effect** | Porter (S. Africa), φ-adjusted to Bolivia | **+0.16 SD** |
-| **2 · Years of schooling** | × 1.5 yr/SD (Hanushek-Woessmann) | **+0.24 yr** |
-| **3 · Mincer return** | × 7.5%/yr (EH 2024, Bolivian women) | **+1.8%** income |
-| **4 · Lifetime value** | PV over 35 working years, disc. 3% | **~$890** |
-| **= Benefit vs. cost** | $890 benefit ÷ $465 cost | **BCR ≈ 1.9** |
+| **1 · Access effect** | Evans & Yuan (2022), φ-adjusted | **+0.06 SD** |
+| **2 · Years of schooling** | × 1.5 yr/SD (Hanushek-Woessmann, approx.) | **+0.09 yr** |
+| **3 · Mincer return** | × 7.5%/yr (EH 2024, Bolivian women) | **+0.7%** income |
+| **4 · Lifetime value** | PV over 35 working years, disc. 3% | **~$330** |
+| **= Benefit vs. cost** | $330 benefit ÷ $465 cost | **BCR ≈ 0.7** |
 
 :::
 ::: {.column width="8%"}
 :::
 :::
 
-<small>Central scenario. If the effect is null (contested literature), **BCR ≈ 0** — the honest downside. Counts **only earnings**; agency, violence reduction and intergenerational gains documented but not added.</small>
+<small>Central scenario [BCR range 0.2 – 1.4]. Counts **only earnings** via retention; learning gains, agency, violence reduction and intergenerational effects are documented but **not** added — the true return is higher.</small>
 
 ## Key takeaways
 
 **1 · The gap is territorial, not enrolment.** Enrolment is ~95% everywhere; the real gaps for girls are in **attendance, dropout, and digital access** — concentrated in rural, indigenous, and poor households.
 
-**2 · A proven model, adapted to Bolivia.** Aula Conectada follows a digital, classroom-delivered design anchored on a single well-matched study (Porter, South Africa), with Technovation Girls (Chile) as the design template — no effects summed across programmes.
+**2 · A design anchored in girl-specific evidence.** Aula Conectada is anchored on the Evans & Yuan (2022) meta-analysis of 73 RCTs — which finds teacher-pedagogy and software (not hardware alone) are what work for girls — with Technovation Girls (Chile) as the design template.
 
-**3 · Cost-effective on learning.** ~**$29 per girl** for each +0.01 SD of learning; central **BCR ≈ 1.9** through the earnings channel alone. The honest downside: if the effect is null (contested literature), the BCR approaches 0.
+**3 · Cost-effective on the outcomes that matter.** ~**$190 per girl** for each +1 pp of attendance; central **BCR ≈ 0.7** [0.2–1.4] through the earnings channel alone, plus an estimated **−1.4 pp NEET** for girls 15–19.
 
-**4 · The monetised return is a floor.** The central BCR (≈ 1.9) counts only earnings. Agency, violence reduction, and intergenerational gains are documented but **not** added — the true return is higher.
+**4 · The monetised return is a floor.** The BCR counts only retention-driven earnings. Learning gains, agency, violence reduction, and intergenerational effects are documented but **not** added — the true return is higher.
 
 # 6 · Methodological Appendix {.section-divider background-color="#00377C"}
 

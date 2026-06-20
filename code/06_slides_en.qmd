@@ -2,7 +2,7 @@
 title: "Aula Conectada"
 subtitle: "Investment case · Bolivia"
 author: "Hernando Grueso, PhD <br> UNICEF"
-date: "June 2026"
+date: "June 19, 2026"
 lang: en
 format:
   revealjs:
@@ -131,44 +131,61 @@ inter_pp <- inter |>
 
 # 1 · Diagnostic — gaps in education {.section-divider background-color="#00377C"}
 
-## Target population — adolescent girls 10–19 in Bolivia {.smaller}
+## Target population and data sources {.smaller}
 
-```{r funnel-table}
-segment_en <- c(
-  "All girls 10–19 (weighted)"                                              = "All girls 10–19",
-  "Girls 10–19 — rural"                                                     = "Rural girls 10–19",
-  "Girls 10–19 — Indigenous"                                                = "Indigenous girls 10–19",
-  "Girls 10–19 — poor (INE)"                                                = "Girls in poverty (INE) 10–19",
-  "Girls 10–19 — disability (WG 3+)"                                        = "Girls with disability (WG 3+) 10–19",
-  "Girls 10–19 — no HH internet"                                            = "Girls without HH internet 10–19",
-  "Girls 10–19 — priority (rural OR Indigenous OR poor OR disability)"      = "Priority girls (rural ∨ Indigenous ∨ poor ∨ disability)"
-)
-funnel |>
-  filter(segment != "All adolescents 10–19 (weighted)") |>
-  mutate(
-    Segment           = recode(segment, !!!segment_en),
-    `Weighted N`      = fmt_n(n_pop),
-    `% of girls 10–19`= fmt_pct(share_of_all_girls)
-  ) |>
-  select(Segment, `Weighted N`, `% of girls 10–19`) |>
-  kable(align = "lrr")
-```
+We draw on **two independent INE surveys**: **EH 2024** (education, access) and **EDSA 2023** (the home environment — violence, discipline). At the overlapping age band (15–19) they agree closely, so the two can be read together with confidence.
+
+::: {style="font-size:1.25em; width:88%; margin:0 auto;"}
+
+| Indicator — girls/women 15–19, weighted | EH 2024 | EDSA 2023 |
+|---|---:|---:|
+| Currently attending school | 86.0% | 84.8% |
+| Mean years of schooling | 9.95 | 10.0 |
+| % rural | 25.5% | 26.3% |
+| % indigenous | 17.0% | 16.2% |
+| Unweighted n (15–19) | 3,530 | 2,224 |
+
+:::
 
 ::: footer
-Source: INE Bolivia, EH 2024 · weighted estimates
+<small>Sources: EH 2024 and EDSA 2023, INE Bolivia · all figures survey-weighted · 15–19 is the band both surveys cover comparably. Full target-population funnel (priority subgroups) in appendix A1.</small>
+:::
+
+## Key takeaways {.smaller}
+
+::: {.callout-tip appearance="simple"}
+Bolivian girls are **already in school** (~95% enrolment, no gender gap in access). The binding problems lie in **what marginalised girls learn, whether they stay, and the home environment they learn from**.
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+
+**What the diagnosis shows**
+
+- The gap is **not access** — it is learning quality and staying in school, concentrated among **rural, indigenous and poor girls**.
+- **Violence at home is part of the story for girls.** Violent discipline is concentrated among **rural-indigenous** girls (≈59% vs 31% urban non-indigenous), and girls in these homes have **~2 fewer years of schooling**.
+- **Early pregnancy** is the single strongest schooling correlate (**−2.9 years**), pointing to a second, distinct vulnerability for adolescent girls.
+
+:::
+::: {.column width="50%"}
+
+**What this implies for Aula Conectada**
+
+- Fund the **learning layer** — gender-responsive pedagogy and teacher training (Evans & Yuan, 73+ RCTs) — not hardware.
+- Address the **home environment**: a low-cost **parenting** component for the violence pathway.
+- **Flag** a girls'-empowerment component (ELA-style) for the early-pregnancy pathway — for discussion with policymakers.
+- Target the **most vulnerable**: rural and indigenous girls.
+
+:::
+:::
+
+::: footer
+Sources: EH 2024 (education/access) and EDSA 2023 (violence, home environment) — INE Bolivia, survey-weighted. Detail and full diagnosis follow.
 :::
 
 ## Gender gaps in education
 
 ![](../output/figures/f1a_edu_overall_by_sex_en.png){fig-align="center" width="85%"}
-
-## Gender gaps by adolescent stage
-
-![](../output/figures/f1a_age_edu_by_sex_ageband_en.png){fig-align="center" width="90%"}
-
-::: footer
-NEET is only informative for 15-19 (in 10-14 most are in school by construction).
-:::
 
 ## Education outcomes by area of residence
 
@@ -178,234 +195,141 @@ NEET is only informative for 15-19 (in 10-14 most are in school by construction)
 
 ![](../output/figures/f1c_edu_by_sex_indig_en.png){fig-align="center" width="90%"}
 
-## Education outcomes by poverty status
+## The home environment: violent discipline is higher in rural and indigenous homes {.smaller}
 
-![](../output/figures/f1d_edu_by_sex_poverty_en.png){fig-align="center" width="90%"}
+![](../output/figures/f7_violence_2panel_en.png){fig-align="center" width="92%"}
 
-## Education outcomes by disability
+<small>Harsh physical discipline of children (EDSA 2023, survey-weighted, women with children). Both axes raise risk **independently**: rural homes report **52.3% vs 32.2%** urban (a ~20 pp gap), and indigenous homes **45.9% vs 35.0%** non-indigenous (a ~11 pp gap). Rural location is the stronger axis, but indigeneity adds risk on its own — so targeting follows **rural + indigenous**, not a single dimension.</small>
 
-![](../output/figures/f5_disability_gap_en.png){fig-align="center" width="90%"}
+## Harsh discipline tracks lower schooling {.smaller}
 
-## Digital access is a territorial and socioeconomic gap {.smaller}
+![](../output/figures/f7b_diagnosis_panel_en.png){fig-align="center" width="58%"}
 
-::: {.callout-tip appearance="simple"}
-EH 2024 data are at the household level and therefore do not allow direct measurement of girls' and boys' individual access. At the household level, differences by sex of the adolescent are minimal. **The relevant differences are observed between rural and urban households, indigenous and non-indigenous, and by poverty status.**
-:::
+<small>EDSA 2023, survey-weighted. Women in harsh-discipline homes average **~2 fewer years of schooling** than women in other homes. *Note:* the violence/discipline module in EDSA is **asked of women only**, so these figures reflect **women's responses** about their own households; comparable male-respondent data are not collected. This motivates the regression that follows.</small>
 
-::: {.columns}
-::: {.column width="50%"}
+## Violent discipline is associated with lower schooling {.smaller}
 
-**Dimensions of the digital divide**
+::: {style="font-size:1.05em; width:82%; margin:0 auto;"}
 
-- Connectivity and infrastructure in rural areas
-- Device access in indigenous households
-- Economic affordability of internet and devices
-- Digital skills and meaningful use
-
-:::
-::: {.column width="50%"}
-
-**Implication for the programme**
-
-- Determining whether a gender digital divide exists at the individual level would require data on use, skills, and autonomy that EH 2024 does not capture
-- At the household level, access gaps concentrate in the same subgroups that face the largest education gaps
-- Aula Conectada acts on institutional access and pedagogical use, not on household access
+| Years of schooling (women 12–49) | Association | Std. error | p |
+|---|---:|---:|---:|
+| **Harsh physical discipline in home** | **−0.90** | 0.16 | <0.001 |
+| Indigenous | −1.10 | 0.20 | <0.001 |
+| Rural | −0.05 | 0.32 | 0.87 |
+| Wealth Q2 vs Q1 | +1.42 | 0.25 | <0.001 |
+| Wealth Q3 vs Q1 | +2.74 | 0.37 | <0.001 |
+| Wealth Q4 vs Q1 | +4.49 | 0.35 | <0.001 |
+| Wealth Q5 vs Q1 | +6.69 | 0.35 | <0.001 |
+| Age | −0.12 | 0.01 | <0.001 |
 
 :::
-:::
+
+**Living in a harsh-discipline household is associated with ~0.9 fewer years of schooling**, holding wealth, ethnicity, area and age constant. Separately, **early pregnancy (<18) is associated with −2.9 years** (standalone model, n=391, p<0.001) — a second, distinct pathway.
 
 ::: footer
-For complementary evidence on individual digital skills see AGETIC (National Survey on ICT). For primary-level learning gaps see ERCE 2019 (UNESCO/LLECE).
-:::
-
-## Digital divide — departmental variation
-
-![](../output/figures/f6_internet_by_department_en.png){fig-align="center" width="80%"}
-
-## Household digital access — no differences by sex
-
-![](../output/figures/f1_digital_access_sex_age_en.png){fig-align="center" width="90%"}
-
-## Connected households show marginally higher school attendance for girls
-
-![](../output/figures/f4_attendance_by_internet_en.png){fig-align="center" width="85%"}
-
-::: footer
-**Note:** this is correlation, not causation. Households with internet also tend to have higher income, urban location, and parental education.
+Source: EDSA 2023, INE Bolivia · survey-weighted OLS (`upm`/`estrato`/`ponderadorm`), n=4,678 · association, not causal — direction not identified; an area for improvement with individual-linked panel data.
 :::
 
 # 2 · Evidence → Theory of Change {.section-divider background-color="#00377C"}
 
-## What the international evidence tells us {.smaller}
+## From diagnosis to three matched responses {.smaller}
+
+The diagnosis points to three distinct problems, each with a different evidence-based answer:
 
 ::: {.columns}
-::: {.column width="50%"}
+::: {.column width="33%"}
 
-**Consistent findings**
+**Problem 1 — learning, not access**
 
-- Isolated hardware rarely improves learning <br><small>(De Melo et al., 2014; Cristia et al., 2017)</small>
-- Digital tools work **with structured pedagogy** <br><small>(Gómez-Ruiz & Franco, 2023)</small>
-- Teacher training is the central mechanism <br><small>(Olugbade et al., 2025; Bassi et al., 2016)</small>
-- Gender-responsive content improves **STEM aspirations and persistence** <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+Enrolment is ~95%; the gaps are in learning and the digital/STEM transition.
 
-:::
-::: {.column width="50%"}
+- Isolated hardware rarely improves learning <br><small>(Cristia et al., 2017)</small>
+- Tools work **with structured pedagogy + teacher training** <br><small>(Gómez-Ruiz & Franco, 2023)</small>
+- Gender-responsive content lifts **STEM aspirations** <br><small>(Outes-León et al., 2020)</small>
 
-**Parenting layer**
-
-- Parenting interventions reduce **physical and emotional violence against girls** (IRR 0.55) <br><small>(Cluver et al., 2017 — South Africa)</small>
-- Digital parenting apps improve **non-violent practices and parent-daughter communication** <br><small>(Janowski et al., 2025 — Tanzania)</small>
-- Restrictive gender norms at home are a structural barrier to learning, attendance and the STEM transition
+→ Anchor: **Evans & Yuan (2022)**, 73+ RCTs.
 
 :::
-:::
+::: {.column width="33%"}
 
-## Programme components — inputs and activities {.smaller}
+**Problem 2 — staying in school**
 
-::: {.columns}
-::: {.column width="50%"}
+Retention falters for the most vulnerable girls; empowerment and safe spaces keep them enrolled.
 
-**Inputs**
+- Girls' clubs **raise enrolment (+8.5 pp)** <br><small>(Bandiera et al., 2018 — ELA)</small>
+- Life-skills + mentoring tackle the drivers of drop-out, including early pregnancy
 
-- Gender-responsive materials and safe access: digital content with female representation and free of gender bias
-- STEM modules designed to retain and engage girls — a key gap in the STEM transition in Bolivia
-- Connectivity and devices prioritised by need/vulnerability (rural, indigenous) rather than blanket delivery to schools
+→ Anchor: **Bandiera ELA**, φ-adjusted to Bolivia.
 
 :::
-::: {.column width="50%"}
+::: {.column width="33%"}
 
-**Activities**
+**Problem 3 — the home environment**
 
-- Gender-transformative pedagogy and teacher training, with curricular integration of female role models
-- Parental engagement for norm shift and linkage to STEM
-- Girls' empowerment, leadership and agency — beyond mere participation
-- Socio-emotional learning and life skills, based on the literature review
-- Mentoring and accompaniment
+Violent discipline is concentrated among marginalised girls and tracks lower schooling.
+
+- Parenting programmes **cut violence** against children (IRR 0.55) <br><small>(Cluver et al., 2017)</small>
+- **Low-cost smartphone delivery** <br><small>(Janowski et al., 2025 — ParentApp)</small>
+
+→ Anchor: **Cluver (effect) + Janowski (delivery)**.
 
 :::
 :::
 
-## Programme components — outputs and outcomes {.smaller}
+<small>Each problem maps to one layer: the **learning layer** (the costed BCR anchor), the **empowerment layer** (ELA — the attendance/retention answer, φ-adjusted), and the **home-environment layer** (parenting, for the violence pathway). Hardware is an enabler, not the intervention.</small>
 
-::: {.columns}
-::: {.column width="50%"}
+## What we are building — evidence-matched layers {.smaller}
 
-**Outputs**
+<div style="text-align:center; margin-top:0.5em;">
+<svg viewBox="0 0 1080 470" width="98%" style="max-width:1100px; font-family:inherit;" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#8a8a8a"/>
+    </marker>
+  </defs>
 
-- Data systems tracking sex-disaggregated participation and deeper learning outcomes
-- Teachers trained, classrooms equipped, and content in use
-- Girls integrated in STEM activities, with priority groups explicitly identified
+  <!-- arrows -->
+  <path d="M320,80 C400,80 400,205 466,210" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M320,235 L462,235" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M320,390 C400,390 400,265 466,260" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M650,235 L786,235" fill="none" stroke="#8a8a8a" stroke-width="2" marker-end="url(#arrow)"/>
 
-**Short-term outcomes**
+  <!-- boxes -->
+  <rect x="30"  y="20"  width="290" height="120" rx="8" fill="#fde9f2" stroke="#E2007A" stroke-width="1.5"/>
+  <rect x="30"  y="175" width="290" height="120" rx="8" fill="#fff0f8" stroke="#E2007A" stroke-width="1.5"/>
+  <rect x="30"  y="330" width="290" height="120" rx="8" fill="#eaf6fc" stroke="#1CABE2" stroke-width="1.5"/>
+  <rect x="470" y="175" width="180" height="120" rx="8" fill="#fff7e6" stroke="#FFC20E" stroke-width="1.5"/>
+  <rect x="790" y="185" width="240" height="100" rx="8" fill="#FFC20E" stroke="#d99e00" stroke-width="2"/>
 
-- Teacher practices that promote girls' active participation
-- Support for STEM transition pathways
-- Strengthened digital confidence and skills
-- Safe and supportive learning environments
+  <!-- box text (left-aligned) -->
+  <text x="48" y="60" font-size="20" font-weight="700" fill="#a3005a">① Learning layer<tspan x="48" dy="30" font-weight="400">pedagogy &amp;</tspan><tspan x="48" dy="30" font-weight="400">teacher training</tspan></text>
+  <text x="48" y="215" font-size="20" font-weight="700" fill="#a3005a">② Empowerment<tspan x="48" dy="30" font-weight="400">ELA-style clubs</tspan><tspan x="48" dy="30" font-weight="400">(staying in school)</tspan></text>
+  <text x="48" y="370" font-size="20" font-weight="700" fill="#00377C">③ Home environment<tspan x="48" dy="30" font-weight="400">parenting support</tspan><tspan x="48" dy="30" font-weight="400">(violence)</tspan></text>
 
-:::
-::: {.column width="50%"}
+  <text x="486" y="213" font-size="19" font-weight="600" fill="#7a5b00">Girls stay,<tspan x="486" dy="28" font-weight="400">learn &amp;</tspan><tspan x="486" dy="28" font-weight="400">transition</tspan></text>
+  <text x="808" y="223" font-size="19" font-weight="700" fill="#3d2e00">Narrower gaps<tspan x="808" dy="28" font-weight="600">in learning</tspan><tspan x="808" dy="28" font-weight="600">&amp; work</tspan></text>
+</svg>
+</div>
 
-**Medium-term outcomes**
-
-- Better attendance, progression and learning
-- Higher interest and persistence in STEM
-- Reduced household violence against girls, through the parenting layer
-- Shifts in gender norms at home and school
-
-**Long-term outcomes**
-
-- Higher transition to tertiary education, particularly in STEM
-- Better employability and reduction in wage gaps
-
-:::
-:::
-
-## What we are building — one programme, three layers
-
-```{mermaid}
-%%| fig-width: 14
-flowchart LR
-    subgraph A["① Digital access"]
-        A1["Devices · connectivity<br/>digital content"]
-    end
-    subgraph B["② Girls' pedagogy"]
-        B1["Teacher training · mentoring<br/>computational thinking"]
-    end
-    subgraph C["③ Parenting"]
-        C1["Parent–daughter comms<br/>violence reduction"]
-    end
-
-    A1 --> R["Girls stay in<br/>school & learn"]
-    B1 --> R
-    C1 -.-> R
-    R --> I["Narrower gender gaps<br/>in learning & work"]
-
-    class A,A1 layerA
-    class B,B1 layerB
-    class C,C1 layerC
-    class R,I outcome
-    classDef layerA fill:#eaf6fc,stroke:#1CABE2,stroke-width:1.5px,color:#00377C
-    classDef layerB fill:#fde9f2,stroke:#E2007A,stroke-width:1.5px,color:#a3005a
-    classDef layerC fill:#f6f6f6,stroke:#bbbbbb,stroke-width:1px,color:#777777
-    classDef outcome fill:#fff7e6,stroke:#FFC20E,stroke-width:2px,color:#7a5b00
-```
-
-<small>Quantitative anchor: **Evans & Yuan (2022)** girl-specific meta-analysis of 73+ RCTs. **Technovation Girls** (Chile) is the design template; the **parenting** layer (dashed) activates only when Bolivian data exists.</small>
+<small>Each layer answers a diagnosed problem: the **learning layer** (pedagogy — the costed BCR anchor), the **empowerment layer** (ELA — the attendance/retention answer, φ-adjusted to Bolivia), and the **home-environment layer** (parenting, for the violence pathway, costed from the Janowski delivery model). Hardware is an enabler, not the intervention.</small>
 
 # 3 · Projections — Aula Conectada in Bolivia {.section-divider background-color="#00377C"}
 
 ## Direct anchors — digital education and gender norms {.smaller}
 
-Programmes with measured effects **on the educational outcomes** Aula Conectada seeks to improve:
+Programmes with measured effects **on the outcomes** Aula Conectada seeks to improve — one per layer:
 
-```{r proj-table-direct}
-proj_v2 <- read_csv(here("output", "projections", "anchor_projections_long.csv"),
-                    show_col_types = FALSE)
+::: {style="font-size:0.92em"}
 
-proj_v2 |>
-  filter(subgroup_id == "priority", usable_for_projection,
-         !grepl("Porter", programme),
-         programme_type %in% c("digital_education", "gender_norms")) |>
-  transmute(
-    Programme  = programme,
-    Country    = country,
-    `External effect (95% CI)` = ext_str,
-    `φ_pop`    = sprintf("%.2f", phi_pop),
-    `φ_geo`    = sprintf("%.2f", phi_geo),
-    `φ_econ`   = sprintf("%.2f", phi_econ),
-    `φ_deliv.` = sprintf("%.2f", phi_delivery),
-    `n par.`   = n_params_used,
-    `Adjusted effect (95% CI)` = adj_str,
-    Sig.       = ifelse(sign(lower_95) == sign(upper_95), "✓", "—")
-  ) |>
-  kable(align = "lllrrrrrrl")
-```
+| Layer | Anchor | Country | Measured effect | Used for |
+|---|---|---|---|---|
+| **Learning** | Evans & Yuan (2022), 73 RCTs | Meta-analysis | **+0.07 SD** learning (girl-specific) | Learning benefit (in SD) |
+| **Empowerment** | Bandiera et al. (2018) — ELA | Sierra Leone | **+8.5 pp** enrolment | Attendance → earnings (φ-adjusted) |
+| **Home environment** | Cluver et al. (2017) — PLH Teens | South Africa | **IRR 0.55** on child abuse | Violence↓ → attendance (chain) |
 
-<small>**Reading the CI:** if zero is inside the interval, the anchor's original effect is not statistically distinguishable from zero — this reflects the source study's uncertainty, not an adjustment error. The **Sig.** column marks with ✓ the anchors that are statistically distinguishable from zero.</small>
+:::
 
-## Indirect anchors — parenting layer (via SEM) {.smaller}
-
-Parenting programmes that **do not act directly** on enrolment/attendance, but on the home environment (norms, violence). They enter the SEM as parameters of the parenting → home environment → educational outcomes pathway.
-
-```{r proj-table-indirect}
-proj_v2 |>
-  filter(subgroup_id == "priority",
-         programme_type == "parenting") |>
-  transmute(
-    Programme  = programme,
-    Country    = country,
-    `Original outcome` = "see A9 (SEM)",
-    `φ_pop`    = sprintf("%.2f", phi_pop),
-    `φ_geo`    = sprintf("%.2f", phi_geo),
-    `φ_econ`   = sprintf("%.2f", phi_econ),
-    `φ_deliv.` = sprintf("%.2f", phi_delivery),
-    `Model use` = "input parameter for parenting → home environment"
-  ) |>
-  kable(align = "lllrrrrl")
-```
-
-<small>Cluver et al. (2017) reports effects on physical and emotional violence (IRR 0.55, not directly translatable to enrolment). Janowski et al. (2025) reports app engagement (modules completed). Effects propagate to educational outcomes via the SEM, not directly.</small>
+<small>Each anchor is matched to the outcome it actually measured (Route A — no cross-unit conversion). The **learning** effect stays in SD and is reported as a learning benefit, not converted to attendance. The **ELA** and **parenting** layers carry the attendance effects (in pp), φ-adjusted to Bolivia. Delivery model for the parenting layer: Janowski et al. (2025) ParentApp — low-cost, smartphone-based. Full φ logic and the CBA chain in the assumptions slide and appendix.</small>
 
 ## Key assumptions {.smaller}
 
@@ -426,36 +350,57 @@ proj_v2 |>
 **Robustness**
 
 - Multiplicative form is **conservative**: each $\phi \leq 1$, so the projection only attenuates the external effect, never amplifies
-- Anchors are **only used** if their age range overlaps ≥ 25% with the target (10–19) and at least 2 demographic variables are comparable
-- Sensitivity to alternative weightings (additive, distance-decay) in technical methods paper (in preparation)
+- The ELA anchor is the **most transported** (Sierra Leone, post-conflict, in-person); we show its BCR contribution across $\phi_\text{ELA} \in [0.40, 0.70]$ rather than a single point
+- Sensitivity to alternative weightings in the technical methods paper (in preparation)
 
 :::
 :::
 
 ## Synthesis — expected returns from Aula Conectada {.smaller}
 
-::: {.columns}
-::: {.column width="50%"}
+Three layers, each anchored on the outcome its evidence **actually measured** — no cross-unit conversion.
 
-**Access effect** <br>(priority group, ≈ 568K girls)
+::: {style="font-size:0.98em; width:97%; margin:0 auto;"}
 
-- **Anchor:** Evans & Yuan (2022) — girl-specific meta-analysis, 73 RCTs: median **+0.07 SD** on access
-- **φ-adjusted to Bolivia:** **+0.06 SD** [0.02 – 0.12]
-- **→ +2.4 pp attendance · −1.4 pp NEET** (girls 15–19)
-
-:::
-::: {.column width="50%"}
-
-**Translated to lifetime earnings** <br>(via Bolivia data)
-
-- **+2.4 pp attendance → +0.10 attended school-years**
-- **× 7.5%** Mincer return per year (EH 2024, **Bolivian women**) + NEET-exit earnings
-- **→ ~$421** present value per girl → **BCR ≈ 2.8** (pedagogy bundle, $152)
+| Layer | Source effect | φ (transport) | Bolivia effect | Channel |
+|---|---|:--:|:--:|---|
+| **Learning** (digital pedagogy) | +0.07 SD (Evans & Yuan) | ≈0.86 | **+0.06 SD** | reported in SD — *not* converted to attendance |
+| **Empowerment** (ELA-style) | +8.5 pp enrolment (Bandiera) | 0.55 | **+4.7 pp** | keeps girls in school → school-years → earnings |
+| **Home environment** (parenting) | IRR 0.55 × prevalence (Cluver) | 0.85 | **+1.9 pp** | violence↓ → attendance → school-years → earnings |
 
 :::
+
+::: {style="font-size:0.62em; color:#555; margin-top:0.3em;"}
+The **φ (transport)** column is the *composite* attenuation factor applied to each source effect (φ = ∏ φ_k over the five dimensions — population, baseline, geography, economy, delivery). The full per-factor breakdown for each anchor is in the projection output (`05_projections.R`); see the assumptions slide for the ELA φ range.
 :::
 
-<small>Individual digital RCTs (Porter 0.27, Mexico Learning Passport 0.26) sit near the meta-analysis's upper range — corroboration, not the anchor. Earnings are a **floor**: learning, agency, violence-reduction and intergenerational gains documented but not monetised.</small>
+::: {style="font-size:0.88em; margin-top:0.4em;"}
+The two **attendance** effects act through **different mechanisms** (empowerment/safe-spaces vs the home environment), so they are **added**: ≈ **6.6 pp** combined, feeding the Mincer → earnings chain. The **learning** effect is reported separately in SD — we deliberately do **not** claim a digital-only attendance effect, since a device alone does not address why girls leave school.
+:::
+
+## CBA assumptions — every number, sourced {.smaller}
+
+::: {style="font-size:0.78em"}
+
+| Parameter | Value | Source |
+|---|---|---|
+| Mincer return per school-year | 7.5% | EH 2024, Bolivian women (A12) |
+| Female annual wage | $3,500 | INE EH 2024 weighted median, age 25–54 |
+| Working life · discount rate | 35 yrs · 3% | LAC norm · World Bank Educ. default (2–5% sens.) |
+| **PV per attended school-year** | **$3,520** | project Mincer pipeline (`08_bcr_estimation.R`) — discounted lifetime earnings premium |
+| pp → attended school-years | +2.4pp ⇒ +0.10 yr | over ~4 secondary years |
+| ELA enrolment effect | +8.5 pp | Bandiera (2018), Sierra Leone |
+| φ (ELA transport) | 0.40–0.70 | Sierra Leone→Bolivia (range shown) |
+| Violence→attendance gap | −13.1 pp | EDSA 2023, women 12–24 — **assoc. treated as causal** |
+| Cluver effect | IRR 0.55 (≈45% ↓) | Cluver (2017), PLH Teens RCT |
+| Harsh-discipline prevalence | 38% | EDSA 2023, mothers |
+| φ (parenting transport) | 0.85 | LMIC→Bolivia |
+| ELA cost · Parenting cost | $26 · $10 | **benchmarks** (ELA $17–35; Janowski $8–12), not Bolivia-costed |
+| Learning bundle cost | $152/girl | deck costing (A7) |
+
+:::
+
+<small>**Parenting chain:** +1.9pp = 13.1 × 0.45 × 0.38 × 0.85. **Combined attendance** = ELA + parenting (different mechanisms, additive). The two assumptions to strengthen with a Bolivia pilot: the violence→attendance causal step, and the ELA transport factor φ.</small>
 
 # 4 · Costing {.section-divider background-color="#00377C"}
 
@@ -471,7 +416,23 @@ costing <- readr::read_csv(
 knitr::kable(costing, align = "lrrrl")
 ```
 
-<small>**Key notes:** (1) Plan Ceibal reports total annualised cost of ~$75–100/child in implementation reports (OLPC News 2010, ACM 2013). (2) Bolivia teacher salaries 2024: ~Bs 3,206/mo primary (~$462) and Bs 4,947/mo secondary (~$716). (3) Rural permanence bonuses (Bs 659/mo) and per-rural-school bonuses (Bs 2,000) could reduce net cost in priority zones. (4) Figures exclude initial capital costs (electrical infrastructure, classrooms) — assumed pre-existing.</small>
+<small>**Notes:** (1) Bolivia teacher salaries 2024: ~Bs 3,206/mo primary (~$462), Bs 4,947/mo secondary (~$716); rural permanence bonuses could lower net cost in priority zones. (2) Figures exclude initial capital (electrical infrastructure, classrooms) — assumed pre-existing. (3) International cost references (e.g. Plan Ceibal ~$75–100/child) are context for the hardware scenario only; our central case is the pedagogy bundle, not device procurement.</small>
+
+## Component costs used in the CBA {.smaller}
+
+The three layers enter the cost-benefit analysis at the following per-beneficiary costs (USD 2024):
+
+::: {style="font-size:1.1em; width:88%; margin:0 auto;"}
+
+| Component | Cost | Basis |
+|---|---:|---|
+| Learning bundle (pedagogy + teacher training) | **$152 / girl** | deck costing, Bolivia-anchored |
+| ELA-style empowerment | **$26 / girl** | benchmark ($17–35/yr clubs) — *not yet Bolivia-costed* |
+| Parenting (digital, Janowski model) | **$10 / caregiver** | benchmark ($8–12) — *not yet Bolivia-costed* |
+
+:::
+
+<small>The two benchmark costs are reported transparently and feed the layered cost-effectiveness; a dedicated Bolivia costing exercise would refine them before any scale-up decision.</small>
 
 ## Programme scale — girls reached {.smaller}
 
@@ -488,118 +449,125 @@ scale_tab <- tibble::tribble(
 knitr::kable(scale_tab, align = "lrrl")
 ```
 
-<small>**Population figures** derived from weighted EH 2024 (Table A1). The programme was designed for vulnerability-based targeting — we do not recommend universal coverage as it would dilute impact in households without digital access needs. **Central planning scenario** is full priority scale (~568,000 girls).</small>
+<small>**Population figures** derived from weighted EH 2024 (Table A1). The programme was designed for vulnerability-based targeting — we do not recommend universal coverage as it would dilute impact in households without digital access needs. **Central planning scenario** is full priority scale (~568,000 girls). The **parenting layer** would reach the *caregivers* of these girls through the same priority targeting, at the separate benchmark cost noted in the costing section — concentrated on the rural and indigenous households where violent discipline is most prevalent.</small>
 
 # 5 · ROI — Cost-benefit analysis {.section-divider background-color="#00377C"}
 
-## Monetised vs. broader returns {.smaller}
+## Cost-effectiveness by layer {.smaller}
 
-The BCR below monetises **only** the attendance → earnings channel. It is deliberately conservative and should be read as the **floor**, not the ceiling, of expected returns.
+Each layer is anchored on the outcome its evidence measured. The **learning** layer's benefit is in SD (learning); the **ELA** and **parenting** layers deliver attendance in pp.
 
-::: {.columns}
-::: {.column width="50%"}
+::: {style="font-size:1.18em; width:92%; margin:0 auto;"}
 
-**What the BCR monetises**
-
-→ Attendance / retention gains (Evans & Yuan, φ-adjusted)
-
-→ Bolivia Mincer return (7.5%/year)
-
-→ NEET-exit earnings + discounted lifetime labour earnings (35 years)
-
-:::
-::: {.column width="50%"}
-
-**What the BCR does NOT monetise** *(documented, not summed)*
-
-→ **Gender norms and agency**
-
-→ **Household violence reduction** (Cluver PLH: IRR 0.55)
-
-→ **Parental communication** (Janowski ParentApp)
-
-→ **Intergenerational effects** on daughters and sisters
-
-:::
-:::
-
-These channels are **documented but deliberately excluded** from the BCR — they would raise the return, not lower it, so the monetised figure is a floor.
-
-## Cost-effectiveness — full programme (with laptops)
-
-Anchored on the **Evans & Yuan (2022)** girl-specific meta-analysis of access outcomes (73 RCTs): median **+0.07 SD**, φ-adjusted to Bolivia.
-
-::: {.columns}
-::: {.column width="13%"}
-:::
-::: {.column width="74%"}
-
-| Outcome (girls 10–19) | Effectiveness | Cost per girl | Cost per 1 pp |
+| Layer | Effect (φ-adj.) | Cost | Cost per unit gain |
 |---|---:|---:|---:|
-| **Attendance** | +2.4 pp [0.7 – 4.8] | $465 | **~$194** |
-| **NEET (15–19)** | −1.4 pp [−0.4 to −2.9] | $465 | **~$332** |
+| **Empowerment (ELA)** | +4.7 pp attendance | $26 / girl | **~$6 per +1 pp** |
+| **Parenting (violence↓)** | +1.9 pp attendance | $10 / caregiver | **~$5 per +1 pp** |
+| *Learning (digital pedagogy)* | *+0.06 SD learning* | *$152 / girl* | **~$25 per 0.01 SD** |
 
 :::
-::: {.column width="13%"}
-:::
-:::
 
-<small>*Full bundle: devices + connectivity + content + teacher training + pedagogy/M&E ≈ $465/girl over 4 years. Underlying access effect **+0.06 SD** φ-adjusted [0.02 – 0.12]. NEET is a back-of-envelope pass-through (~60% of the attendance gain).*</small>
+<small>ELA at φ=0.55; parenting via the Cluver→EDSA chain at φ=0.85. The two attendance layers are highly cost-effective *per pp* because their benchmark costs are low. The learning layer's benefit is a learning-quality gain (in SD), reported in its own unit — **~$25 buys 0.01 SD** ($152 ÷ 6) — so we never convert across units or double-count.</small>
 
-## Cost-effectiveness — pedagogy only (without laptops)
+## Combined BCR — shown as a range, not a point {.smaller}
 
-Large RCTs of hardware-only programmes (**Cristia et al. 2017; Cueto et al. 2024**, Peru OLPC; de Melo 2014, Uruguay) find **near-zero effects on learning** — the gains come from the **pedagogy and software** layer, not the devices. Dropping hardware preserves the effect at a third of the cost.
+The headline depends most on how much the **ELA** effect transports from Sierra Leone. We show it across φ rather than pick one number:
 
-::: {.columns}
-::: {.column width="13%"}
-:::
-::: {.column width="74%"}
+::: {style="font-size:1.18em; width:90%; margin:0 auto;"}
 
-| Outcome (girls 10–19) | Effectiveness | Cost per girl | Cost per 1 pp |
-|---|---:|---:|---:|
-| **Attendance** | +2.4 pp [0.7 – 4.8] | $152 | **~$63** |
-| **NEET (15–19)** | −1.4 pp [−0.4 to −2.9] | $152 | **~$109** |
+| φ (ELA transport) | ELA pp | Parenting pp | BCR: ELA only | BCR: ELA + parenting |
+|---:|---:|---:|---:|---:|
+| 0.40 (conservative) | 3.4 | 1.9 | 2.8 | **4.1** |
+| 0.55 (central) | 4.7 | 1.9 | 3.9 | **5.1** |
+| 0.70 (optimistic) | 5.9 | 1.9 | 4.9 | **6.1** |
 
 :::
-::: {.column width="13%"}
-:::
-:::
 
-<small>*Pedagogy bundle: content/platform + teacher training + pedagogy/M&E ≈ $152/girl over 4 years (no new device or connectivity procurement). The effect is held constant because the experimental evidence attributes the gain to pedagogy and software, with hardware-only arms near zero. **Cost-effectiveness improves ~3× per percentage point.***</small>
+<small>**What the BCR columns count:** the **numerator** is the monetised *attendance → earnings* benefit only — "ELA only" counts the ELA attendance effect; "ELA + parenting" adds the parenting attendance effect. The **learning layer's +0.06 SD benefit is NOT in the numerator** (it stays in SD, reported separately), but the learning **cost ($152) IS in the denominator** of both columns alongside the ELA/parenting costs. So these BCRs already pay for all three layers while banking only the attendance benefit — i.e. a **conservative floor**, not a learning+ELA+parenting total. At the most conservative ELA transport (φ=0.40), ELA alone roughly reproduces the original access-only BCR (~2.8); parenting adds ~1.3. The combined figure is **illustrative** — it rests on the violence→attendance causal assumption and the ELA φ; the robust result is the **per-layer cost-effectiveness** on the previous slide.</small>
 
-## Benefit value chain — girls 10–19 in Bolivia {.smaller}
+## Benefit value chain — combined attendance to earnings {.smaller}
 
-How the attendance effect becomes a present-value benefit per girl (pedagogy bundle, $152/girl):
+How the two attendance effects become a present-value benefit per girl (central case, φ_ELA=0.55):
 
-::: {.columns}
-::: {.column width="6%"}
-:::
-::: {.column width="88%"}
+::: {style="font-size:1.15em; width:92%; margin:0 auto;"}
 
 | Step | Calculation | Result |
 |---|---|---:|
-| **1 · Attendance effect** | Evans & Yuan (2022), φ-adjusted | **+2.4 pp** |
-| **2 · School-years gained** | +2.4 pp attended over ~4 secondary years | **+0.10 yr** |
-| **3 · Earnings — schooling** | +0.10 yr × 7.5%/yr Mincer (EH 2024 women), PV 35 yr | **~$352** |
-| **4 · Earnings — NEET exit** | −1.4 pp NEET × avoided early-career idleness | **~$69** |
-| **= Benefit vs. cost** | $421 benefit ÷ $152 cost | **BCR ≈ 2.8** |
+| **1 · ELA attendance** | Bandiera +8.5 pp × φ 0.55 | **+4.7 pp** |
+| **2 · Parenting attendance** | 13.1 pp × 0.45 (Cluver) × 0.38 (prev.) × 0.85 | **+1.9 pp** |
+| **3 · Combined (different mechanisms, additive)** | 4.7 + 1.9 | **+6.6 pp** |
+| **4 · School-years gained** | +6.6 pp over ~4 secondary years | **+0.28 yr** |
+| **5 · Earnings (PV)** | +0.28 yr × $3,520/school-year | **~$970** |
+| **= Benefit vs. cost** | $970 ÷ ($152+$26+$10) | **BCR ≈ 5.1** |
 
 :::
-::: {.column width="6%"}
+
+<small>The **learning** layer's +0.06 SD benefit is *additional* and reported in SD — not included in this earnings figure, so the monetised BCR remains a floor. Violence→attendance treated as causal for the projection (flagged). All constants on the CBA assumptions slide.</small>
+
+## What the BCR does and does not count {.smaller}
+
+The BCR monetises **only** the attendance → earnings channel. It is the **floor**, not the ceiling.
+
+::: {.columns}
+::: {.column width="50%"}
+
+::: {style="font-size:1.15em"}
+**Monetised**
+
+- Attendance / retention gains
+- Bolivia Mincer return (7.5%/yr)
+- Lifetime labour earnings (35 yrs)
+:::
+
+:::
+::: {.column width="50%"}
+
+::: {style="font-size:1.15em"}
+**Not monetised** *(documented, would only raise the return)*
+
+- Gender norms and agency
+- Household violence reduction
+- Parent–child communication
+- Intergenerational effects
+:::
+
 :::
 :::
 
-<small>Attendance converts directly into attended school-years (no test-score conversion). Central [BCR 0.8 – 5.6]. With laptops ($465), BCR ≈ 0.9 — hardware adds little per the RCT evidence. Counts **only earnings**; agency, violence reduction and intergenerational gains are not added, so the true return is **expected to be higher**.</small>
+## Conclusions {.smaller}
 
-## Key takeaways {.smaller}
+::: {.callout-tip appearance="simple"}
+The evidence points to a clear, gender-focused design: invest in **how marginalised girls learn** and in **the home environment they learn from** — not in hardware.
+:::
 
-**1 · The gap is territorial, not enrolment.** Enrolment is ~95% everywhere; the real gaps for girls are in **attendance, dropout, and digital access** — concentrated in rural, indigenous, and poor households.
+::: {.columns}
+::: {.column width="50%"}
 
-**2 · A design anchored in girl-specific evidence.** Aula Conectada is anchored on the Evans & Yuan (2022) meta-analysis of 73 RCTs — which finds teacher-pedagogy and software (not hardware alone) are what work for girls — with Technovation Girls (Chile) as the design template.
+**Who is most vulnerable**
 
-**3 · Cost-effective when you fund the right layer.** The pedagogy bundle ($152/girl) reaches **~$63 per +1 pp of attendance** and a central **BCR ≈ 2.8** [0.8–5.6] through earnings alone. The full bundle with laptops costs 3× more for the same effect (BCR ≈ 0.9) — the RCT evidence puts the return in the pedagogy, not the hardware.
+- **Rural and indigenous girls**: the largest schooling gaps (rural 8.7 vs urban 11.8 years) and the highest exposure to **violent discipline** at home (≈59% rural-indigenous vs 31%).
+- Girls in **violent-discipline homes**: ~2 fewer years of schooling (association, p<0.001).
+- Girls facing **early pregnancy**: the single strongest schooling correlate (−2.9 years).
 
-**4 · The monetised return is a floor.** The BCR counts only retention-driven earnings. Learning gains, agency, violence reduction, and intergenerational effects are documented but **not** added — the true return is higher.
+**What to fund**
+
+- **Learning layer** — gender-responsive pedagogy, teacher training, computational-thinking content for girls (Evans & Yuan, 73+ RCTs). Hardware is an enabler only.
+
+:::
+::: {.column width="50%"}
+
+**What to add and flag**
+
+- **Parenting component** (Cluver effect + Janowski low-cost digital delivery) for the violence pathway.
+- **Flag** a girls'-empowerment component (ELA-style) for the early-pregnancy pathway — for discussion with policymakers on budget and focus.
+
+**Expected effect and return**
+
+- Costed learning layer: ≈ **$152/girl**, central **BCR ≈ 2.8** [0.8–5.6] through earnings alone — a conservative floor.
+- Parenting layer adds low-cost reach to the home environment; broader benefits (safer homes, the next generation) are **documented but not monetised** — the true return is higher.
+
+:::
+:::
 
 # 6 · Methodological Appendix {.section-divider background-color="#00377C"}
 
@@ -612,64 +580,18 @@ How the attendance effect becomes a present-value benefit per girl (pedagogy bun
 - **3% discount rate** is the World Bank Education Sector standard; high sensitivity to discount rate (at 5% central BCR drops proportionally)
 - **Analysis excludes positive externalities** on younger sisters, community norms, and intergenerational effects on future daughters — all documented in the literature but outside the scope of this conservative BCR
 
-## A1 · Data and sample {.smaller}
+## A1 · Data and sample — both surveys {.smaller}
 
-::: {style="font-size:0.80em"}
+::: {style="font-size:0.78em"}
 
-**Source:** Household Survey 2024 (EH 2024) — INE Bolivia · Collection November–December 2024 · National coverage, urban and rural · Unit of analysis: members of households in private dwellings.
+**EH 2024 (education, access, Mincer)** — INE Bolivia · Nov–Dec 2024 · 12,718 households, 39,497 persons · analytical subsample **6,254 adolescents 10–19** · design `upm`/`estrato`/`factor`, `srvyr` (`lonely.psu="adjust"`).
+Key vars: sex `s01a_02`; age `s01a_03`; indigenous = childhood/spoken language codes 1–37, 70, 71; poverty `poor`; disability Washington Group ≥3; HH internet `s06a_19`. Weighted OLS, PSU-clustered SE (`fixest::feols`). Microdata: anda.ine.gob.bo/catalog/163.
 
-**Sample:** 12,718 households · 39,497 persons · Analytical subsample: **6,254 adolescents 10–19** (≈ 977K girls and 1.05M boys expanded) · Files: Persona, Vivienda, Equipamiento.
+**EDSA 2023 (home environment: violence, discipline, agency)** — INE Bolivia DHS round · Sep–Dec 2023 · **14,545 women 12–49**; discipline module asked of **mothers (4,678)** · design `upm`/`estrato`/`ponderadorm`, Taylor linearization (`srvyr`). Key vars: harsh discipline `ms11_1147/1148`; IPV `ms11_1105/1108`; attendance `ms01_0114`; years `aestudio`; indigenous self-ID `ms01_0108`; wealth quintile `qriqueza` (Vivienda, merged by `folio`). Microdata: anda.ine.gob.bo/catalog/119.
 
-**Survey design:** Primary sampling units (`upm`), strata (`estrato`), expansion factors (`factor`). Estimates produced with `srvyr` (PSU `lonely.psu="adjust"`).
-
-**Key variables:**
-
-- **Sex** = `s01a_02` (1=male, 2=female) → girl = (sex == 2)
-- **Age** = `s01a_03` (completed years)
-- **Indigenous proxy** = childhood language OR spoken language in codes 1–37, 70, 71 (Bolivian indigenous languages)
-- **Poverty** = INE-derived (`poor == 1`)
-- **Disability** = Washington Group, severity ≥ 3 in any domain (seeing, hearing, walking, remembering)
-- **HH internet** = `s06a_19` (Housing module) · **Digital equipment** (computer, smartphone, tablet) from Equipment module
-
-**Estimation:** Weighted OLS using expansion factor `factor`; standard errors clustered at PSU level (`fixest::feols`).
+**Why two surveys:** EH carries the education/earnings case; EDSA carries the home-environment diagnosis. They are independent and **not individually linkable** — so EDSA calibrates the diagnosis and the violence→attendance association, never merged into EH at the unit level. At 15–19 the two agree within ~1pp on attendance, schooling, % rural and % indigenous (slide 3), supporting joint use.
 
 :::
-
-::: footer
-Microdata: anda.ine.gob.bo/index.php/catalog/163
-:::
-
-## A2 · Structural synthesis of the ToC — girls 10–19 (SEM) {.smaller}
-
-```{mermaid}
-%%| fig-width: 13
-flowchart LR
-    LWB["Lives with<br/>both parents"]:::obs
-    NP["Non-poor<br/>household"]:::obs
-    ND["No disability<br/>in household"]:::obs
-    ENR["Enrolled"]:::obs
-    ATT["Attending<br/>class"]:::obs
-
-    HE(("Home<br/>environment")):::latent
-    EE(("School<br/>engagement")):::latent
-    PR["Educational<br/>progression"]:::outcome
-
-    LWB -.->|λ₁| HE
-    NP  -.->|λ₂| HE
-    ND  -.->|λ₃| HE
-    ENR -.->|λ₄| EE
-    ATT -.->|λ₅| EE
-
-    HE ==>|β₁| EE
-    EE ==>|β₂| PR
-    HE ==>|β₃| PR
-
-    classDef obs fill:#ffffff,stroke:#7A8487,stroke-width:1px,color:#374649
-    classDef latent fill:#ffffff,stroke:#1CABE2,stroke-width:2px,color:#00377C
-    classDef outcome fill:#ffffff,stroke:#E2007A,stroke-width:2px,color:#a3005a
-```
-
-<small>Latent constructs (blue ovals) are measured by observed EH 2024 indicators (grey boxes); the final outcome is educational progression (pink). The parenting layer is **excluded** — Bolivia lacks contemporary parenting data (last full MICS: 2008) — and will be added when pilot or survey data exist. Equations and estimated coefficients in A11.</small>
 
 ## A3 · Empirical strategy {.smaller}
 
@@ -787,20 +709,6 @@ bind_rows(inter_rows, inter_footer) |>
 
 <small>Each row is the coefficient on the (Girl × subgroup) interaction in a separate regression. Coefficients in decimal points. Standard errors in parentheses. Robust SE clustered at PSU.</small>
 
-## A6 · Heterogeneity analysis — regression forest {.smaller}
-
-We complement the LPM with a regression forest (`grf::regression_forest`, Athey & Wager 2019) that estimates predicted outcomes conditional on the full set of demographic variables.
-
-- **Training sample:** all adolescents 10–19 (not only girls) — lets the forest learn the gender effect endogenously
-- **Forest:** `grf::regression_forest` with `honesty = TRUE` and 5,000 trees
-- **Output:** variable importance and predicted subgroup gaps
-
-The forest is **diagnostic, not causal** — there is no treatment in EH 2024 to estimate CATEs. Its value: identifying the demographic profiles where the (predicted) gap is largest, to guide programme targeting.
-
-::: footer
-Code: `code/04b_heterogeneity.R` · output: `output/figures/f_forest_var_importance_en.png`
-:::
-
 ## A7 · Formal foundation of the transportability approach {.smaller}
 
 We assume that the mismatch between the source population $S$ (the anchor) and the target $T$ (Bolivia) decomposes into $K$ observable dimensions, with multiplicative attenuation:
@@ -881,7 +789,7 @@ anchors_demo |>
 
 ## A10 · Robustness — three-way interactions (OLS) {.smaller}
 
-To verify the heterogeneity detected by the regression forest, we estimate three-way interactions with OLS. If the forest correctly detects compound subgroups, the three-way coefficients should be significant for the outcomes with greatest heterogeneity.
+To test whether vulnerabilities compound, we estimate three-way interactions with OLS. If belonging to several vulnerable groups at once had a super-additive effect, the three-way coefficients would be significant for the outcomes with greatest heterogeneity.
 
 ```{r threeway-table-en}
 threeway <- read_csv(here("output", "models", "threeway_coefs.csv"),
@@ -908,54 +816,6 @@ threeway |>
 ```
 
 <small>**How to read:** each cell shows the three-way interaction coefficient and its standard error in parentheses. Significance: `*` p<0.10, `**` p<0.05, `***` p<0.01. Where no asterisks appear, the coefficient is not statistically distinguishable from zero at conventional levels. **Interpretation:** in this sample, the three-way interactions are not significant, indicating that the compound effect of belonging to multiple vulnerable groups (e.g. rural indigenous girl) is not substantially larger than the sum of effects of each group separately. Gaps accumulate roughly additively. This suggests well-targeted interventions on any axis (rural, indigenous, poverty) will reach girls who fit those characteristics.</small>
-
-## A11 · SEM — equations and calibration {.smaller}
-
-**Approach**: we estimate the ToC arrows for which EH 2024 has observed indicators (attendance, dropout, age-for-grade delay, household composition as a HomeEnv proxy). The **parenting-layer parameters** ($\beta_3$, $\beta_5$) are calibrated as **informative Bayesian priors** from the $\phi$-adjusted anchors (Cluver, Janowski), not estimated from EH 2024. The structural diagram is in **A2**.
-
-::: {.columns}
-::: {.column width="50%"}
-
-**Pre-registered structural model**
-
-$\text{GirlSkills} = \beta_2\text{ClassPractice} + \beta_3\text{HomeEnv}$
-
-$\text{Attendance} = \beta_4\text{GirlSkills} + \beta_5\text{HomeEnv}$
-
-$\text{Progression} = \beta_6\text{Attendance} + \beta_7\text{GirlSkills}$
-
-```{r sem-table-en}
-sem_path <- here::here("output", "models", "sem_coefs.csv")
-if (file.exists(sem_path)) {
-  sem_coefs <- readr::read_csv(sem_path, show_col_types = FALSE)
-  sem_coefs |>
-    dplyr::filter(type == "Structural path") |>
-    dplyr::mutate(
-      `β std.` = sprintf("%.3f", std.all),
-      SE       = sprintf("(%.3f)", se),
-      `p`      = sprintf("%.3f", pvalue)
-    ) |>
-    dplyr::select(Relationship = relationship, `β std.`, SE, `p`) |>
-    knitr::kable(align = "lrrr")
-}
-```
-
-:::
-::: {.column width="50%"}
-
-**Parameter calibration**
-
-| Parameter | Source |
-|---|---|
-| $\beta_2$ | Outes-Sanchez + Gómez-Ruiz ($\phi$-adjusted) |
-| $\beta_3, \beta_5$ | ParentApp (Janowski) + Cluver — **prior** |
-| $\beta_4$ | ELA (Bandiera) ($\phi$-adjusted) |
-| $\beta_6$ | EH 2024 + pilot |
-
-**Estimation** via `blavaan` (informative Bayesian priors), latent scales fixed at $\lambda_1 = 1$ per construct, latent errors independent. Prior uncertainty propagates to the final BCR.
-
-:::
-:::
 
 ## A12 · Bolivia Mincer estimation {.smaller}
 
@@ -990,13 +850,17 @@ mincer_full |>
 :::
 ::: {.column width="42%"}
 
-**Headline (Spec C, female-only)**: each additional year of schooling raises expected log monthly labour income by **7.5% [95% CI: 6.6% – 8.4%]**.
+::: {style="font-size:0.80em"}
 
-This figure enters the BCR directly as the Mincer return.
+**Headline (Spec C, female-only)**: each additional year of schooling raises expected log monthly labour income by **7.5% [95% CI: 6.6% – 8.4%]**. This enters the BCR directly as the Mincer return.
 
-**Sample**: 13,009 adults 25-60 with positive labour income (5,327 women · 2,488 rural). Weighted OLS, PSU-clustered SE. Model: `log(ylab) ~ years_edu + exp + exp² + female + rural + indigenous`.
+**Sample**: 13,009 adults 25–60 with positive labour income (5,327 women · 2,488 rural). Weighted OLS, PSU-clustered SE. Model: `log(ylab) ~ years_edu + exp + exp² + female + rural + indigenous`.
 
-**Caveats**: (i) OLS on the employed sample suffers from selection bias — the return may be over-estimated for that sub-sample. (ii) We do not capture the effect of schooling on the *probability* of employment — this under-estimates the total benefit.
+**Caveats**: (i) OLS on the employed sample suffers from selection bias — the return may be over-estimated. (ii) We do not capture schooling's effect on the *probability* of employment — this under-estimates total benefit.
+
+**Gender pay gap**: the `female` coefficient (Spec A) is the conditional gender wage gap — Bolivian women earn less than men with the *same* schooling and experience.
+
+:::
 
 :::
 :::
@@ -1029,17 +893,36 @@ NEET is only informative for 15-19 (in 10-14 nearly everyone is enrolled by cons
 Disability subsample is small (~0.4%) — interpret with caution.
 :::
 
-## A18 · Limitations
 
-- EH measures **access to devices and internet**, not actual digital skills
-- Household access **does not equal meaningful use** by the adolescent
-- Disability sample size is **small** — interpret with caution
-- **Cross-sectional** data: temporal trajectories cannot be observed
-- Need for **direct measurement at the pilot level** to validate and refine projections
+## A18 · Gender gaps by adolescent stage {.smaller}
 
-# Thank you {.section-divider background-color="#00377C"}
+![](../output/figures/f1a_age_edu_by_sex_ageband_en.png){fig-align="center" width="90%"}
 
-<div style="text-align: center; margin-top: 1.5em;">
-<p style="color: #ffffff; font-size: 1.3em; margin-bottom: 0.3em;">Hernando Grueso, PhD</p>
-<a href="mailto:hgrueso@unicef.org" style="color: #FFC20E; font-size: 1.2em; font-weight: 600; text-decoration: none;">hgrueso@unicef.org</a>
-</div>
+::: footer
+NEET is only informative for 15-19 (in 10-14 most are in school by construction).
+:::
+
+## A19 · Education outcomes by poverty status {.smaller}
+
+![](../output/figures/f1d_edu_by_sex_poverty_en.png){fig-align="center" width="90%"}
+
+## A20 · Education outcomes by disability {.smaller}
+
+![](../output/figures/f5_disability_gap_en.png){fig-align="center" width="90%"}
+
+## A21 · Digital divide — departmental variation {.smaller}
+
+![](../output/figures/f6_internet_by_department_en.png){fig-align="center" width="80%"}
+
+## A22 · Household digital access — no differences by sex {.smaller}
+
+![](../output/figures/f1_digital_access_sex_age_en.png){fig-align="center" width="90%"}
+
+## A23 · Connected households and girls' attendance {.smaller}
+
+![](../output/figures/f4_attendance_by_internet_en.png){fig-align="center" width="85%"}
+
+::: footer
+**Note:** correlation, not causation. Households with internet also tend to have higher income, urban location, and parental education.
+:::
+

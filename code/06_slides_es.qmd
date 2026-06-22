@@ -2,7 +2,7 @@
 title: "Aula Conectada"
 subtitle: "Caso de inversión · Bolivia"
 author: "Hernando Grueso, PhD <br> UNICEF"
-date: "Junio 2026"
+date: "19 de junio de 2026"
 lang: es
 format:
   revealjs:
@@ -131,44 +131,63 @@ inter_pp <- inter |>
 
 # 1 · Diagnóstico — brechas en educación {.section-divider background-color="#00377C"}
 
-## Población objetivo — niñas adolescentes 10–19 en Bolivia {.smaller}
+## Población objetivo y fuentes de datos {.smaller}
 
-```{r funnel-table}
-segment_es <- c(
-  "All girls 10–19 (weighted)"                                              = "Todas las niñas 10–19",
-  "Girls 10–19 — rural"                                                     = "Niñas rurales 10–19",
-  "Girls 10–19 — Indigenous"                                                = "Niñas indígenas 10–19",
-  "Girls 10–19 — poor (INE)"                                                = "Niñas en pobreza (INE) 10–19",
-  "Girls 10–19 — disability (WG 3+)"                                        = "Niñas con discapacidad (WG 3+) 10–19",
-  "Girls 10–19 — no HH internet"                                            = "Niñas sin internet en hogar 10–19",
-  "Girls 10–19 — priority (rural OR Indigenous OR poor OR disability)"      = "Niñas prioritarias (rural ∨ indígena ∨ pobre ∨ discapacidad)"
-)
-funnel |>
-  filter(segment != "All adolescents 10–19 (weighted)") |>
-  mutate(
-    Segmento = recode(segment, !!!segment_es),
-    `N ponderado`      = fmt_n(n_pop),
-    `% de niñas 10–19` = fmt_pct(share_of_all_girls)
-  ) |>
-  select(Segmento, `N ponderado`, `% de niñas 10–19`) |>
-  kable(align = "lrr")
-```
+Usamos **dos encuestas independientes del INE**: la **EH 2024** (educación, acceso) y la **EDSA 2023** (el entorno del hogar — violencia, disciplina). En la banda etaria que comparten (15–19) coinciden estrechamente, por lo que pueden leerse en conjunto con confianza.
+
+::: {style="font-size:1.25em; width:88%; margin:0 auto;"}
+
+| Indicador — niñas adolescentes 15–19, ponderado | EH 2024 | EDSA 2023 |
+|---|---:|---:|
+| Asiste actualmente a la escuela | 86.0% | 84.8% |
+| Años de escolaridad (media) | 9.95 | 10.0 |
+| % rural | 25.5% | 26.3% |
+| % indígena | 17.0% | 16.2% |
+| n sin ponderar (15–19) | 3,530 | 2,224 |
+
+:::
+
+En términos absolutos, Bolivia tiene alrededor de **1.19 millones de niñas adolescentes de 10–19 años** (EH 2024, ponderado). La asistencia es casi universal a los 10–14 (**97.9%**) pero cae a **85.9% a los 15–19** — es decir, cerca de **81,000 niñas de 15–19 años están fuera de la escuela**, concentradas en la **transición a secundaria superior** (el promedio 10–19 es 92.1%).
 
 ::: footer
-Fuente: INE Bolivia, EH 2024 · estimaciones ponderadas
+<small>Fuentes: EH 2024 y EDSA 2023, INE Bolivia · todas las cifras ponderadas por diseño muestral · 15–19 es la banda que ambas encuestas cubren de forma comparable. El embudo completo de población objetivo (subgrupos prioritarios) está en el anexo A1.</small>
+:::
+
+## Mensajes clave {.smaller}
+
+::: {.callout-tip appearance="simple"}
+Las niñas bolivianas **ya están en la escuela** (~92% de matrícula 10–19, sin brecha de género en el acceso) — pero la asistencia cae a **86% a los 15–19**. Los problemas vinculantes están en **qué aprenden las niñas marginalizadas, si permanecen durante la transición a secundaria superior, y el entorno del hogar desde el que aprenden**.
+:::
+
+::: {.columns}
+::: {.column width="50%"}
+
+**Qué muestra el diagnóstico**
+
+- La brecha **no es el acceso** — es la calidad del aprendizaje y la **permanencia escolar después de los 15**, concentrada en **niñas rurales, indígenas y pobres**.
+- **La violencia en el hogar es parte de la historia.** La disciplina violenta se concentra en hogares **rurales e indígenas** (rural 52% vs 32% urbano; indígena 46% vs 35%), y las niñas en hogares con disciplina severa tienen **~2 años menos de escolaridad**.
+- El **embarazo adolescente** es el correlato de escolaridad más fuerte (**−2.9 años**) — una segunda vulnerabilidad, distinta, para las niñas adolescentes.
+
+:::
+::: {.column width="50%"}
+
+**Qué implica para Aula Conectada**
+
+- Financiar la **capa de aprendizaje** — pedagogía con enfoque de género y formación docente (Evans & Yuan, 73+ ECAs) — no el hardware.
+- Añadir una **capa de empoderamiento** (tipo ELA) — la respuesta de permanencia, que aborda los motores del abandono, incluido el **embarazo adolescente**.
+- Atender el **entorno del hogar**: un componente de **crianza** de bajo costo para la vía de la violencia.
+- Focalizar en las **más vulnerables**: niñas rurales e indígenas.
+
+:::
+:::
+
+::: footer
+Fuentes: EH 2024 (educación/acceso) y EDSA 2023 (violencia, entorno del hogar) — INE Bolivia, ponderado. El detalle y el diagnóstico completo siguen a continuación.
 :::
 
 ## Brechas de género en educación
 
 ![](../output/figures/f1a_edu_overall_by_sex.png){fig-align="center" width="85%"}
-
-## Brechas de género según etapa de la adolescencia
-
-![](../output/figures/f1a_age_edu_by_sex_ageband.png){fig-align="center" width="90%"}
-
-::: footer
-NEET sólo es informativo para 15-19 (en 10-14 la mayoría está en escuela por construcción).
-:::
 
 ## Resultados educativos según zona de residencia
 
@@ -178,292 +197,213 @@ NEET sólo es informativo para 15-19 (en 10-14 la mayoría está en escuela por 
 
 ![](../output/figures/f1c_edu_by_sex_indig.png){fig-align="center" width="90%"}
 
-## Resultados educativos según situación de pobreza
+## El entorno del hogar: la disciplina violenta es mayor en hogares rurales e indígenas {.smaller}
 
-![](../output/figures/f1d_edu_by_sex_poverty.png){fig-align="center" width="90%"}
+![](../output/figures/f7_violence_2panel_es.png){fig-align="center" width="92%"}
 
-## Resultados educativos según discapacidad
+<small>Disciplina física severa hacia los hijos (EDSA 2023, ponderado, mujeres con hijos). Ambos ejes elevan el riesgo de forma **independiente**: los hogares rurales reportan **52.3% vs 32.2%** urbano (brecha de ~20 pp), y los indígenas **45.9% vs 35.0%** no indígenas (brecha de ~11 pp). La ruralidad es el eje más fuerte, pero la condición indígena añade riesgo por sí sola — por eso la focalización sigue **rural + indígena**, no una sola dimensión.</small>
 
-![](../output/figures/f5_disability_gap.png){fig-align="center" width="90%"}
+<small>*Sobre el sexo del menor:* es una medida **a nivel de hogar**, reportada por las mujeres sobre la disciplina de los hijos en casa; la EDSA **no** la desagrega por sexo del menor (y en otros contextos la disciplina física suele recaer más en los niños varones). Lo relevante para este caso es, por tanto, el **entorno del hogar** — un hogar propenso a la violencia es un entorno de riesgo que las niñas **viven o presencian**, y que se asocia a menor escolaridad.</small>
 
-## El acceso digital es una brecha territorial y socioeconómica {.smaller}
+## La disciplina severa se asocia a menor escolaridad {.smaller}
 
-::: {.callout-tip appearance="simple"}
-Los datos de EH 2024 son a nivel del hogar, por lo que no permiten medir directamente el acceso individual de niñas y niños. A nivel del hogar, las diferencias por sexo del adolescente son mínimas. **Las diferencias relevantes se observan entre hogares rurales y urbanos, indígenas y no indígenas, y según la situación de pobreza.**
-:::
+![](../output/figures/f7b_diagnosis_panel_es.png){fig-align="center" width="58%"}
 
-::: {.columns}
-::: {.column width="50%"}
+<small>EDSA 2023, ponderado. Las mujeres en hogares con disciplina severa promedian **~2 años menos de escolaridad** que las de otros hogares. *Nota:* el módulo de violencia/disciplina de la EDSA se **aplica solo a mujeres**, por lo que estas cifras reflejan **respuestas de mujeres** sobre sus propios hogares; no se recogen datos comparables de hombres. Esto motiva la regresión que sigue.</small>
 
-**Dimensiones de la brecha digital**
+## La disciplina violenta se asocia con menor escolaridad {.smaller}
 
-- Conectividad e infraestructura en zonas rurales
-- Acceso a dispositivos en hogares indígenas
-- Asequibilidad económica de internet y dispositivos
-- Habilidades digitales y uso significativo
+::: {style="font-size:1.05em; width:82%; margin:0 auto;"}
 
-:::
-::: {.column width="50%"}
-
-**Implicación para el programa**
-
-- Una brecha digital de género a nivel individual requeriría datos que EH 2024 no captura (uso, habilidades, autonomía de uso)
-- A nivel del hogar, las brechas de acceso se concentran en los mismos subgrupos que enfrentan mayores brechas educativas
-- El programa Aula Conectada actúa sobre el acceso institucional y el uso pedagógico, no sobre el acceso del hogar
+| Años de escolaridad (mujeres 12–49) | Asociación | Error est. | p |
+|---|---:|---:|---:|
+| **Disciplina física severa en el hogar** | **−0.90** | 0.16 | <0.001 |
+| Indígena | −1.10 | 0.20 | <0.001 |
+| Rural | −0.05 | 0.32 | 0.87 |
+| Riqueza Q2 vs Q1 | +1.42 | 0.25 | <0.001 |
+| Riqueza Q3 vs Q1 | +2.74 | 0.37 | <0.001 |
+| Riqueza Q4 vs Q1 | +4.49 | 0.35 | <0.001 |
+| Riqueza Q5 vs Q1 | +6.69 | 0.35 | <0.001 |
+| Edad | −0.12 | 0.01 | <0.001 |
 
 :::
-:::
+
+**Vivir en un hogar con disciplina severa se asocia con ~0.9 años menos de escolaridad**, manteniendo constantes riqueza, etnicidad, zona y edad — la vía del entorno del hogar (violencia). *El embarazo adolescente — una vía aún más fuerte y distinta — se presenta en la siguiente diapositiva.*
 
 ::: footer
-Para evidencia complementaria sobre habilidades digitales individuales véase AGETIC (Encuesta Nacional sobre TIC). Sobre brechas de aprendizaje en primaria véase ERCE 2019 (UNESCO/LLECE).
+Fuente: EDSA 2023, INE Bolivia · MCO ponderado (`upm`/`estrato`/`ponderadorm`), n=4,678 · asociación, no causal — la dirección no está identificada; un aspecto a mejorar con datos de panel vinculados a nivel individual.
 :::
 
-## Brecha digital — variación departamental
+## Embarazo adolescente — una segunda vía, distinta {.smaller}
 
-![](../output/figures/f6_internet_by_department.png){fig-align="center" width="80%"}
+Más allá de la vía del entorno del hogar (violencia), el **embarazo adolescente** es el **correlato de escolaridad más fuerte** en los datos — una vulnerabilidad aparte que la historia de la violencia no captura.
 
-## Acceso digital del hogar — sin diferencias por sexo
+::: {style="font-size:1.1em; width:82%; margin:0 auto;"}
 
-![](../output/figures/f1_digital_access_sex_age.png){fig-align="center" width="90%"}
+| Asociación con escolaridad (mujeres) | Estimación | n | p |
+|---|---:|---:|---:|
+| **Embarazo temprano (< 18)** | **−2.9 años** | 391 | <0.001 |
+| Hogar con disciplina severa *(comparación)* | −0.9 años | 4,678 | <0.001 |
 
-## Hogares conectados muestran marginalmente una mayor asistencia escolar para las niñas
+:::
 
-![](../output/figures/f4_attendance_by_internet.png){fig-align="center" width="85%"}
+- La penalización del embarazo temprano es **aproximadamente 3× mayor** que la del hogar con violencia — la maternidad temprana se asocia fuertemente con dejar la escuela.
+- Es una **vía distinta** que llama a la **capa de empoderamiento** (clubes tipo ELA), cuya base de evidencia incluye la **reducción del embarazo y matrimonio tempranos** (Bandiera et al., 2018) — no el componente de crianza/violencia.
 
 ::: footer
-**Nota:** esto es correlación, no causalidad. Hogares con internet también tienen mayor ingreso, urbanidad y educación parental.
+Fuente: EDSA 2023, INE Bolivia · ponderado · asociación, no causal. La prevalencia de maternidad adolescente entre las 15–19 puede añadirse desde la EDSA si se solicita.
 :::
 
 # 2 · Evidencia → Teoría del Cambio {.section-divider background-color="#00377C"}
 
-## Qué nos dice la evidencia internacional {.smaller}
+## Del diagnóstico a tres respuestas emparejadas {.smaller}
 
+El diagnóstico señala tres problemas distintos, cada uno con una respuesta diferente basada en evidencia:
+
+:::: {style="font-size:0.74em"}
 ::: {.columns}
-::: {.column width="50%"}
+::: {.column width="33%"}
 
-**Hallazgos consistentes**
+**Problema 1 — aprendizaje, no acceso**
 
-- Hardware aislado rara vez mejora aprendizaje <br><small>(De Melo et al., 2014; Cristia et al., 2017)</small>
-- Herramientas digitales funcionan **con pedagogía estructurada** <br><small>(Gómez-Ruiz & Franco, 2023)</small>
-- Formación docente es el mecanismo central <br><small>(Olugbade et al., 2025; Bassi et al., 2016)</small>
-- Contenido con enfoque de género mejora **aspiraciones y persistencia STEM** <br><small>(Outes-León et al., 2020; Porter & Trzesniewski, 2020)</small>
+La matrícula es alta al inicio de la adolescencia pero **cae a 86% a los 15–19** (la transición a secundaria superior); las brechas vinculantes están en la **calidad del aprendizaje**, no en el acceso.
 
-:::
-::: {.column width="50%"}
+- El hardware aislado rara vez mejora el aprendizaje <br><small>(Cristia et al., 2017)</small>
+- Las herramientas funcionan **con pedagogía estructurada + formación docente** <br><small>(Gómez-Ruiz & Franco, 2023)</small>
+- Los contenidos con enfoque de género pueden elevar las **aspiraciones STEM** de las niñas <br><small>(Outes-León et al., 2020 — un rasgo de diseño)</small>
 
-**Capa de parenting**
-
-- Intervenciones de parenting reducen **violencia física y emocional contra niñas** (IRR 0.55) <br><small>(Cluver et al., 2017 — Sudáfrica)</small>
-- Apps de parenting digitales mejoran **prácticas no violentas y comunicación padres-hija** <br><small>(Janowski et al., 2025 — Tanzania)</small>
-- Normas de género restrictivas en el hogar son barrera estructural a aprendizaje, asistencia y transición a STEM
+→ Ancla: **Evans & Yuan (2022)**, 73+ ECAs.
 
 :::
-:::
+::: {.column width="33%"}
 
-## Componentes del programa — insumos y actividades {.smaller}
+**Problema 2 — permanecer en la escuela**
 
-::: {.columns}
-::: {.column width="50%"}
+La permanencia falla para las niñas más vulnerables; el empoderamiento y los espacios seguros las mantienen matriculadas.
 
-**Insumos**
+- Los clubes de niñas **elevan la matrícula (+8.5 pp)** <br><small>(Bandiera et al., 2018 — ELA)</small>
+- Habilidades para la vida + mentoría atacan los motores del abandono, incluido el embarazo adolescente
 
-- Materiales gender-responsive y acceso seguro: contenido digital con representación femenina y sin sesgos de género
-- Módulos STEM diseñados para retener y enganchar niñas — vacío clave en la transición a STEM en Bolivia
-- Conectividad y dispositivos priorizados por necesidad/vulnerabilidad (rural, indígena) en lugar de entrega indiscriminada a escuelas
+→ Ancla: **Bandiera ELA**, ajustada por φ a Bolivia.
 
 :::
-::: {.column width="50%"}
+::: {.column width="33%"}
 
-**Actividades**
+**Problema 3 — el entorno del hogar**
 
-- Pedagogía gender-transformadora y formación docente, con integración curricular de modelos femeninos
-- Engagement parental para cambio de normas y vinculación con STEM
-- Empoderamiento, liderazgo y agencia de niñas, más allá de la participación
-- Habilidades socioemocionales y life skills, basadas en revisión de literatura
-- Mentoría y acompañamiento
+La disciplina violenta se concentra en las niñas marginalizadas y se asocia a menor escolaridad.
+
+- Los programas de crianza **reducen la violencia** hacia los hijos (IRR 0.55) <br><small>(Cluver et al., 2017)</small>
+- **Entrega de bajo costo vía smartphone** <br><small>(Janowski et al., 2025 — ParentApp)</small>
+
+→ Ancla: **Cluver (efecto) + Janowski (entrega)**.
 
 :::
 :::
+::::
 
-## Componentes del programa — outputs y outcomes {.smaller}
+<small>Cada problema corresponde a una capa: la **capa de aprendizaje** (el ancla costeada del BCR), la **capa de empoderamiento** (ELA — la respuesta de asistencia/permanencia, ajustada por φ) y la **capa de entorno del hogar** (crianza, para la vía de la violencia). El hardware es un habilitador, no la intervención.</small>
 
-::: {.columns}
-::: {.column width="50%"}
+## Qué estamos construyendo — capas emparejadas con la evidencia {.smaller}
 
-**Outputs**
+![](../output/figures/f_toc_es.png){fig-align="center" width="88%"}
 
-- Sistemas de datos que rastrean participación sex-disaggregated y outcomes profundos de aprendizaje
-- Docentes formados, aulas equipadas y contenidos en uso
-- Niñas integradas en actividades STEM, con grupos prioritarios identificados explícitamente
-
-**Outcomes de corto plazo**
-
-- Prácticas docentes que promueven la participación activa de niñas
-- Apoyo a vías de transición hacia STEM
-- Confianza y habilidades digitales fortalecidas
-- Entornos de aprendizaje seguros y de apoyo
-
-:::
-::: {.column width="50%"}
-
-**Outcomes de mediano plazo**
-
-- Mejor asistencia, progresión y aprendizaje
-- Mayor interés y persistencia en STEM
-- Reducción de violencia intrahogar contra niñas, mediante la capa de parenting
-- Cambios en normas de género en el hogar y la escuela
-
-**Outcomes de largo plazo**
-
-- Mayor transición a educación superior, particularmente en STEM
-- Mejor empleabilidad y reducción de brechas salariales
-
-:::
-:::
-
-## Qué estamos construyendo — un programa, tres capas
-
-```{mermaid}
-%%| fig-width: 14
-flowchart LR
-    subgraph A["① Acceso digital"]
-        A1["Dispositivos · conectividad<br/>contenido digital"]
-    end
-    subgraph B["② Pedagogía de niñas"]
-        B1["Formación docente · mentoría<br/>pensamiento computacional"]
-    end
-    subgraph C["③ Crianza"]
-        C1["Comunicación con la hija<br/>reducción de violencia"]
-    end
-
-    A1 --> R["Las niñas permanecen<br/>y aprenden"]
-    B1 --> R
-    C1 -.-> R
-    R --> I["Menores brechas de género<br/>en aprendizaje y empleo"]
-
-    class A,A1 layerA
-    class B,B1 layerB
-    class C,C1 layerC
-    class R,I outcome
-    classDef layerA fill:#eaf6fc,stroke:#1CABE2,stroke-width:1.5px,color:#00377C
-    classDef layerB fill:#fde9f2,stroke:#E2007A,stroke-width:1.5px,color:#a3005a
-    classDef layerC fill:#f6f6f6,stroke:#bbbbbb,stroke-width:1px,color:#777777
-    classDef outcome fill:#fff7e6,stroke:#FFC20E,stroke-width:2px,color:#7a5b00
-```
-
-<small>Ancla cuantitativa: **Evans & Yuan (2022)**, meta-análisis específico de niñas de 73+ RCTs. **Technovation Girls** (Chile) es la plantilla de diseño; la capa de **crianza** (punteada) se activa sólo cuando exista data boliviana.</small>
+<small>Cada capa responde a un problema diagnosticado: la **capa de aprendizaje** (pedagogía — el ancla costeada del BCR), la **capa de empoderamiento** (ELA — la respuesta de asistencia/permanencia, ajustada por φ a Bolivia) y la **capa de entorno del hogar** (crianza, para la vía de la violencia, costeada con el modelo de entrega de Janowski). El hardware es un habilitador, no la intervención.</small>
 
 # 3 · Proyecciones — Aula Conectada en Bolivia {.section-divider background-color="#00377C"}
 
-## Anclas directas — digital education y normas de género {.smaller}
+## Anclas directas — educación digital y normas de género {.smaller}
 
-Programas con efecto medido **sobre los resultados educativos** que Aula Conectada busca mejorar:
+Programas con efectos medidos **sobre los resultados** que Aula Conectada busca mejorar — uno por capa:
 
-```{r proj-table-direct}
-proj_v2 <- read_csv(here("output", "projections", "anchor_projections_long.csv"),
-                    show_col_types = FALSE)
+::: {style="font-size:0.92em"}
 
-proj_v2 |>
-  filter(subgroup_id == "priority", usable_for_projection,
-         !grepl("Porter", programme),
-         programme_type %in% c("digital_education", "gender_norms")) |>
-  transmute(
-    Programa   = programme,
-    País       = country,
-    `Efecto externo (95% CI)` = ext_str,
-    `φ_pop`    = sprintf("%.2f", phi_pop),
-    `φ_geo`    = sprintf("%.2f", phi_geo),
-    `φ_econ`   = sprintf("%.2f", phi_econ),
-    `φ_deliv.` = sprintf("%.2f", phi_delivery),
-    `n par.`   = n_params_used,
-    `Efecto ajustado (95% CI)` = adj_str,
-    Sig.       = ifelse(sign(lower_95) == sign(upper_95), "✓", "—")
-  ) |>
-  kable(align = "lllrrrrrrl")
-```
+| Capa | Ancla | País | Efecto medido | Usada para |
+|---|---|---|---|---|
+| **Aprendizaje** | Evans & Yuan (2022), 73 ECAs | Metaanálisis | **+0.07 DE** aprendizaje (específico de niñas) | Beneficio de aprendizaje (en DE) |
+| **Empoderamiento** | Bandiera et al. (2018) — ELA | Sierra Leona | **+8.5 pp** matrícula | Asistencia → ingresos (ajustada por φ) |
+| **Entorno del hogar** | Cluver et al. (2017) — PLH Teens | Sudáfrica | **IRR 0.55** sobre maltrato infantil | Violencia↓ → asistencia (cadena) |
 
-<small>**Lectura del IC:** si cero está dentro del intervalo, el efecto del ancla original no es estadísticamente distinguible de cero — esto refleja la incertidumbre del estudio, no un error del ajuste. La columna **Sig.** marca con ✓ las anclas que sí lo son.</small>
+:::
 
-## Anclas indirectas — capa de parenting (vía SEM) {.smaller}
+<small>Cada ancla se empareja con el resultado que realmente midió (Ruta A — sin conversión entre unidades). El efecto de **aprendizaje** permanece en DE y se reporta como beneficio de aprendizaje, no se convierte en asistencia. Las capas de **ELA** y **crianza** portan los efectos de asistencia (en pp), ajustados por φ a Bolivia. El **ancla ELA también redujo el embarazo y matrimonio tempranos** — la segunda vía de las niñas adolescentes en el diagnóstico — aunque aquí monetizamos solo su efecto de asistencia (una decisión conservadora). Modelo de entrega de la capa de crianza: Janowski et al. (2025) ParentApp — de bajo costo, vía smartphone. La lógica completa de φ y la cadena del análisis costo-beneficio están en la diapositiva de supuestos y en el anexo.</small>
 
-Programas de parenting que **no actúan directamente** sobre matrícula/asistencia, sino sobre el entorno del hogar (normas, violencia). Entran al SEM como parámetros del componente parenting → entorno hogar → resultados educativos.
-
-```{r proj-table-indirect}
-proj_v2 |>
-  filter(subgroup_id == "priority",
-         programme_type == "parenting") |>
-  transmute(
-    Programa   = programme,
-    País       = country,
-    `Outcome original`   = "ver A9 (SEM)",
-    `φ_pop`    = sprintf("%.2f", phi_pop),
-    `φ_geo`    = sprintf("%.2f", phi_geo),
-    `φ_econ`   = sprintf("%.2f", phi_econ),
-    `φ_deliv.` = sprintf("%.2f", phi_delivery),
-    `Uso en el modelo` = "parámetro entrada parenting → entorno hogar"
-  ) |>
-  kable(align = "lllrrrrl")
-```
-
-<small>Cluver et al. (2017) reporta efectos sobre violencia física y emocional (IRR 0.55, no traducible directamente a matrícula). Janowski et al. (2025) reporta engagement con la app (módulos completados). Los efectos se propagan al outcome educativo vía el SEM, no directamente.</small>
-
-## Supuestos clave del enfoque {.smaller}
-
-Cada proyección descansa sobre supuestos explícitos. Documentarlos permite al Ministerio evaluar la credibilidad de cada estimación.
+## Supuestos clave {.smaller}
 
 ::: {.columns}
 ::: {.column width="50%"}
 
-**Sobre las anclas externas**
+**Los cinco factores $\phi$ son supuestos, no estimaciones**
 
-- Estudios con identificación creíble en su contexto original (RCT o cuasi-experimental)
-- **Mecanismos causales** parcialmente trasladables (formación docente, pedagogía, contenido con enfoque de género operan de forma comparable entre países)
-- Las variables observables que usamos capturan la heterogeneidad relevante
-
-:::
-::: {.column width="50%"}
-
-**Sobre Bolivia y la implementación**
-
-- Aula Conectada se implementará con **fidelidad pedagógica** comparable a las anclas
-- Las brechas observadas en EH 2024 son representativas del contexto de escalamiento
-- Los subgrupos prioritarios se mantendrán como población objetivo
-
-:::
-:::
-
-**Cómo se manejan los supuestos:** cada factor φ se calcula sobre datos observables. Cuando no hay datos suficientes (p. ej. φ_baseline sin nivel basal reportado), se asigna 1.0 explícitamente. La columna **n par.** indica cuántos factores se calibraron con datos reales.
-
-## Síntesis — qué retorno esperar de Aula Conectada {.smaller}
-
-::: {.columns}
-::: {.column width="50%"}
-
-**Efecto en acceso** <br>(grupo prioritario, ≈ 568 mil niñas)
-
-- **Ancla:** Evans & Yuan (2022) — meta-análisis específico de niñas, 73 RCTs: mediana **+0.07 SD** en acceso
-- **φ-ajustado a Bolivia:** **+0.06 SD** [0.02 – 0.12]
-- **→ +2.4 pp asistencia · −1.4 pp NEET** (niñas 15–19)
+- $\phi_\text{pop} = 1$ cuando origen y destino son idénticos en edad y % rural
+- $\phi_\text{baseline} = 1$ cuando Bolivia tiene pleno margen; menor cuando el indicador ya está cerca de su techo
+- $\phi_\text{geo}$ se escalona por distancia Haversine (1.00/0.85/0.65/0.50)
+- $\phi_\text{econ}$ se acota a [0.30, 1.00] por estabilidad
+- $\phi_\text{delivery}$ refleja implementación gubernamental frente a ONG/investigación
 
 :::
 ::: {.column width="50%"}
 
-**Traducido a ingresos de vida** <br>(vía datos de Bolivia)
+**Robustez**
 
-- **+2.4 pp asistencia → +0.10 años de escolaridad asistida**
-- **× 7.5%** retorno Mincer por año (EH 2024, **mujeres bolivianas**) + ingresos por salida de NEET
-- **→ ~$421** valor presente por niña → **BCR ≈ 2.8** (paquete pedagógico, $152)
+- La forma multiplicativa es **conservadora**: cada $\phi \leq 1$, por lo que la proyección solo atenúa el efecto externo, nunca lo amplifica
+- El ancla ELA es la **más transportada** (Sierra Leona, posconflicto, presencial); mostramos su contribución al BCR en el rango $\phi_\text{ELA} \in [0.40, 0.70]$ en lugar de un único punto
+- La sensibilidad a ponderaciones alternativas está en el documento técnico de métodos (en preparación)
 
 :::
 :::
 
-<small>RCTs digitales individuales (Porter 0.27, Learning Passport México 0.26) se ubican cerca del rango superior del meta-análisis — corroboración, no el ancla. Los ingresos son un **piso**: aprendizaje, agencia, reducción de violencia y efectos intergeneracionales documentados pero no monetizados.</small>
+## Síntesis — retornos esperados de Aula Conectada {.smaller}
+
+Tres capas, cada una anclada en el resultado que su evidencia **realmente midió** — sin conversión entre unidades.
+
+::: {style="font-size:0.98em; width:97%; margin:0 auto;"}
+
+| Capa | Efecto fuente | φ (transporte) | Efecto Bolivia | Canal |
+|---|---|:--:|:--:|---|
+| **Aprendizaje** (pedagogía digital) | +0.07 DE (Evans & Yuan) | ≈0.86 | **+0.06 DE** | se reporta en DE — *no* se convierte en asistencia |
+| **Empoderamiento** (tipo ELA) | +8.5 pp matrícula (Bandiera) | 0.55 | **+4.7 pp** | mantiene a las niñas en la escuela → años-escuela → ingresos |
+| **Entorno del hogar** (crianza) | IRR 0.55 × prevalencia (Cluver) | 0.85 | **+1.9 pp** | violencia↓ → asistencia → años-escuela → ingresos |
+
+:::
+
+::: {style="font-size:0.62em; color:#555; margin-top:0.3em;"}
+La columna **φ (transporte)** es el factor de atenuación *compuesto* aplicado a cada efecto fuente (φ = ∏ φ_k sobre las cinco dimensiones — población, línea base, geografía, economía, entrega). El desglose completo por factor para cada ancla está en la salida de proyección (`05_projections.R`); ver el rango de φ de ELA en la diapositiva de supuestos.
+:::
+
+::: {style="font-size:0.88em; margin-top:0.4em;"}
+Los dos efectos de **asistencia** operan por **mecanismos diferentes** (empoderamiento/espacios seguros vs el entorno del hogar), por lo que se **suman**: ≈ **6.6 pp** combinados, alimentando la cadena Mincer → ingresos. El efecto de **aprendizaje** se reporta por separado en DE — deliberadamente **no** afirmamos un efecto de asistencia solo por lo digital, ya que un dispositivo por sí solo no aborda por qué las niñas dejan la escuela.
+:::
+
+## Supuestos del análisis costo-beneficio — cada número, con fuente {.smaller}
+
+::: {style="font-size:0.78em"}
+
+| Parámetro | Valor | Fuente |
+|---|---|---|
+| Retorno Mincer por año-escuela | 7.5% | EH 2024, mujeres bolivianas (A12) |
+| Salario anual femenino | $3,500 | Mediana ponderada INE EH 2024, edad 25–54 |
+| Vida laboral · tasa de descuento | 35 años · 3% | Norma ALC · valor por defecto Banco Mundial Educ. (sens. 2–5%) |
+| **VP por año-escuela asistido** | **$3,520** | pipeline Mincer del proyecto (`08_bcr_estimation.R`) — prima de ingresos de por vida descontada |
+| pp → años-escuela asistidos | +2.4pp ⇒ +0.10 año | sobre ~4 años de secundaria |
+| Efecto de matrícula ELA | +8.5 pp | Bandiera (2018), Sierra Leona |
+| φ (transporte ELA) | 0.40–0.70 | Sierra Leona→Bolivia (rango mostrado) |
+| Brecha violencia→asistencia | −13.1 pp | EDSA 2023, mujeres 12–24 — **asociación tratada como causal** |
+| Efecto Cluver | IRR 0.55 (≈45% ↓) | Cluver (2017), ECA PLH Teens |
+| Prevalencia de disciplina severa | 38% | EDSA 2023, madres |
+| φ (transporte crianza) | 0.85 | PIMB→Bolivia |
+| Costo ELA · Costo crianza | $26 · $10 | **referencias** (ELA $17–35; Janowski $8–12), no costeado para Bolivia |
+| Costo del paquete de aprendizaje | $152/niña | costeo del deck (A7) |
+
+:::
+
+<small>**Cadena de crianza:** +1.9pp = 13.1 × 0.45 × 0.38 × 0.85. **Asistencia combinada** = ELA + crianza (mecanismos diferentes, aditivos). Los dos supuestos a reforzar con un piloto en Bolivia: el paso causal violencia→asistencia, y el factor de transporte φ de ELA.</small>
 
 # 4 · Costos {.section-divider background-color="#00377C"}
 
 ## Costos unitarios — supuestos y fuentes {.smaller}
 
-Construimos **tres escenarios (bajo / central / alto)** a partir de referentes regionales documentados. Todos los valores anuales por niña, en USD 2024.
+Construimos **tres escenarios (bajo / central / alto)** a partir de referencias regionales documentadas. Todos los valores son anuales por niña, en USD 2024.
 
 ```{r costing-table}
 costing <- readr::read_csv(
@@ -496,207 +436,190 @@ costing |>
   knitr::kable(align = "lrrrl")
 ```
 
-<small>**Notas clave:** (1) Plan Ceibal reporta un costo total anualizado de ~$75–100/niño en sus reportes de implementación (OLPC News 2010, ACM 2013). (2) Salarios docentes Bolivia 2024: ~Bs 3,206/mes primaria (~$462) y Bs 4,947/mes secundaria (~$716). (3) Los bonos de permanencia rural (Bs 659/mes) y por escuela rural (Bs 2,000) podrían reducir el costo neto en zonas prioritarias. (4) Las cifras excluyen costos de capital iniciales (infraestructura eléctrica, aulas) — asumidos como existentes.</small>
+<small>**Notas:** (1) Salarios docentes Bolivia 2024: ~Bs 3,206/mes primaria (~$462), Bs 4,947/mes secundaria (~$716); los bonos de permanencia rural podrían reducir el costo neto en zonas prioritarias. (2) Las cifras excluyen capital inicial (infraestructura eléctrica, aulas) — se asume preexistente. (3) Las referencias internacionales de costo (p. ej. Plan Ceibal ~$75–100/niño) son contexto solo para el escenario de hardware; nuestro caso central es el paquete pedagógico, no la compra de dispositivos.</small>
+
+## Costos por componente usados en el análisis {.smaller}
+
+Las tres capas entran al análisis costo-beneficio con los siguientes costos por beneficiaria (USD 2024):
+
+::: {style="font-size:1.1em; width:88%; margin:0 auto;"}
+
+| Componente | Costo | Base |
+|---|---:|---|
+| Paquete de aprendizaje (pedagogía + formación docente) | **$152 / niña** | costeo del deck, anclado en Bolivia |
+| Empoderamiento tipo ELA | **$26 / niña** | referencia ($17–35/año clubes) — *aún no costeado para Bolivia* |
+| Crianza (digital, modelo Janowski) | **$10 / cuidador** | referencia ($8–12) — *aún no costeado para Bolivia* |
+
+:::
+
+<small>Los dos costos de referencia se reportan de forma transparente y alimentan la costo-efectividad por capas; un ejercicio de costeo dedicado para Bolivia los refinaría antes de cualquier decisión de escalamiento.</small>
 
 ## Escala del programa — niñas alcanzadas {.smaller}
 
-Aula Conectada como inversión en **adolescentes mujeres 10–19**, con tres escenarios de cobertura prioritaria:
+Aula Conectada como inversión en **niñas adolescentes 10–19**, con escenarios de cobertura prioritaria:
 
-```{r scale-table}
+```{r scale-table-en}
 scale_tab <- tibble::tribble(
-  ~Escenario,                                          ~`N niñas`,        ~`% del total`, ~`Cobertura`,
-  "Piloto (8 departamentos prioritarios)",             "~80,000",          "8%",           "Rurales+indígenas+pobres",
-  "Escala intermedia",                                 "~280,000",         "29%",          "Subconjunto prioritario amplio",
-  "Escala completa (todas las prioritarias)",          "~568,000",         "58%",          "Todas las niñas en al menos una vulnerabilidad",
-  "Universal (todas las niñas 10–19)",                 "~977,000",         "100%",         "Cobertura nacional"
+  ~Escenario,                                    ~`N niñas`,    ~`% del total`, ~`Costo total (~$188/niña)`, ~Cobertura,
+  "Piloto (8 departamentos prioritarios)",       "~80,000",     "7%",            "~$15 M",   "Rurales+indígenas+pobres",
+  "Escala intermedia",                           "~280,000",    "24%",           "~$53 M",   "Subconjunto prioritario amplio",
+  "Escala completa — todas las prioritarias ★",  "~568,000",    "48%",           "~$107 M",  "Todas con ≥1 vulnerabilidad",
+  "Universal (todas las niñas 10–19)",           "~1,186,000",  "100%",          "~$223 M",  "Cobertura nacional"
 )
-knitr::kable(scale_tab, align = "lrrl")
+knitr::kable(scale_tab, align = "lrrrl")
 ```
 
-<small>**Cifras de población** derivadas de la EH 2024 ponderada (Tabla A1). El programa fue diseñado para focalización por vulnerabilidad — no recomendamos universalización ya que diluiría el impacto en hogares sin necesidades de acceso digital. El **escenario central de planificación** es escala completa (~568,000 niñas).</small>
+<small>**★ Escenario recomendado (planificación central):** escala prioritaria completa (~568,000 niñas, ~$107 M total). **Cifras de población** de la EH 2024 ponderada (≈1.19 M niñas 10–19; Tabla A1). Costo total ≈ N × **$188/niña** = $152 aprendizaje + $26 ELA + $10 crianza (por cuidador de una niña alcanzada); un ejercicio de costeo para Bolivia refinaría las referencias de ELA/crianza. **No** recomendamos cobertura universal — diluiría el impacto en hogares sin necesidades de acceso digital. La **capa de crianza** alcanza a los *cuidadores* de estas niñas mediante la misma focalización prioritaria, concentrada en los hogares rurales e indígenas donde la disciplina violenta es más prevalente.</small>
 
 # 5 · ROI — Análisis costo-beneficio {.section-divider background-color="#00377C"}
 
-## Retornos monetizados vs. retornos más amplios {.smaller}
+## Costo-efectividad por capa {.smaller}
 
-El BCR a continuación monetiza **únicamente** el canal de asistencia → ingresos. Es deliberadamente conservador y debe leerse como el **piso**, no el techo, de los retornos esperados.
+Cada capa está anclada en el resultado que midió su evidencia. El beneficio de la capa de **aprendizaje** está en DE (aprendizaje); las capas de **ELA** y **crianza** entregan asistencia en pp.
 
-::: {.columns}
-::: {.column width="50%"}
+::: {style="font-size:1.18em; width:92%; margin:0 auto;"}
 
-**Lo que el BCR sí monetiza**
-
-→ Asistencia / retención (Evans & Yuan, φ-ajustado)
-
-→ Retorno Mincer Bolivia (7.5%/año)
-
-→ Ingresos por salida de NEET + ingresos laborales descontados a 35 años
-
-:::
-::: {.column width="50%"}
-
-**Lo que el BCR NO monetiza** *(documentado, no sumado)*
-
-→ **Normas de género y agencia**
-
-→ **Reducción de violencia doméstica** (Cluver PLH: IRR 0.55)
-
-→ **Comunicación parental** (Janowski ParentApp)
-
-→ **Efectos intergeneracionales** sobre hijas y hermanas
-
-:::
-:::
-
-Estos canales están **documentados pero deliberadamente excluidos** del BCR — elevarían el retorno, no lo reducen, por lo que la cifra monetizada es un piso.
-
-## Costo-efectividad — programa completo (con laptops)
-
-Anclado en el meta-análisis específico de niñas de **Evans & Yuan (2022)** sobre resultados de acceso (73 RCTs): mediana **+0.07 SD**, φ-ajustado a Bolivia.
-
-::: {.columns}
-::: {.column width="13%"}
-:::
-::: {.column width="74%"}
-
-| Resultado (niñas 10–19) | Efectividad | Costo por niña | Costo por 1 pp |
+| Capa | Efecto (aj. por φ) | Costo | Costo por unidad de mejora |
 |---|---:|---:|---:|
-| **Asistencia** | +2.4 pp [0.7 – 4.8] | $465 | **~$194** |
-| **NEET (15–19)** | −1.4 pp [−0.4 a −2.9] | $465 | **~$332** |
+| **Empoderamiento (ELA)** | +4.7 pp asistencia | $26 / niña | **~$6 por +1 pp** |
+| **Crianza (violencia↓)** | +1.9 pp asistencia | $10 / cuidador | **~$5 por +1 pp** |
+| *Aprendizaje (pedagogía digital)* | *+0.06 DE aprendizaje* | *$152 / niña* | **~$25 por 0.01 DE** |
 
 :::
-::: {.column width="13%"}
-:::
-:::
 
-<small>*Paquete completo: dispositivos + conectividad + contenido + formación docente + pedagogía/M&E ≈ $465/niña en 4 años. Efecto subyacente en acceso **+0.06 SD** φ-ajustado [0.02 – 0.12]. NEET es un cálculo de orden de magnitud (pass-through ~60% de la ganancia en asistencia).*</small>
+<small>ELA con φ=0.55; crianza vía la cadena Cluver→EDSA con φ=0.85. Las dos capas de asistencia son muy costo-efectivas *por pp* porque sus costos de referencia son bajos. El beneficio de la capa de aprendizaje es una mejora de calidad del aprendizaje (en DE), reportada en su propia unidad — **~$25 compran 0.01 DE** ($152 ÷ 6) — por lo que nunca convertimos entre unidades ni contamos doble.</small>
 
-## Costo-efectividad — sólo pedagogía (sin laptops)
+## BCR combinado — mostrado como rango, no como punto {.smaller}
 
-Grandes RCTs de programas de sólo hardware (**Cristia et al. 2017; Cueto et al. 2024**, OLPC Perú; de Melo 2014, Uruguay) hallan **efectos casi nulos en aprendizaje** — las ganancias vienen de la capa de **pedagogía y software**, no de los dispositivos. Quitar el hardware preserva el efecto a un tercio del costo.
+El titular depende sobre todo de cuánto se transporta el efecto **ELA** desde Sierra Leona. Lo mostramos a lo largo de φ en lugar de elegir un único número:
 
-::: {.columns}
-::: {.column width="13%"}
-:::
-::: {.column width="74%"}
+::: {style="font-size:1.18em; width:90%; margin:0 auto;"}
 
-| Resultado (niñas 10–19) | Efectividad | Costo por niña | Costo por 1 pp |
-|---|---:|---:|---:|
-| **Asistencia** | +2.4 pp [0.7 – 4.8] | $152 | **~$63** |
-| **NEET (15–19)** | −1.4 pp [−0.4 a −2.9] | $152 | **~$109** |
+| φ (transporte ELA) | ELA pp | Crianza pp | BCR: solo ELA | BCR: ELA + crianza |
+|---:|---:|---:|---:|---:|
+| 0.40 (conservador) | 3.4 | 1.9 | 2.8 | **4.1** |
+| 0.55 (central) | 4.7 | 1.9 | 3.9 | **5.1** |
+| 0.70 (optimista) | 5.9 | 1.9 | 4.9 | **6.1** |
 
 :::
-::: {.column width="13%"}
-:::
-:::
 
-<small>*Paquete pedagógico: contenido/plataforma + formación docente + pedagogía/M&E ≈ $152/niña en 4 años (sin compra de nuevos dispositivos ni conectividad). El efecto se mantiene constante porque la evidencia experimental atribuye la ganancia a la pedagogía y el software, con brazos de sólo hardware cercanos a cero. **La costo-efectividad mejora ~3× por punto porcentual.***</small>
+<small>**Qué cuentan las columnas del BCR:** el **numerador** es solo el beneficio monetizado de *asistencia → ingresos* — "solo ELA" cuenta el efecto de asistencia de ELA; "ELA + crianza" añade el efecto de asistencia de la crianza. El **beneficio de +0.06 DE de la capa de aprendizaje NO está en el numerador** (permanece en DE, reportado por separado), pero el **costo de aprendizaje ($152) SÍ está en el denominador** de ambas columnas, junto a los costos de ELA/crianza. Así, estos BCR ya pagan las tres capas mientras solo contabilizan el beneficio de asistencia — es decir, un **piso conservador**, no un total aprendizaje+ELA+crianza. En el transporte de ELA más conservador (φ=0.40), ELA por sí sola reproduce aproximadamente el BCR original solo-acceso (~2.8); la crianza añade ~1.3. La cifra combinada es **ilustrativa** — descansa en el supuesto causal violencia→asistencia y en φ de ELA; el resultado robusto es la **costo-efectividad por capa** de la diapositiva anterior.</small>
 
-## Cadena de valor del beneficio — niñas 10–19 en Bolivia {.smaller}
+## Cadena de valor del beneficio — de la asistencia combinada a los ingresos {.smaller}
 
-Cómo el efecto en asistencia se convierte en un beneficio en valor presente por niña (paquete pedagógico, $152/niña):
+Cómo los dos efectos de asistencia se convierten en un beneficio en valor presente por niña (caso central, φ_ELA=0.55):
 
-::: {.columns}
-::: {.column width="6%"}
-:::
-::: {.column width="88%"}
+::: {style="font-size:1.15em; width:92%; margin:0 auto;"}
 
 | Paso | Cálculo | Resultado |
 |---|---|---:|
-| **1 · Efecto en asistencia** | Evans & Yuan (2022), φ-ajustado | **+2.4 pp** |
-| **2 · Años de escolaridad** | +2.4 pp asistidos sobre ~4 años de secundaria | **+0.10 años** |
-| **3 · Ingresos — escolaridad** | +0.10 años × 7.5%/año Mincer (EH 2024 mujeres), VP 35 años | **~$352** |
-| **4 · Ingresos — salida de NEET** | −1.4 pp NEET × inactividad temprana evitada | **~$69** |
-| **= Beneficio vs. costo** | $421 beneficio ÷ $152 costo | **BCR ≈ 2.8** |
+| **1 · Asistencia ELA** | Bandiera +8.5 pp × φ 0.55 | **+4.7 pp** |
+| **2 · Asistencia crianza** | 13.1 pp × 0.45 (Cluver) × 0.38 (prev.) × 0.85 | **+1.9 pp** |
+| **3 · Combinado (mecanismos diferentes, aditivo)** | 4.7 + 1.9 | **+6.6 pp** |
+| **4 · Años-escuela ganados** | +6.6 pp sobre ~4 años de secundaria | **+0.28 año** |
+| **5 · Ingresos (VP)** | +0.28 año × $3,520/año-escuela | **~$970** |
+| **= Beneficio vs. costo** | $970 ÷ ($152+$26+$10) | **BCR ≈ 5.1** |
 
 :::
-::: {.column width="6%"}
+
+<small>**Cómo leer el resultado:** +6.6 pp de asistencia ≈ **0.28 de un año-escuela (~3–4 meses)** más de escolaridad por niña. Los **~$970 son un total único** — el *valor presente de hoy* de los ingresos adicionales que esos 3–4 meses de escolaridad generan a lo largo de **toda su vida laboral de ~35 años**, ya descontados al 3%. **No** son $970 por año. Divididos entre el costo de las tres capas ($188), eso da un BCR ≈ 5.1. El beneficio de +0.06 DE de la capa de **aprendizaje** es *adicional* y se reporta en DE — no está en esta cifra de ingresos — por lo que el BCR monetizado sigue siendo un piso. Violencia→asistencia tratada como causal para la proyección (señalado). Todas las constantes en la diapositiva de supuestos.</small>
+
+## Qué cuenta y qué no cuenta el BCR {.smaller}
+
+El BCR monetiza **solo** el canal asistencia → ingresos. Es el **piso**, no el techo.
+
+::: {.columns}
+::: {.column width="50%"}
+
+::: {style="font-size:1.15em"}
+**Monetizado**
+
+- Ganancias de asistencia / permanencia
+- Retorno Mincer Bolivia (7.5%/año)
+- Ingresos laborales de por vida (35 años)
+:::
+
+:::
+::: {.column width="50%"}
+
+::: {style="font-size:1.15em"}
+**No monetizado** *(documentado, solo elevaría el retorno)*
+
+- Normas de género y agencia
+- Reducción de violencia en el hogar
+- Comunicación entre padres e hijos
+- Efectos intergeneracionales
+:::
+
 :::
 :::
 
-<small>La asistencia se convierte directamente en años de escolaridad asistida. Central [BCR 0.8 – 5.6]. Con laptops ($465), BCR ≈ 0.9. Cuenta **sólo ingresos**; agencia, violencia e intergeneracionales no sumados → retorno real **se espera mayor**.</small>
+## Conclusiones {.smaller}
 
-## Mensajes clave {.smaller}
+::: {.callout-tip appearance="simple"}
+La evidencia apunta a un diseño claro y con enfoque de género: invertir en **cómo aprenden las niñas marginalizadas** y en **el entorno del hogar desde el que aprenden** — no en hardware.
+:::
 
-**1 · La brecha es territorial, no de matrícula.** La matrícula es ~95% en todas partes; las brechas reales para las niñas están en **asistencia, abandono y acceso digital** — concentradas en hogares rurales, indígenas y pobres.
+:::: {style="font-size:0.76em"}
+::: {.columns}
+::: {.column width="50%"}
 
-**2 · Un diseño anclado en evidencia específica de niñas.** Aula Conectada se ancla en el meta-análisis de Evans & Yuan (2022) de 73 RCTs — que halla que la pedagogía docente y el software (no el hardware solo) son lo que funciona para las niñas — con Technovation Girls (Chile) como plantilla de diseño.
+**Quiénes son las más vulnerables**
 
-**3 · Costo-efectivo cuando se financia la capa correcta.** El paquete pedagógico ($152/niña) alcanza **~$63 por +1 pp de asistencia** y un **BCR central ≈ 2.8** [0.8–5.6] sólo por ingresos. El paquete completo con laptops cuesta 3× más por el mismo efecto (BCR ≈ 0.9) — la evidencia RCT ubica el retorno en la pedagogía, no en el hardware.
+- **Niñas rurales e indígenas**: las mayores brechas de escolaridad (rural 8.7 vs urbano 11.8 años) y la mayor exposición a **disciplina violenta** en el hogar (rural 52% vs 32% urbano; indígena 46% vs 35%).
+- Niñas en **hogares con disciplina violenta**: ~2 años menos de escolaridad (asociación, p<0.001).
+- Niñas que enfrentan **embarazo temprano**: el correlato de escolaridad más fuerte (−2.9 años).
 
-**4 · El retorno monetizado es un piso.** El BCR cuenta sólo ingresos vía retención. Aprendizaje, agencia, reducción de violencia y efectos intergeneracionales están documentados pero **no** sumados — el retorno real es mayor.
+**Qué financiar**
+
+- **Capa de aprendizaje** — pedagogía con enfoque de género, formación docente, contenidos de pensamiento computacional para niñas (Evans & Yuan, 73+ ECAs). El hardware es solo un habilitador.
+
+:::
+::: {.column width="50%"}
+
+**Qué añadir**
+
+- **Capa de empoderamiento** (tipo ELA) — la respuesta de permanencia, que aborda los motores del abandono, incluido el **embarazo temprano** (el correlato de escolaridad más fuerte, −2.9 años).
+- **Componente de crianza** (efecto Cluver + entrega digital de bajo costo de Janowski) para la vía de la violencia.
+
+**Efecto y retorno esperados**
+
+- **Costo-efectividad por capa** (el titular robusto): ELA ~$6 por +1 pp de asistencia, crianza ~$5 por +1 pp, aprendizaje ~$25 por 0.01 DE.
+- **BCR combinado ≈ 4.1–6.1** (rango de φ, central ~5.1) solo por asistencia→ingresos — un **piso** conservador. Los beneficios más amplios (hogares más seguros, la próxima generación) están **documentados pero no monetizados**, por lo que el retorno real es mayor.
+
+:::
+:::
+::::
 
 # 6 · Anexo Metodológico {.section-divider background-color="#00377C"}
 
 ## A0 · Supuestos del análisis costo-beneficio {.smaller}
 
-- **Costing estimado.** Los costos unitarios son proyectados a partir de referentes regionales (Plan Ceibal Uruguay, IDB EdTech reviews, escalafón docente boliviano). Un costing oficial del programa puede refinar el rango — recomendamos revisar antes de tomar decisiones de escala
-- **Costos de gestión y coordinación.** Las cifras incluyen overhead administrativo (10-20%) pero no costos de monitoreo en terreno, coordinación inter-institucional ni costos políticos/operacionales en zonas remotas. Estos podrían añadir 10-20% adicional en escenarios rurales
-- **Beneficios sólo vía canal educativo-laboral.** No cuantificamos beneficios en agencia, salud reproductiva, reducción de violencia o productividad doméstica — todos potencialmente significativos pero más difíciles de monetizar de manera defendible
-- **Mincer estimado con datos bolivianos.** El retorno por año de educación se estima a partir de la EH 2024 (7.5%/año en mujeres, IC 95% [6.6%, 8.4%]). La estimación no incorpora el efecto de la educación sobre la *probabilidad* de emplearse — el beneficio total es probablemente mayor que el aquí proyectado
-- **Descuento al 3%** es la convención estándar de la World Bank Education Sector; sensibilidad alta al descuento (al 5% el BCR central baja proporcionalmente)
-- **El análisis no incluye externalidades positivas** sobre hermanas menores, normas comunitarias, ni efectos intergeneracionales en hijas futuras — todos documentados en la literatura pero fuera del alcance de este BCR conservador
+- **Costeo estimado.** Los costos unitarios se proyectan a partir de referencias regionales (Plan Ceibal Uruguay, revisiones EdTech del BID, escala salarial docente de Bolivia). Un costeo oficial del programa podría refinar el rango — recomendamos revisarlo antes de decisiones de escalamiento
+- **Costos de gestión y coordinación.** Las cifras incluyen gastos administrativos (10-20%) pero excluyen el monitoreo en terreno, la coordinación interinstitucional y los costos político/operativos en zonas remotas. Estos podrían añadir 10-20% adicional en escenarios rurales
+- **Beneficios solo por el canal educación-trabajo.** No cuantificamos beneficios en agencia, salud reproductiva, reducción de violencia o productividad doméstica — todos potencialmente significativos pero más difíciles de monetizar de forma defendible
+- **Mincer estimado con datos bolivianos.** El retorno por año de escolaridad se estima de la EH 2024 (7.5%/año para mujeres, IC 95% [6.6%, 8.4%]). La estimación no incorpora el efecto de la escolaridad sobre la *probabilidad* de empleo — el beneficio total probablemente es mayor que el proyectado aquí
+- La **tasa de descuento del 3%** es el estándar del Sector Educación del Banco Mundial; alta sensibilidad a la tasa (al 5% el BCR central cae proporcionalmente)
+- El **análisis excluye externalidades positivas** sobre hermanas menores, normas comunitarias y efectos intergeneracionales en futuras hijas — todos documentados en la literatura pero fuera del alcance de este BCR conservador
 
-## A1 · Datos y muestra {.smaller}
+## A1 · Datos y muestra — ambas encuestas {.smaller}
 
-::: {style="font-size:0.80em"}
+::: {style="font-size:0.78em"}
 
-**Fuente:** Encuesta de Hogares 2024 (EH 2024) — INE Bolivia · Recolección noviembre–diciembre 2024 · Cobertura nacional, urbano y rural · Unidad de análisis: miembros del hogar en viviendas particulares.
+**EH 2024 (educación, acceso, Mincer)** — INE Bolivia · nov–dic 2024 · 12,718 hogares, 39,497 personas · submuestra analítica **6,254 adolescentes 10–19** · diseño `upm`/`estrato`/`factor`, `srvyr` (`lonely.psu="adjust"`).
+Variables clave: sexo `s01a_02`; edad `s01a_03`; indígena = códigos de lengua materna/hablada 1–37, 70, 71; pobreza `poor`; discapacidad Grupo de Washington ≥3; internet en hogar `s06a_19`. MCO ponderado, EE agrupados por UPM (`fixest::feols`). Microdatos: anda.ine.gob.bo/catalog/163.
 
-**Tamaño:** 12,718 hogares · 39,497 personas · Submuestra analítica: **6,254 adolescentes 10–19** (≈ 977 mil niñas y 1.05 M niños expandidos) · Archivos: Persona, Vivienda, Equipamiento.
+**EDSA 2023 (entorno del hogar: violencia, disciplina, agencia)** — ronda DHS del INE Bolivia · sep–dic 2023 · **14,545 mujeres 12–49**; módulo de disciplina aplicado a **madres (4,678)** · diseño `upm`/`estrato`/`ponderadorm`, linealización de Taylor (`srvyr`). Variables clave: disciplina severa `ms11_1147/1148`; VPI `ms11_1105/1108`; asistencia `ms01_0114`; años `aestudio`; autoidentificación indígena `ms01_0108`; quintil de riqueza `qriqueza` (Vivienda, unido por `folio`). Microdatos: anda.ine.gob.bo/catalog/119.
 
-**Variables clave**
-
-- **Niña** = `s01a_02 == 2` · **Ruralidad** = `area == 2` · **Pobreza** = `p0` (INE)
-- **Pertenencia indígena** = lengua materna o lengua hablada en códigos bolivianos (1–37, 70, 71)
-- **Discapacidad** = Washington Group, severidad ≥ 3 en cualquier dominio (ver, oír, caminar, recordar)
-- **Internet en hogar** = `s06a_19` (módulo Vivienda) · **Equipamiento digital** (computadora, smartphone, tablet) del módulo Equipamiento
-
-**Estimación:** MCO ponderado por factor de expansión `factor`; errores estándar agrupados al nivel UPM (`fixest::feols`).
+**Por qué dos encuestas:** la EH sostiene el caso de educación/ingresos; la EDSA sostiene el diagnóstico del entorno del hogar. Son independientes y **no vinculables a nivel individual** — por eso la EDSA calibra el diagnóstico y la asociación violencia→asistencia, nunca se fusiona con la EH a nivel de unidad. A los 15–19 ambas coinciden dentro de ~1pp en asistencia, escolaridad, % rural y % indígena (diapositiva 3), lo que respalda su uso conjunto.
 
 :::
-
-::: footer
-Microdatos: anda.ine.gob.bo/index.php/catalog/163
-:::
-
-## A2 · Síntesis estructural de la ToC — niñas 10–19 (SEM) {.smaller}
-
-```{mermaid}
-%%| fig-width: 13
-flowchart LR
-    LWB["Vive con<br/>ambos padres"]:::obs
-    NP["Hogar<br/>no pobre"]:::obs
-    ND["Hogar sin<br/>discapacidad"]:::obs
-    ENR["Matriculada"]:::obs
-    ATT["Asistiendo<br/>a clase"]:::obs
-
-    HE(("Entorno<br/>del hogar")):::latent
-    EE(("Compromiso<br/>escolar")):::latent
-    PR["Progresión<br/>educativa"]:::outcome
-
-    LWB -.->|λ₁| HE
-    NP  -.->|λ₂| HE
-    ND  -.->|λ₃| HE
-    ENR -.->|λ₄| EE
-    ATT -.->|λ₅| EE
-
-    HE ==>|β₁| EE
-    EE ==>|β₂| PR
-    HE ==>|β₃| PR
-
-    classDef obs fill:#ffffff,stroke:#7A8487,stroke-width:1px,color:#374649
-    classDef latent fill:#ffffff,stroke:#1CABE2,stroke-width:2px,color:#00377C
-    classDef outcome fill:#ffffff,stroke:#E2007A,stroke-width:2px,color:#a3005a
-```
-
-<small>Los constructos latentes (óvalos azules) se miden con indicadores observados de la EH 2024 (cajas grises); el resultado final es la progresión educativa (rosa). La capa de crianza está **excluida** —Bolivia carece de datos contemporáneos (última MICS: 2008)— y se añadirá cuando existan datos del piloto o de una encuesta. Ecuaciones y coeficientes estimados en A11.</small>
 
 ## A3 · Estrategia empírica {.smaller}
 
 ::: {style="font-size:0.82em"}
 
-**Modelo base (LPM con efectos fijos de departamento):**
+**Modelo base (MPL con efectos fijos de departamento):**
 
 $$Y_{ihd} = \alpha + \beta_F F_i + \beta_R R_i + \beta_I I_i + \beta_D D_i + \beta_P P_i + \gamma X_{ihd} + \delta_d + \varepsilon_{ihd}$$
 
@@ -706,20 +629,21 @@ donde $F$ = Niña, $R$ = Rural, $I$ = Indígena, $D$ = Discapacidad, $P$ = Pobre
 
 $$Y_{ihd} = \alpha + \beta_F F_i + \gamma X_{ihd} + \sum_{k \in \{R,I,D,P\}} \theta_k \, (F_i \times k_i) + \delta_d + \varepsilon_{ihd}$$
 
-Cada coeficiente $\theta_k$ mide cuánto mayor o menor es la brecha de género en ese subgrupo. Por ejemplo, $\theta_R$ captura si la brecha de género entre niñas y niños rurales difiere de la brecha entre niñas y niños urbanos.
+Cada $\theta_k$ mide cuánto mayor o menor es la brecha de género en ese subgrupo. Por ejemplo, $\theta_R$ capta si la brecha de género entre niñas y niños rurales difiere de la brecha entre niñas y niños urbanos.
 
 **Modelo interseccional con interacciones de tres vías (robustez):**
 
-$$Y_{ihd} = \alpha + \text{efectos principales} + \text{2-vías} + \theta_{F\cdot R \cdot I} \, (F_i \times R_i \times I_i) + \delta_d + \varepsilon_{ihd}$$
+$$Y_{ihd} = \alpha + \text{main effects} + \text{2-way} + \theta_{F\cdot R \cdot I} \, (F_i \times R_i \times I_i) + \delta_d + \varepsilon_{ihd}$$
 
-y análogos para $F \times R \times P$ y $F \times I \times P$. Las interacciones de tres vías capturan si la brecha de género en una intersección compuesta (por ejemplo, niñas rurales indígenas) difiere de lo que sugieren las dos interacciones de dos vías por separado.
+y análogo para $F \times R \times P$ y $F \times I \times P$. Las interacciones de tres vías captan si la brecha de género en una intersección compuesta (p. ej. niñas rurales indígenas) difiere de lo que las interacciones de dos vías sugerirían por separado.
 
-Estimación por MCO ponderado por `factor` (factor de expansión); errores estándar agrupados al nivel UPM (`fixest::feols`).
+Estimación por MCO ponderado usando `factor` (factor de expansión); errores estándar agrupados a nivel de UPM (`fixest::feols`).
 
 :::
 
-## A4 · Tabla completa — coeficientes principales {.smaller}
+## A4 · Tabla completa de coeficientes — modelo principal {.smaller}
 
+::: {style="font-size:0.62em"}
 ```{r reg-table-all}
 out_vars <- c("hh_internet", "enrolled", "attending", "hh_any_device", "grade_delay")
 out_lbls <- c(hh_internet   = "Internet hogar",
@@ -758,8 +682,9 @@ foot <- tibble(
 bind_rows(tab, foot) |>
   kable(align = "lccccc")
 ```
+:::
 
-<small>`*` p<0.10, `**` p<0.05, `***` p<0.01. Errores estándar entre paréntesis bajo cada coeficiente. MCO ponderado por factor de expansión EH 2024; efectos fijos de departamento; errores agrupados al nivel UPM (`fixest::feols`).</small>
+<small>Coeficientes en puntos decimales (× 100 para pp). EE robustos entre paréntesis. `*` p<0.10, `**` p<0.05, `***` p<0.01.</small>
 
 ## A5 · Tabla interseccional completa {.smaller}
 
@@ -822,42 +747,11 @@ footer_rows <- tibble(
 bind_rows(rows, footer_rows) |> kable(align = "lcccc")
 ```
 
-<small>Coeficientes de interacción (efecto adicional para niñas en cada grupo). Errores estándar entre paréntesis. `*` p<0.10, `**` p<0.05, `***` p<0.01. MCO ponderado, efectos fijos de departamento, errores agrupados al nivel UPM.</small>
-
-## A6 · Análisis de heterogeneidad — bosque de regresión {.smaller}
-
-**Método:** `grf::regression_forest` (Athey & Wager, 2019) — un ensamble de árboles de regresión con submuestreo honesto.
-
-::: {.columns}
-::: {.column width="55%"}
-
-**Especificación**
-
-- **Muestra de entrenamiento:** todos los adolescentes 10–19 (no solo niñas) — permite que el bosque aprenda el efecto del género de forma endógena
-- **Covariables (7):** sexo, edad, ruralidad, indígena, discapacidad, pobreza, departamento
-- **Outcomes (4 bosques separados):** asistencia escolar, internet en hogar, cualquier dispositivo, computadora
-- **Hiperparámetros:** 2,000 árboles · honestidad activada · fracción 0.5 · pesos muestrales = factor de expansión EH 2024
-
-:::
-::: {.column width="45%"}
-
-**Qué reportamos**
-
-- **Importancia de variables** normalizada por outcome
-- **Predicciones por subgrupo** evaluadas sobre una grilla de 16 perfiles (sexo × rural × indígena × pobreza), fijando edad = 13 y departamento = La Paz
-
-**Qué NO es esto**
-
-- No es bosque causal (no hay tratamiento)
-- No estima el efecto de Aula Conectada
-- Estima la heterogeneidad de gaps de **línea base** — útil para focalizar
-
-:::
-:::
+<small>Cada fila es el coeficiente de la interacción (Niña × subgrupo) en una regresión separada. Coeficientes en puntos decimales. Errores estándar entre paréntesis. EE robustos agrupados por UPM.</small>
 
 ## A7 · Fundamento formal del enfoque de transportabilidad {.smaller}
 
-Asumimos que el desajuste entre la población fuente $S$ (el ancla) y la población objetivo $T$ (Bolivia) se descompone en $K$ dimensiones observables y que la atenuación es **multiplicativa**:
+Suponemos que el desajuste entre la población fuente $S$ (el ancla) y el destino $T$ (Bolivia) se descompone en $K$ dimensiones observables, con atenuación multiplicativa:
 
 $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T), \qquad \phi_k \in [0, 1] $$
 
@@ -866,10 +760,10 @@ $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T),
 
 **Glosario de factores $\phi_k$:**
 
-- $\phi_\text{pop}$ — edad y % rural estandarizados
-- $\phi_\text{baseline}$ — nivel inicial del outcome
+- $\phi_\text{pop}$ — edad estandarizada y % rural
+- $\phi_\text{baseline}$ — margen del indicador
 - $\phi_\text{geo}$ — distancia Haversine desde La Paz
-- $\phi_\text{econ}$ — razón PIB per cápita
+- $\phi_\text{econ}$ — ratio de PIB per cápita
 - $\phi_\text{delivery}$ — 1.0 (gobierno) o 0.7 (ONG/investigación)
 
 :::
@@ -877,40 +771,30 @@ $$ \hat\beta_T \;\approx\; \hat\beta_S \; \cdot \; \prod_{k=1}^{K} \phi_k(S, T),
 
 **Supuestos:**
 
-- (A1) **Suficiencia de observables**: las 5 dimensiones capturan los modificadores de efecto relevantes
+- (A1) **Observables suficientes**: las 5 dimensiones capturan los modificadores de efecto relevantes
 - (A2) **Separabilidad**: los efectos son aproximadamente multiplicativos
-- (A3) **Monotonía**: el desajuste sólo atenúa, nunca amplifica
-- (A4) **Independencia del SE**: la varianza del ancla se propaga sin perturbar los $\phi_k$
+- (A3) **Monotonicidad**: el desajuste solo atenúa, nunca amplifica
+- (A4) **Independencia de EE**: la varianza del ancla se propaga sin perturbar los $\phi_k$
 
 :::
 :::
 
 ## A8 · Metodología de proyección ajustada a Bolivia {.smaller}
 
-**Fórmula completa:** Efecto = $\beta_{\text{externo}} \times \phi_{\text{pop}} \times \phi_{\text{baseline}} \times \phi_{\text{geo}} \times \phi_{\text{econ}} \times \phi_{\text{delivery}}$
+**Algoritmo** para cada ancla:
 
-::: {.columns}
-::: {.column width="50%"}
+1. Calcular $\phi_\text{pop}$ como $1 - \sqrt{\overline{d^2_\text{age}, d^2_\text{rural}}}$, donde $d$ son las diferencias estandarizadas entre la fuente y Bolivia
+2. Calcular $\phi_\text{baseline} = (Y_\text{max} - Y_\text{Bol}) / (Y_\text{max} - Y_\text{anchor})$ cuando sea medible (si no, 1)
+3. Calcular $\phi_\text{geo}$ en bandas Haversine desde La Paz: ≤1,000 km → 1.00; 1,000–5,000 km → 0.85; 5,000–10,000 km → 0.65; >10,000 km → 0.50
+4. Calcular $\phi_\text{econ}$ como el ratio de PIB per cápita Bolivia/ancla, acotado a [0.30, 1.00]
+5. Calcular $\phi_\text{delivery}$: 1.0 si el implementador es gubernamental; 0.7 si es ONG/investigación (Vivalt 2020)
+6. Multiplicar: $\hat\beta_T = \hat\beta_S \cdot \prod \phi_k$
+7. Propagar EE: $\text{SE}(\hat\beta_T) = \text{SE}(\hat\beta_S) \cdot \prod \phi_k$
+8. IC 95%: $\hat\beta_T \pm 1.96 \cdot \text{SE}(\hat\beta_T)$
 
-**φ_pop** — $\exp(-\bar d^2)$ sobre edad y % rural, estandarizados. Indig_share **deliberadamente excluido** (no apples-to-apples entre contextos). Acotado [0,1].
+**Reglas de exclusión** — solape de edad <25% con 10–19, o <2 variables demográficas comparables → el ancla no se proyecta.
 
-**φ_baseline** — $(Y_{\max} - Y_{\text{Bol}}) / (Y_{\max} - Y_{\text{ancla}})$. NA si el ancla no reporta nivel basal. Acotado [0,1].
-
-**φ_geo** — distancia Haversine desde La Paz. Mismo país = 1.00; <3000 km = 0.85; <6000 km = 0.65; ≥6000 km = 0.50.
-
-:::
-::: {.column width="50%"}
-
-**φ_econ** — razón PIB/cápita Bolivia/ancla. Si el ancla es de un país más pobre → 1.0 (no se descuenta). Acotado [0.3, 1].
-
-**φ_delivery** — 1.00 si el ancla es implementación gubernamental, 0.70 si es investigación/ONG (Vivalt 2020).
-
-**Reglas de exclusión** — solapamiento etario <25% con 10–19, o <2 variables demográficas comparables → ancla no proyectada.
-
-**Incertidumbre** — IC 95% propagado del SE del ancla. Sin ruido sintético en los factores φ.
-
-:::
-:::
+**Incertidumbre** — IC 95% propagado desde el EE del ancla. Sin ruido sintético sobre los factores $\phi$.
 
 ## A9 · Evidencia consolidada — anclas en uso {.smaller}
 
@@ -943,11 +827,11 @@ anchors_demo |>
   kable(align = "lllllr")
 ```
 
-<small>Listado completo de las anclas externas usadas en la proyección a Bolivia (ver `05_projections.R` y `R/anchors_demographics.R`). La revisión sistemática completa de 52 papers está en `data/lit_review_papers.csv`. La columna **Flecha ToC** indica qué arco de la Teoría de Cambio alimenta cada ancla.</small>
+<small>Lista completa de anclas externas usadas en la proyección de Bolivia (ver `05_projections.R` y `R/anchors_demographics.R`). La revisión sistemática completa de 52 artículos está en `data/lit_review_papers.csv`. La columna **Flecha ToC** indica qué arco de la Teoría del Cambio alimenta cada ancla.</small>
 
 ## A10 · Robustez — interacciones de tres vías (MCO) {.smaller}
 
-Para verificar la heterogeneidad detectada por el bosque de regresión, estimamos interacciones de tres vías con MCO. Si el bosque detecta correctamente subgrupos compuestos, los coeficientes de tres vías deberían ser significativos para los outcomes con mayor heterogeneidad.
+Para probar si las vulnerabilidades se acumulan, estimamos interacciones de tres vías con MCO. Si pertenecer a varios grupos vulnerables a la vez tuviera un efecto superaditivo, los coeficientes de tres vías serían significativos para los resultados con mayor heterogeneidad.
 
 ```{r threeway-table}
 threeway <- read_csv(here("output", "models", "threeway_coefs.csv"),
@@ -973,55 +857,7 @@ threeway |>
   kable(align = "lrrr")
 ```
 
-<small>**Cómo leer:** cada celda muestra el coeficiente de la interacción de tres vías y su error estándar entre paréntesis. Significancia: `*` p<0.10, `**` p<0.05, `***` p<0.01. Si no aparecen asteriscos, el coeficiente no es estadísticamente distinguible de cero a los niveles convencionales. **Interpretación:** en esta muestra, las interacciones triples no son significativas, lo que indica que el efecto compuesto de pertenecer a múltiples grupos vulnerables (por ejemplo, niña rural indígena) no es sustancialmente mayor que la suma de los efectos de cada grupo por separado. Las brechas se acumulan de forma aproximadamente aditiva. Esto sugiere que las intervenciones bien dirigidas a cualquiera de los ejes (rural, indígena, pobreza) tendrán impacto en niñas que cumplen con esas características.</small>
-
-## A11 · SEM — ecuaciones y calibración {.smaller}
-
-**Enfoque**: estimamos las flechas de la ToC para las que la EH 2024 tiene indicadores observados (asistencia, abandono, rezago, composición del hogar como proxy de HomeEnv). Los parámetros de la **capa de parenting** ($\beta_3$, $\beta_5$) se calibran como **priors informativos bayesianos** desde las anclas $\phi$-ajustadas (Cluver, Janowski), no se estiman con la EH 2024. El diagrama estructural está en **A2**.
-
-::: {.columns}
-::: {.column width="50%"}
-
-**Modelo estructural pre-registrado**
-
-$\text{GirlSkills} = \beta_2\text{ClassPractice} + \beta_3\text{HomeEnv}$
-
-$\text{Attendance} = \beta_4\text{GirlSkills} + \beta_5\text{HomeEnv}$
-
-$\text{Progression} = \beta_6\text{Attendance} + \beta_7\text{GirlSkills}$
-
-```{r sem-table}
-sem_path <- here::here("output", "models", "sem_coefs.csv")
-if (file.exists(sem_path)) {
-  sem_coefs <- readr::read_csv(sem_path, show_col_types = FALSE)
-  sem_coefs |>
-    dplyr::filter(type == "Structural path") |>
-    dplyr::mutate(
-      `β std.` = sprintf("%.3f", std.all),
-      SE       = sprintf("(%.3f)", se),
-      `p`      = sprintf("%.3f", pvalue)
-    ) |>
-    dplyr::select(Relación = relationship, `β std.`, SE, `p`) |>
-    knitr::kable(align = "lrrr")
-}
-```
-
-:::
-::: {.column width="50%"}
-
-**Calibración de parámetros**
-
-| Parámetro | Fuente |
-|---|---|
-| $\beta_2$ | Outes-Sanchez + Gómez-Ruiz ($\phi$-ajustados) |
-| $\beta_3, \beta_5$ | ParentApp (Janowski) + Cluver — **prior** |
-| $\beta_4$ | ELA (Bandiera) ($\phi$-ajustado) |
-| $\beta_6$ | EH 2024 + piloto |
-
-**Estimación** vía `blavaan` (priors bayesianos informativos) con escalas latentes fijadas $\lambda_1 = 1$ por constructo y errores latentes independientes. La incertidumbre de los priors propaga al BCR final.
-
-:::
-:::
+<small>**Cómo leer:** cada celda muestra el coeficiente de la interacción de tres vías y su error estándar entre paréntesis. Significancia: `*` p<0.10, `**` p<0.05, `***` p<0.01. Donde no hay asteriscos, el coeficiente no es estadísticamente distinguible de cero a niveles convencionales. **Interpretación:** en esta muestra, las interacciones de tres vías no son significativas, lo que indica que el efecto compuesto de pertenecer a varios grupos vulnerables (p. ej. niña rural indígena) no es sustancialmente mayor que la suma de los efectos de cada grupo por separado. Las brechas se acumulan de forma aproximadamente aditiva. Esto sugiere que intervenciones bien focalizadas en cualquier eje (rural, indígena, pobreza) alcanzarán a las niñas con esas características.</small>
 
 ## A12 · Estimación Mincer para Bolivia {.smaller}
 
@@ -1056,13 +892,17 @@ mincer_full |>
 :::
 ::: {.column width="42%"}
 
-**Resultado central (Spec C, sólo mujeres)**: cada año adicional de educación aumenta el log-ingreso laboral mensual esperado en **7.5% [IC 95%: 6.6% – 8.4%]**.
+::: {style="font-size:0.80em"}
 
-Esta cifra entra directamente en el cálculo del BCR como retorno Mincer.
+**Titular (Esp. C, solo mujeres)**: cada año adicional de escolaridad aumenta el log del ingreso laboral mensual esperado en **7.5% [IC 95%: 6.6% – 8.4%]**. Esto entra directamente al BCR como el retorno Mincer.
 
-**Muestra**: 13,009 adultos 25-60 con ingreso laboral positivo (5,327 mujeres · 2,488 rurales). OLS ponderado, SE clusterizado a nivel UPM. Modelo: `log(ylab) ~ años_edu + exp + exp² + female + rural + indigenous`.
+**Muestra**: 13,009 adultos 25–60 con ingreso laboral positivo (5,327 mujeres · 2,488 rurales). MCO ponderado, EE agrupados por UPM. Modelo: `log(ylab) ~ years_edu + exp + exp² + female + rural + indigenous`.
 
-**Caveats**: (i) OLS sobre empleadas sufre sesgo de selección — el retorno puede estar sobreestimado para esa submuestra. (ii) No capturamos el efecto de educación sobre la *probabilidad* de empleo — eso subestima el beneficio total.
+**Salvedades**: (i) El MCO sobre la muestra de ocupados sufre sesgo de selección — el retorno puede estar sobreestimado. (ii) No capturamos el efecto de la escolaridad sobre la *probabilidad* de empleo — esto subestima el beneficio total.
+
+**Brecha salarial de género**: el coeficiente `female` (Esp. A) es la brecha salarial de género condicional — las mujeres bolivianas ganan menos que los hombres con la *misma* escolaridad y experiencia.
+
+:::
 
 :::
 :::
@@ -1072,7 +912,7 @@ Esta cifra entra directamente en el cálculo del BCR como retorno Mincer.
 ![](../output/figures/f1a_age_edu_by_sex_ageband.png){fig-align="center" width="90%"}
 
 ::: footer
-NEET sólo es informativo en 15-19 (en 10-14 la mayoría está matriculada por construcción).
+NEET solo es informativo para 15-19 (en 10-14 casi todas están matriculadas por construcción).
 :::
 
 ## A14 · Resultados educativos por banda etaria — zona de residencia {.smaller}
@@ -1092,20 +932,39 @@ NEET sólo es informativo en 15-19 (en 10-14 la mayoría está matriculada por c
 ![](../output/figures/f5_age_edu_by_sex_disab_ageband.png){fig-align="center" width="92%"}
 
 ::: footer
-Submuestra con discapacidad pequeña (~0.4%) — interpretar con cautela.
+La submuestra de discapacidad es pequeña (~0.4%) — interpretar con cautela.
 :::
 
-## A18 · Limitaciones
 
-- La EH mide **acceso a dispositivos e internet**, no habilidades digitales reales
-- Acceso del hogar **no equivale a uso significativo** por parte de la adolescente
-- Tamaño muestral de discapacidad es **pequeño** — interpretar con cautela
-- Datos **transversales**: no se puede observar trayectoria temporal
-- Necesidad de **medición directa al nivel del piloto** para validar y refinar las proyecciones
+## A18 · Brechas de género según etapa de la adolescencia {.smaller}
 
-# Gracias {.section-divider background-color="#00377C"}
+![](../output/figures/f1a_age_edu_by_sex_ageband.png){fig-align="center" width="90%"}
 
-<div style="text-align: center; margin-top: 1.5em;">
-<p style="color: #ffffff; font-size: 1.3em; margin-bottom: 0.3em;">Hernando Grueso, PhD</p>
-<a href="mailto:hgrueso@unicef.org" style="color: #FFC20E; font-size: 1.2em; font-weight: 600; text-decoration: none;">hgrueso@unicef.org</a>
-</div>
+::: footer
+NEET solo es informativo para 15-19 (en 10-14 la mayoría está en la escuela por construcción).
+:::
+
+## A19 · Resultados educativos según situación de pobreza {.smaller}
+
+![](../output/figures/f1d_edu_by_sex_poverty.png){fig-align="center" width="90%"}
+
+## A20 · Resultados educativos según discapacidad {.smaller}
+
+![](../output/figures/f5_disability_gap.png){fig-align="center" width="90%"}
+
+## A21 · Brecha digital — variación departamental {.smaller}
+
+![](../output/figures/f6_internet_by_department.png){fig-align="center" width="80%"}
+
+## A22 · Acceso digital del hogar — sin diferencias por sexo {.smaller}
+
+![](../output/figures/f1_digital_access_sex_age.png){fig-align="center" width="90%"}
+
+## A23 · Hogares conectados y asistencia de las niñas {.smaller}
+
+![](../output/figures/f4_attendance_by_internet.png){fig-align="center" width="85%"}
+
+::: footer
+**Nota:** correlación, no causalidad. Los hogares con internet también tienden a tener mayores ingresos, ubicación urbana y mayor educación de los padres.
+:::
+

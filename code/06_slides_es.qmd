@@ -1,8 +1,9 @@
 ---
-title: "Aula Conectada"
+title: "Diseñando Aula Conectada desde una mirada de evidencia con enfoque de género"
 subtitle: "Caso de inversión · Bolivia"
-author: "Hernando Grueso, PhD <br> UNICEF"
-date: "19 de junio de 2026"
+author: "Hernando Grueso, PhD <br> UNICEF <br> <a href='mailto:hgrueso@unicef.org'>hgrueso@unicef.org</a>"
+date: "2026-06-23"
+date-format: long
 lang: es
 format:
   revealjs:
@@ -15,6 +16,13 @@ format:
     smaller: false
     embed-resources: true
     fig-align: center
+    include-in-header:
+      text: |
+        <style>
+        #title-slide .subtitle, .reveal .subtitle { font-size: 1.35em !important; margin-bottom: 0.45em; }
+        #title-slide .date, .reveal .date { font-size: 0.72em !important; margin-top: 1.5em !important; }
+        #title-slide a[href^="mailto"], .reveal .author a { color: #1CABE2 !important; font-size: 0.8em; text-decoration: underline; }
+        </style>
 execute:
   echo: false
   warning: false
@@ -523,6 +531,23 @@ Cómo los dos efectos de asistencia se convierten en un beneficio en valor prese
 :::
 
 <small>**Cómo leer el resultado:** +6.6 pp de asistencia ≈ **0.28 de un año-escuela (~3–4 meses)** más de escolaridad por niña. Los **~$970 son un total único** — el *valor presente de hoy* de los ingresos adicionales que esos 3–4 meses de escolaridad generan a lo largo de **toda su vida laboral de ~35 años**, ya descontados al 3%. **No** son $970 por año. Divididos entre el costo de las tres capas ($188), eso da un BCR ≈ 5.1. El beneficio de +0.06 DE de la capa de **aprendizaje** es *adicional* y se reporta en DE — no está en esta cifra de ingresos — por lo que el BCR monetizado sigue siendo un piso. Violencia→asistencia tratada como causal para la proyección (señalado). Todas las constantes en la diapositiva de supuestos.</small>
+
+## A escala de Bolivia — la ganancia por niña como retorno nacional {.smaller}
+
+Los **$970 por niña** son un valor presente; multiplicados por las niñas alcanzadas, se convierten en un retorno nacional considerable.
+
+::: {style="font-size:1.05em; width:94%; margin:0 auto;"}
+
+| Escenario de cobertura | Niñas alcanzadas | Ingresos de por vida (VP) | Costo del programa |
+|---|---:|---:|---:|
+| Piloto (8 departamentos prioritarios) | ~80,000 | **~$78 M** | ~$15 M |
+| Escala intermedia | ~280,000 | **~$272 M** | ~$53 M |
+| Escala completa — prioritarias ★ | ~568,000 | **~$551 M** | ~$107 M |
+| Universal (todas las niñas 10–19) | ~1,186,000 | **~$1,150 M** | ~$223 M |
+
+:::
+
+<small>Ingresos de por vida = niñas alcanzadas × **$970 VP/niña** (solo asistencia→ingresos — el piso conservador; la mejora de aprendizaje y los beneficios más amplios son adicionales). A la **escala prioritaria completa** recomendada, eso equivale a unos **$551 millones** en ingresos de por vida descontados por cerca de **$107 millones** invertidos. Son valores presentes descontados al 3%, no flujos anuales.</small>
 
 ## Qué cuenta y qué no cuenta el BCR {.smaller}
 
